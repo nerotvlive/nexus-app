@@ -85,13 +85,15 @@ function initLibrary() {
 }
 
 function showInstance(id,name,version,summary,description,tagsString) {
-    if(!document.getElementById("update-button").classList.contains("d-none")) {
-        document.getElementById("update-button").classList.add("d-none");
-    }
+    document.getElementById("folder-button").classList.add("d-none");
+    document.getElementById("library-settings-button").classList.add("d-none");
+    document.getElementById("update-button").classList.add("d-none");
+
     document.getElementById("library-title").querySelector("span").classList.remove("icon");
     document.getElementById("library-title").querySelector("img").src = "";
     id = decodeURIComponent(id);
     name = decodeURIComponent(name);
+    activeInstanceName = name;
     version = decodeURIComponent(version);
     summary = decodeURIComponent(summary);
     description = decodeURIComponent(description);
@@ -149,9 +151,11 @@ function showInstance(id,name,version,summary,description,tagsString) {
     document.getElementById("update-button").onclick = function () {
         console.log('[CONNECTOR] library.update.'+activeInstance);
     }
+    document.getElementById("folder-button").classList.remove("d-none");
     document.getElementById("folder-button").onclick = function () {
         console.log('[CONNECTOR] library.folder.'+activeInstance);
     }
+    document.getElementById("library-settings-button").classList.remove("d-none");
     document.getElementById("library-settings-button").onclick = function () {
         console.log('[CONNECTOR] library.settings.'+activeInstance);
     }
@@ -183,20 +187,11 @@ function requestInstanceCreation() {
 
 function showSettingsPane(pageName) {
     document.getElementById("settings-pane").classList.add('show');
-    let page = "general";
-    pageName = pageName.toLowerCase();
-    if(pageName === "game") {
-        page = "game";
-    } else if(pageName === "java") {
-        page = "java";
-    } else if(pageName === "hook") {
-        page = "hook";
-    } else if(pageName === "delete") {
-        page = "delete";
-    }
     const settingsPane = document.getElementById("settings-pane").querySelector(".instance-settings");
     const menuPane = settingsPane.querySelector(".settings-menu");
     const contentPane = settingsPane.querySelector(".settings-content");
+
+    contentPane.querySelector(".settings-title").innerText = pageName;
     contentPane.querySelector(".general-settings").classList.remove('show');
     menuPane.querySelector(".general-button").classList.remove('show');
     contentPane.querySelector(".game-settings").classList.remove('show');
@@ -205,11 +200,11 @@ function showSettingsPane(pageName) {
     menuPane.querySelector(".java-button").classList.remove('show');
     contentPane.querySelector(".hook-settings").classList.remove('show');
     menuPane.querySelector(".hook-button").classList.remove('show');
-    contentPane.querySelector(".delete-settings").classList.remove('show');
-    menuPane.querySelector(".delete-button").classList.remove('show');
+    contentPane.querySelector(".deletion-settings").classList.remove('show');
+    menuPane.querySelector(".deletion-button").classList.remove('show');
 
-    menuPane.querySelector("."+page+"-button").classList.add('show');
-    contentPane.querySelector("."+page+"-settings").classList.add('show');
+    menuPane.querySelector("."+pageName.toLowerCase()+"-button").classList.add('show');
+    contentPane.querySelector("."+pageName.toLowerCase()+"-settings").classList.add('show');
 }
 
 document.getElementById("settings-pane").addEventListener("click", function (event) {

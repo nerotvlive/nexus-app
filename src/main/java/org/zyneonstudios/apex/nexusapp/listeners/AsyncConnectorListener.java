@@ -3,6 +3,7 @@ package org.zyneonstudios.apex.nexusapp.listeners;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.starxg.keytar.Keytar;
+import com.zyneonstudios.nexus.utilities.file.FileActions;
 import org.zyneonstudios.apex.nexusapp.events.PageLoadedEvent;
 import org.zyneonstudios.apex.nexusapp.frame.AppFrame;
 import org.zyneonstudios.apex.nexusapp.launchprocess.GameHooks;
@@ -14,6 +15,7 @@ import org.zyneonstudios.apex.nexusapp.search.modrinth.search.facets.categories.
 import org.zyneonstudios.apex.nexusapp.search.zyndex.ZyndexIntegration;
 import org.zyneonstudios.apex.nexusapp.search.zyndex.local.LocalInstance;
 import org.zyneonstudios.apex.nexusapp.utilities.DiscordRichPresence;
+import org.zyneonstudios.apex.nexusapp.utilities.FileUtilities;
 import org.zyneonstudios.apex.nexusapp.utilities.MicrosoftAuthenticator;
 import org.zyneonstudios.apex.nexusapp.utilities.StringUtility;
 import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
@@ -430,9 +432,28 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                         NexusApplication.getInstance().getInstanceManager().addRunningInstance(launcher.getGameProcess(), id);
                     }
                 }
+            } else if(s.startsWith("delete.")) {
+                String id = s.replace("delete.", "");
+                LocalInstance instance = NexusApplication.getInstance().getInstanceManager().getInstance(id);
+                String path = instance.getPath();
+                String absolutePath = new File(path).getAbsolutePath();
+                instance = null;
+                NexusApplication.getInstance().getInstanceManager().removeInstance(path);
+                System.gc();
+                try {
+                    if(!FileUtilities.deleteDirectory(new File(absolutePath))) {
+                        throw new RuntimeException("Couldn't delete instance folder: "+path);
+                    } else {
+                        frame.getBrowser().reload();
+                    }
+                } catch (Exception e) {
+                    NexusApplication.getLogger().err(e.getMessage());
+                }
             } else if(s.startsWith("settings.")) {
                 String id = s.replace("settings.", "");
-                frame.executeJavaScript("showSettingsPane('general');");
+                LocalInstance instance = NexusApplication.getInstance().getInstanceManager().getInstance(id);
+                String path = new File(instance.getPath()).getAbsolutePath().replace("\\","\\\\");
+                frame.executeJavaScript("document.body.querySelector('.settings-deletion-delete').onclick = function () { console.log('[CONNECTOR] library.delete."+id+"'); }","document.body.querySelector('.settings-deletion-folder').onclick = function () { console.log('[CONNECTOR] library.folder."+id+"'); }","document.body.querySelector('.settings-deletion-id').innerText = \""+instance.getInstance().getId()+"\";","document.body.querySelector('.settings-deletion-name').innerText = \""+instance.getInstance().getName()+"\";","document.body.querySelector('.settings-deletion-version').innerText = \""+instance.getInstance().getVersion()+"\";","document.body.querySelector('.settings-deletion-path').innerText = \""+path+"\";","document.body.querySelector('.settings-instance-title').innerText = \""+instance.getInstance().getName()+"\";","showSettingsPane('General');");
             } else if(s.startsWith("folder.")) {
                 String id = s.replace("folder.", "");
                 LocalInstance instance = NexusApplication.getInstance().getInstanceManager().getInstance(id);

@@ -12,6 +12,13 @@
 let activeInstance = "";
 
 /**
+ * The name of the currently active instance of the application.
+ *
+ * @type {string}
+ */
+let activeInstanceName = "";
+
+/**
  * The current search ID used for discover searches.
  *
  * @type {string}

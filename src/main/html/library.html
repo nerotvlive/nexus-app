@@ -48,8 +48,8 @@
             <h4 class="m-0 w-100" style="padding: 0.5rem 0.5rem 0.75rem 0.75rem;" id="library-title"><img alt="" src=""><span>Library</span></h4>
             <div class="buttons w-100 d-flex flex-row align-self-center justify-content-end">
                 <a id="update-button" class="update shadow d-none"><i class="bi bi-download"></i></a>
-                <a id="folder-button" class="folder shadow"><i class="bi bi-folder2"></i></a>
-                <a id="library-settings-button" class="settings shadow" onclick="showSettingsPane('general');"><i class="bi bi-gear"></i></a>
+                <a id="folder-button" class="folder shadow d-none"><i class="bi bi-folder2"></i></a>
+                <a id="library-settings-button" class="settings shadow d-none" onclick="console.log('[CONNECTOR] library.settings.'+activeInstance)"><i class="bi bi-gear"></i></a>
             </div>
         </div>
 
@@ -109,24 +109,24 @@
     <div class="overflow-hidden" id="settings-pane">
         <div class="instance-settings">
             <div class="settings-menu">
-                <button type="button" class="general-button btn btn-nex-secondary flex-grow-1 top" onclick="showSettingsPane('general');">
+                <button type="button" class="general-button btn btn-nex-secondary flex-grow-1 top" onclick="showSettingsPane('General');">
                     <i class="bi bi-wrench"></i>
                     <span>General settings</span>
                 </button>
-                <button type="button" class="game-button btn btn-nex-secondary flex-grow-1" onclick="showSettingsPane('game');">
+                <button type="button" class="game-button btn btn-nex-secondary flex-grow-1" onclick="showSettingsPane('Game');">
                     <i class="bi bi-controller"></i>
                     <span>Game settings</span>
                 </button>
-                <button type="button" class="java-button btn btn-nex-secondary flex-grow-1" onclick="showSettingsPane('java');">
+                <button type="button" class="java-button btn btn-nex-secondary flex-grow-1" onclick="showSettingsPane('Java');">
                     <i class="bi bi-cup-hot"></i>
                     <span>Java settings</span>
                 </button>
-                <button type="button" class="hook-button btn btn-nex-secondary flex-grow-1" onclick="showSettingsPane('hook');">
+                <button type="button" class="hook-button btn btn-nex-secondary flex-grow-1" onclick="showSettingsPane('Hook');">
                     <i class="bi bi-code"></i>
                     <span>Hook settings</span>
                 </button>
                 <div class="settings-menu-actions">
-                    <button type="button" class="delete-button btn btn-nex-red flex-grow-1 bottom" onclick="showSettingsPane('delete');">
+                    <button type="button" class="deletion-button btn btn-nex-red flex-grow-1 bottom" onclick="showSettingsPane('Deletion');">
                         <i class="bi bi-trash"></i>
                         <span>Delete instance</span>
                     </button>
@@ -134,37 +134,38 @@
             </div>
             <div class="settings-content">
                 <i class="bi bi-x-lg close-button" onclick="document.getElementById('settings-pane').classList.remove('show');"></i>
+                <h5 class="p-2"><span class="settings-title">${instance.settings.pagename}</span> settings for <strong class="settings-instance-title">${instance.name}</strong></h5>
                 <div class="general-settings settings-content-pane">
-                    <h5>General settings for <strong>Instance name</strong></h5>
+
                 </div>
                 <div class="game-settings settings-content-pane">
-                    <h5>Game settings for <strong>Instance name</strong></h5>
+
                 </div>
                 <div class="java-settings settings-content-pane">
-                    <h5>Java settings for <strong>Instance name</strong></h5>
+
                 </div>
                 <div class="hook-settings settings-content-pane">
-                    <h5>Hook settings for <strong>Instance name</strong></h5>
+
                 </div>
-                <div class="delete-settings settings-content-pane">
-                    <h5>Deletion settings for <strong>Instance name</strong></h5>
+                <div class="deletion-settings settings-content-pane">
+
                     <div class="alert alert-danger shadow" role="alert">
                         <strong>Do you really want to delete this instance?</strong><br><br>
                         <div class="alert alert-warning shadow" role="alert">
-                            <strong>ID: </strong><br>
-                            <strong>Name: </strong><br>
-                            <strong>Version: </strong><br>
-                            <strong>Path: </strong><br>
+                            <strong>ID: </strong><span class="settings-deletion-id"></span><br>
+                            <strong>Name: </strong><span class="settings-deletion-name"></span><br>
+                            <strong>Version: </strong><span class="settings-deletion-version"></span><br>
+                            <strong>Path: </strong><span class="settings-deletion-path"></span><br>
                         </div>
                         If you continue, this instance will be permanently deleted - <strong>Forever</strong>.<br>
                         Think carefully about whether you want to do that.<br><br>
                         Do you want to take another look at the contents of this instance?<br>
-                        <button type="button" class="btn btn-nex-red shadow btn-of">Open instance folder</button>
+                        <button type="button" class="btn btn-nex-red shadow btn-of settings-deletion-folder">Open instance folder</button>
                     </div>
                     <div class="d-flex flex-row gap-3">
-                        <button onclick="showSettingsPane('general');" type="button" class="btn btn-nex-secondary shadow"><strong>Don't delete instance</strong></button>
+                        <button onclick="showSettingsPane('General');" type="button" class="btn btn-nex-secondary shadow"><strong>Don't delete instance</strong></button>
                         <div>
-                            <button type="button" class="btn btn-df btn-nex-red shadow">Delete instance <strong>forever</strong></button>
+                            <button type="button" class="btn btn-df btn-nex-red shadow settings-deletion-delete">Delete instance <strong>forever</strong></button>
                         </div>
                     </div>
                 </div>
@@ -176,7 +177,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content glass rounded-2">
             <div class="modal-header" style="background: var(--nex-brighter-100);" id="addInstanceM-header">
-                <strong>Add an instance</strong>
+                <strong>Instance Creator (work in progress but working)</strong>
             </div>
             <div class="modal-body instance-creator">
                 <div class="alert alert-warning d-none" id="creator-name-warning" role="alert">
@@ -191,6 +192,8 @@
                             <input type="text" id="creator–instance-name" placeholder="* Instance name">
                         </label>
                         <div class="d-flex">
+                            <div>
+                                Game Type
                             <label>
                                 <select id="creator-mc-type" onchange="document.getElementById('creator-mc-versions').innerHTML = ''; document.getElementById('creator-ml-versions').innerHTML = ''; console.log('[CONNECTOR] library.creator.init.'+this.value);">
                                     <option value="vanilla">Vanilla</option>
@@ -201,18 +204,25 @@
                                     <option value="quilt">Quilt</option>
                                 </select>
                             </label>
+                            </div>
+                            <div>
+                                Minecraft Version
                             <label>
                                 <select id="creator-mc-versions" onchange="document.getElementById('creator-ml-versions').innerHTML = ''; console.log('[CONNECTOR] library.creator.init.version.'+document.getElementById('creator-mc-type').value+'.'+this.value);">
 
                                 </select>
                             </label>
+                            </div>
                         </div>
                         <div class="d-flex">
+                            <div>
+                                Modloader version
                             <label>
                                 <select id="creator-ml-versions" class="d-none" onchange="">
 
                                 </select>
                             </label>
+                            </div>
                             <label>
 
                             </label>
