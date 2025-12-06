@@ -5,7 +5,7 @@
 
 <details>
     <summary>Warning</summary>
-    For your security, please download the NEXUS App directly from our official websites https://nexus.zyneonstudios.org and https://github.com/zyneonstudios/nexus-app. Downloading from other sources may expose you to risks such as malware. We cannot guarantee the safety of downloads from third-party links.
+    For your security, please download the NEXUS App directly from our official websites https://apex.zyneonstudios.org/nexus-app and https://github.com/nerotvlive/nexus-app. Downloading from other sources may expose you to risks such as malware. We cannot guarantee the safety of downloads from third-party links.
 </details>
 
 ## We're searching for help
@@ -14,16 +14,16 @@ Currently, the NEXUS app effectively has only one developer. This person works o
 ## Description
 The NEXUS App is a modular and extensible Minecraft modding application which integrates various platforms.
 
-<img src="https://raw.githubusercontent.com/nerofynetwork/NEXUS-App/refs/heads/main/src/main/html/assets/nexus/img/app-screenshot.png">
+<img src="https://raw.githubusercontent.com/nerotvlive/nexus-app/refs/heads/main/src/main/html/assets/nexus/img/app-screenshot.png">
 
 ## Supported platforms
-[<img src="https://i.ibb.co/FK4LNHm/platforms.png">](https://nexus.zyneonstudios.org/app#download)
-[<img src="https://i.ibb.co/nBLzRMT/download.png">](https://nexus.zyneonstudios.org/app#download)
-[Alternative/Direct Downloads](https://github.com/zyneonstudios/nexus-app/releases/)
+[<img src="https://i.ibb.co/FK4LNHm/platforms.png">](https://apex.zyneonstudios.org/nexus-app#download)
+[<img src="https://i.ibb.co/nBLzRMT/download.png">](https://apex.zyneonstudios.org/nexus-app#download)
+[Alternative/Direct Downloads](https://github.com/nerotvlive/nexus-app/releases/)
 
 <details>
     <summary>Old description</summary>
-    Download the Zyneon Application from https://github.com/zyneonstudios/nexus-app/releases and https://nexus.zyneonstudios.net/application only! All other sources are not verified and we assume no liability!
+    Download the Zyneon Application from https://github.com/nerotvlive/nexus-app/releases and https://apex.zyneonstudios.org/nexus-app only! All other sources are not verified and we assume no liability!
 
 ---
 ![Zyneon Application logo and text](https://i.ibb.co/tsKhXtB/23.png)
@@ -39,11 +39,11 @@ The Zyneon Application allows you to create, launch, manage, download and share 
 # Web version (alpha)
 The application also has a version that can be easily accessed from an Internet browser. This is currently still in a very early alpha phase and is missing a lot of features.
 
-[Click here to open web version](https://nexus.zyneonstudios.org/app/)
+[Click here to open web version](https://apex.zyneonstudios.org/nexus-app/)
 
 ---
-[<img src="https://i.ibb.co/nBLzRMT/download.png">](https://nexus.zyneonstudios.org/app#download)
-[Alternative/Direct Downloads](https://github.com/zyneonstudios/nexus-app/releases/)
+[<img src="https://i.ibb.co/nBLzRMT/download.png">](https://apex.zyneonstudios.org/nexus-app#download)
+[Alternative/Direct Downloads](https://github.com/nerotvlive/nexus-app/releases/)
 
 ---
 # Images

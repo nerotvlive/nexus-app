@@ -420,6 +420,9 @@ body {
                     cursor: pointer;
                     color: var(--nex-fg) !important;
                     text-shadow: 0 0 0.4rem var(--nex-fg) !important;
+                    transform: translateY(-0.1rem);
+                    padding-bottom: 0.1rem;
+                    margin-bottom: 0.2rem;
                 }
 
                 i.active {
@@ -491,6 +494,10 @@ body {
                     cursor: pointer;
                     background: linear-gradient(45deg, var(--bs-dark), var(--bs-dark-bg-subtle));
                     border: 1px solid var(--bs-border-color);
+                }
+
+                i:hover {
+                    transform: translateY(-0.1rem);
                 }
 
                 span.text:hover {

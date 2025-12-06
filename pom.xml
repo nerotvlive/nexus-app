@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.nrfy.nexus</groupId>
+    <groupId>org.zyneonstudios.apex</groupId>
     <artifactId>nexus-app</artifactId>
     <version>2026.1-beta.6</version>
 
@@ -101,7 +101,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.zyneonstudios.nexus.application.Main</mainClass>
+                            <mainClass>org.zyneonstudios.apex.nexusapp.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -131,7 +131,7 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.zyneonstudios.nexus.application.Main</mainClass>
+                                    <mainClass>org.zyneonstudios.apex.nexusapp.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

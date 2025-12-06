@@ -20,7 +20,7 @@ public class HelpCommand extends NexusConsoleCommand {
         logger.log("=(NEXUS APP)"+separator);
         logger.deb("NEXUS APP DEBUG MODE ENABLED");
         logger.log("NexusApplication version: "+NexusApplication.getInstance().getVersion());
-        logger.log("For more help: https://nexus.zyneon.de/app/");
+        logger.log("For more help: https://apex.zyneonstudios.org/nexus-app");
         logger.log(separator+"(NEXUS APP)=");
         logger.log(" ");
 
