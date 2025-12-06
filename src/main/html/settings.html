@@ -1,0 +1,600 @@
+<link href="assets/nexus/css/settings.css" rel="stylesheet">
+
+<div id="settings" class="nex-flex w-100 h-100">
+    <!-- Sidebar/Submenu for Settings Categories -->
+    <div class="card bg-dark-subtle submenu glass">
+        <div class="card-header">
+            <strong>Application settings</strong>
+        </div>
+        <div class="submenu-group">
+            <!-- Button for Appearance Settings -->
+            <button id="appearance-settings-button" onclick="showSettingsCategory('appearance-settings');" type="button" class="btn btn-nex-secondary">
+                <i class="bi bi-brush"></i>
+                <span>Appearance settings</span>
+            </button>
+            <!-- Button for Download Settings -->
+            <button id="download-settings-button" onclick="showSettingsCategory('download-settings');" type="button" class="btn btn-nex-secondary">
+                <i class="bi bi-download"></i>
+                <span>Download settings</span>
+            </button>
+            <!-- Button for Java Settings -->
+            <button id="java-settings-button" onclick="showSettingsCategory('java-settings');" type="button" class="btn btn-nex-secondary">
+                <i class="bi bi-cup-hot"></i>
+                <span>Java settings</span>
+            </button>
+            <!-- Button for Module Settings -->
+            <button id="module-settings-button" onclick="showSettingsCategory('module-settings');" type="button" class="btn btn-nex-secondary">
+                <i class="bi bi-puzzle-fill"></i>
+                <span>Module settings</span>
+            </button>
+        </div>
+        <div class="card-header" style="border-top: 1px solid var(--bs-border-color-translucent);">
+            <strong>User settings</strong>
+        </div>
+        <div class="submenu-group">
+            <!-- Button for Account Settings -->
+            <button id="account-settings-button" onclick="showSettingsCategory('account-settings'); console.log('[CONNECTOR] initAccountSettings');" type="button" class="btn btn-nex-secondary">
+                <i class="bi bi-person-circle"></i>
+                <span>Account settings</span>
+            </button>
+
+            <!-- Button for Privacy Settings -->
+            <button id="privacy-settings-button" onclick="showSettingsCategory('privacy-settings'); console.log('[CONNECTOR] initDiscordRPC');" type="button" class="btn btn-nex-secondary">
+                <i class="bi bi-shield"></i>
+                <span>Privacy settings</span>
+            </button>
+        </div>
+        <div class="card-header" style="border-top: 1px solid var(--bs-border-color-translucent);">
+            <strong>Instance settings</strong>
+        </div>
+        <div class="submenu-group">
+            <!-- Button for Default Instance Settings -->
+            <button id="default-instance-settings-button" onclick="showSettingsCategory('default-instance-settings');" type="button" class="btn btn-nex-secondary">
+                <i class="bi bi-controller"></i>
+                <span>Default instance settings</span>
+            </button>
+        </div>
+        <div class="card-header" style="border-top: 1px solid var(--bs-border-color-translucent);">
+            <strong>Actions</strong>
+        </div>
+        <div class="submenu-group">
+            <!-- Reload action button -->
+            <button id="reload-button" type="button" class="btn btn-nex-secondary" onclick="location.reload();">
+                <i class="bi bi-arrow-clockwise"></i>
+                <span>Reload application</span>
+            </button>
+            <!-- Restart action button -->
+            <button id="restart-button" type="button" class="btn btn-nex-secondary" onclick="console.log('[CONNECTOR] restart')">
+                <i class="bi bi-arrow-repeat"></i>
+                <span>Restart application</span>
+            </button>
+            <!-- Exit action button -->
+            <button id="exit-button" type="button" class="btn btn-nex-secondary" onclick="console.log('[CONNECTOR] exit')">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Exit application</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Area for Settings -->
+    <div class="position-relative w-100 m-2 card glass shadow overflow-hidden p-0">
+        <div class="title-menu card-header shadow p-1 w-100 d-flex flex-row border-bottom-0">
+            <h4 class="m-0 w-100" style="padding: 0.5rem 0.5rem 0.75rem 0.75rem">Settings</h4>
+            <div class="buttons w-100 d-flex flex-row align-self-center justify-content-end">
+            </div>
+        </div>
+
+        <!-- Appearance Settings Section -->
+        <div id="appearance-settings" class="settings-card overflow-auto flex-column gap-3">
+            <!-- General Appearance Settings Card -->
+            <div class="settings-section">
+                <div>
+                    <strong>General appearance settings</strong>
+                </div>
+                <table class="table m-0">
+                    <tbody>
+                    <!-- Landing Page Selection Row -->
+                    <tr>
+                        <td class="left" colspan="2">Landing page <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose which page the NEXUS App displays when it starts."></i></td>
+                        <td class="right">
+                            <label>
+                                <select class="form-select appearance-landing" onchange="landing = this.value; setLanding(this.value);">
+                                    <option value="dashboard.html">Dashboard</option>
+                                    <option value="discover.html">Discover</option>
+                                    <option value="library.html">Library</option>
+                                </select>
+                            </label>
+                        </td>
+                    </tr>
+                    <!-- Theme Selection Row -->
+                    <tr class="disabled">
+                        <td class="left" colspan="2">Theme <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose the color scheme in which the NEXUS App should be displayed."></i></td>
+                        <td class="right">
+                            <label>
+                                <select class="form-select appearance-theme" onchange="theme = this.value; updateTheme();">
+                                    <option value="auto">Automatic</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="light">Light</option>
+                                </select>
+                            </label>
+                        </td>
+                    </tr>
+                    <!-- Animations Toggle Row -->
+                    <tr>
+                        <td class="left" colspan="2">Animations <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose whether the displayed and supported elements of the NEXUS App should have animations or not."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-animations switch" type="checkbox" role="switch" onchange="setAnimations(this.checked);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Render Effects Toggle Row -->
+                    <tr class="disabled">
+                        <td class="left" colspan="2">Render effects <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose whether you want to render the effects of the NEXUS App interface, such as glow effects, shadows or glass backgrounds."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input disabled class="form-check-input appearance-renderEffects switch" type="checkbox" role="switch" onchange="setRenderEffects(this.checked);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Accent Color Selection Row -->
+                    <tr>
+                        <td class="left">Accent color <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose the accent color of the NEXUS App interface."></i></td>
+                        <td>
+                            <div class="text-switch">
+                                <span>Custom <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose your own color via the color picker, RGB, HSL and/or HEX code."></i> </span>
+                                <div class="form-switch">
+                                    <label>
+                                        <input class="form-check-input appearance-customAccentColor switch" type="checkbox" role="switch" onchange="setCustomAccentColor(this.checked);">
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="right">
+                            <div class="colors">
+                                <!-- Predefined Accent Color Buttons -->
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-nex-purple" onclick="setAccentColor('var(--nex-purple)');"></button>
+                                    <button type="button" class="btn btn-nex-blue" onclick="setAccentColor('var(--nex-blue)');"></button>
+                                    <button type="button" class="btn btn-nex-green" onclick="setAccentColor('var(--nex-green)');"></button>
+                                    <button type="button" class="btn btn-nex-red" onclick="setAccentColor('var(--nex-red)');"></button>
+                                    <button type="button" class="btn btn-nex-yellow" onclick="setAccentColor('var(--nex-yellow)');"></button>
+                                </div>
+                            </div>
+                            <!-- Custom Accent Color Input -->
+                            <div class="color-input m-0 p-0">
+                                <i class="bi bi-arrow-clockwise" onclick="setAccentColor('#8732ec');"></i>
+                                <label>
+                                    <input type="color" class="color appearance-accentColor" value="#00000000" oninput="setAccentColor(this.value);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Border Radius Control Row -->
+                    <tr class="last">
+                        <td class="left">Border radius <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you set the radius of the rounded edges. This determines how rounded the corners of the NEXUS App interface should be, with a value between 0 and 2 (1 by default)."></i></td>
+                        <td>
+                            <label>
+                                <!-- Number Input for Border Radius -->
+                                <input class="number-display appearance-borderRadiusDisplay" type="number" min="0" max="2" step="0.01" value="0" oninput="if(this.value<0) {this.value=0;} if(this.value>2) {this.value=2;} setBorderRadius_dev(parseFloat(this.value));" onchange="setBorderRadius(parseFloat(this.value));">
+                            </label>
+                        </td>
+                        <td class="right">
+                            <label>
+                                <!-- Range Slider for Border Radius -->
+                                <input type="range" class="range appearance-borderRadius form-range" min="0" value="0" max="2" step="0.01" oninput="setBorderRadius(parseFloat(this.value));">
+                            </label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Dynamic Panel Appearance Settings Card -->
+            <div class="settings-section">
+                <div>
+                    <strong>Dynamic panel appearance settings</strong>
+                </div>
+                <table class="table m-0">
+                    <tbody>
+                    <!-- Floating Panel Toggle Row -->
+                    <tr class="floating-switch">
+                        <td class="left" colspan="2">Floating <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose whether the dynamic NEXUS App panel should float or connect to the bottom edge. By default, it's floating."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-panelFloating switch" type="checkbox" role="switch" onchange="setPanelFloating(this.checked);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Inline Panel Toggle Row -->
+                    <tr>
+                        <td class="left" colspan="2">Inline to menu  <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you integrate the dynamic NEXUS App panel into the menu so that it is only visible when the menu is expanded."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-panelInlined switch" type="checkbox" role="switch" onchange="setPanelInlined(this.checked);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Move Downloads To Panel Toggle Row -->
+                    <tr>
+                        <td class="left" colspan="2">Move downloads to panel  <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you decide whether the download button is in the dynamic panel or in the menu."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-downloadsToPanel switch" type="checkbox" role="switch" onchange="setDownloadsToPanel(this.checked);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Move Settings To Panel Toggle Row -->
+                    <tr class="last">
+                        <td class="left" colspan="2">Move settings to panel  <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you decide whether the settings button is in the dynamic panel or in the menu."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-settingsToPanel switch" type="checkbox" role="switch" onchange="setSettingsToPanel(this.checked);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="settings-section">
+                <div>
+                    <strong>Extended appearance settings</strong>
+                </div>
+                <table class="table m-0">
+                    <tbody>
+                    <tr class="hide-app-switch">
+                        <td class="left" colspan="2">Hide application on game start <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Choose whether the application should minimize when the game starts. The app should automatically reappear when the game is closed."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-hideApp switch" type="checkbox" role="switch" onchange="console.log('[CONNECTOR] hideApp.'+this.checked);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="native-window-switch last">
+                        <td class="left" colspan="2">Use native window decorations (requires restart) <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Selects whether to use the operating system's native window display. Recommended for Windows: on, recommended for Linux: off."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-nativeWindow switch" type="checkbox" role="switch" onchange="console.log('[CONNECTOR] nativeWindow.'+this.checked);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Download Settings Section -->
+        <div id="download-settings" class="settings-card overflow-auto flex-column gap-3">
+
+        </div>
+
+        <!-- Java Settings Section -->
+        <div id="java-settings" class="settings-card overflow-auto flex-column gap-3">
+            <div class="settings-section">
+                <div>
+                    <strong>Java installations</strong>
+                </div>
+                <table class="table m-0">
+                    <tbody>
+                    <!-- Java 21 path selection row -->
+                    <tr class="java-21-path-value">
+                        <td class="left" colspan="2">Java 21 installation path <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you select an installed Java 21 version or the path where the NEXUS App should install Java 21."></i></td>
+                        <td>
+                            <span class="java-21-path-value path-value">C:\Program Files\Java\jdk-21\</span>
+                        </td>
+                        <td class="right">
+                            <a>Select path</a>
+                        </td>
+                    </tr>
+                    <!-- Java 21 path selection row -->
+                    <tr class="java-11-path-value">
+                        <td class="left" colspan="2">Java 11 installation path <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you select an installed Java 11 version or the path where the NEXUS App should install Java 21."></i></td>
+                        <td>
+                            <span class="java-11-path-value path-value">C:\Program Files\Java\jdk-11\</span>
+                        </td>
+                        <td class="right">
+                            <a>Select path</a>
+                        </td>
+                    </tr>
+                    <!-- Java 21 path selection row -->
+                    <tr class="java-8-path-value last">
+                        <td class="left" colspan="2">Java 8 installation path <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you select an installed Java 8 version or the path where the NEXUS App should install Java 21."></i></td>
+                        <td>
+                            <span class="java-8-path-value path-value">C:\Program Files\Java\jdk-8\</span>
+                        </td>
+                        <td class="right">
+                            <a>Select path</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="settings-section">
+                <div>
+                    <strong>Actions</strong>
+                </div>
+                <table class="table m-0">
+                    <tbody>
+                    <!-- Java 21 installation button -->
+                    <tr class="java-21-installer">
+                        <td class="left" colspan="2">Install Java 21 <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="This action lets you (re)install Java 21 in the specified path."></i></td>
+                        <td>
+                            <span class="java-8-path-value path-value">No Java detected</span>
+                        </td>
+                        <td class="right">
+                            <a>Install</a>
+                        </td>
+                    </tr>
+                    <!-- Java 11 installation button -->
+                    <tr class="java-11-installer">
+                        <td class="left" colspan="2">Install Java 11 <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="This action lets you (re)install Java 11 in the specified path."></i></td>
+                        <td>
+                            <span class="java-8-path-value path-value">No Java detected</span>
+                        </td>
+                        <td class="right">
+                            <a>Install</a>
+                        </td>
+                    </tr>
+                    <!-- Java 8 installation button -->
+                    <tr class="java-8-installer last">
+                        <td class="left" colspan="2">Install Java 8 <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="This action lets you (re)install Java 8 in the specified path."></i></td>
+                        <td>
+                            <span class="java-8-path-value path-value">No Java detected</span>
+                        </td>
+                        <td class="right">
+                            <a>Install</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Module Settings Section -->
+        <div id="module-settings" class="settings-card overflow-auto flex-column gap-3">
+
+        </div>
+
+        <!-- Account Settings Section -->
+        <div id="account-settings" class="settings-card overflow-auto flex-column gap-3">
+            <div class="settings-section">
+                <div class="card shadow position-relative glass account-activeProfileCard" style="margin-bottom: 1rem; display: none">
+                    <div class="card-body overflow-hidden position-relative d-flex">
+                        <img alt="player head" class="account-activeSkin" src="assets/nexus/img/steve.png">
+                        <div class="d-flex flex-column" style="padding: 0 0 0 1rem;">
+                            <h4 class="p-0 m-0"><strong class="account-activeName">loading...</strong></h4>
+                            <span style="opacity: 0.9;" class="d-flex position-relative flex-column flex-lg-row gap-1"><strong>UUID: </strong><span class="account-activeUUID uuid-value" onclick="copyUUID(this)" data-bs-toggle="popover" data-bs-trigger="manual" data-bs-content="UUID copied!">loading...</span></span>
+                            <div style="height: 100%; white-space: nowrap; display: flex; gap: 0.5rem; align-items: flex-end;">
+                                <button type="button" class="btn btn-outline-light" onclick="window.open('https://www.minecraft.net/msaprofile/mygames/editprofile','_blank');">Change username</button>
+                                <button type="button" class="btn btn-outline-light" onclick="window.open('https://www.minecraft.net/msaprofile/mygames/editskin','_blank');">Change skin</button>
+                                <button type="button" class="btn btn-danger" onclick="console.log('[CONNECTOR] logout');">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <strong>Accounts</strong>
+                </div>
+                <table class="table m-0">
+                    <tbody>
+                    <tr class="account-activeRow" style="display: none;">
+                        <td class="left account-activeRowName" colspan="2">loading...</td>
+                        <td class="right">
+                            <span style="padding-right: 0.25rem">Active account</span>
+                        </td>
+                    </tr>
+                    <tr class="account-template" style="display: none;">
+                        <td class="left account-templateName" colspan="2">loading...</td>
+                        <td class="right">
+                            <a onclick="console.log('[CONNECTOR] login.'+this.parentElement.parentElement.id); document.getElementById('login-overlay').innerText = 'Please wait...';">Use account</a>
+                            <a onclick="console.log('[CONNECTOR] logout.'+this.parentElement.parentElement.id); document.getElementById('login-overlay').innerText = 'Please wait...';">Logout</a>
+                        </td>
+                    </tr>
+                    <tr class="last">
+                        <td class="left" colspan="2">Add account</td>
+                        <td class="right">
+                            <button onclick="console.log('[CONNECTOR] login');" type="button" class="btn btn-warning m-0 shadow" style="border: 1px solid var(--bs-border-color-translucent) !important; padding: 0 1rem"><i class="bi bi-microsoft" style="cursor: unset; opacity: 1;"></i> Microsoft Login</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Privacy Settings Section -->
+        <div id="privacy-settings" class="settings-card overflow-auto flex-column gap-3">
+            <div class="settings-section">
+                <div>
+                    <strong>User related privacy settings</strong>
+                </div>
+                <table class="table m-0">
+                    <tbody>
+                    <!-- Telemetry Toggle Row -->
+                    <tr class="telemetry-switch disabled">
+                        <td class="left" colspan="2">Enable telemetry <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="For now, telemetry is disabled by default and can't be enabled. Perhaps this option will be removed entirely after the beta anyway."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input disabled class="form-check-input privacy-enableTelemetry switch" type="checkbox" role="switch">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Discord RPC Toggle Row -->
+                    <tr class="discord-rpc-switch last">
+                        <td class="left" colspan="2">Enable Discord Rich Presence <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose whether you want to use Discord Rich Presence to show your friends that you are using the NEXUS App."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input privacy-enableDiscordRPC switch" type="checkbox" onchange="console.log('[CONNECTOR] discordrpc.'+this.checked);" role="switch">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Default Instance Settings Section -->
+        <div id="default-instance-settings" class="settings-card overflow-auto flex-column gap-3">
+            <div class="settings-section">
+                <div>
+                    <strong>Default instance settings</strong>
+                </div>
+                <table class="table m-0">
+                    <tbody>
+                    <tr class="instance-default-path last">
+                        <td class="left" colspan="2">Default instance installation path <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you select an installed Java 8 version or the path where the NEXUS App should install Java 21."></i></td>
+                        <td>
+                            <span class="instance-default-path-value path-value"></span>
+                        </td>
+                        <td class="right">
+                            <a onclick="console.log('[CONNECTOR] settings.select.instancePath')">Select path</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="settings-section">
+                <div>
+                    <strong>Game window settings</strong>
+                </div>
+                <table class="table m-0">
+                    <tbody>
+                    <tr class="fullscreen-switch">
+                        <td class="left" colspan="2">Launch game in fullscreen <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose whether the game should start in full screen or not."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input instance-useFullscreen switch" type="checkbox" onchange="" role="switch">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="game-width-input">
+                        <td class="left" colspan="2">Game window width <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Sets the window width of the game."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="number-display instance-windowWidth" type="number" step="1" value="854" oninput="">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="game-height-input last">
+                        <td class="left" colspan="2">Game window height <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Sets the window height of the game."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="number-display instance-windowHeight" type="number" step="1" value="480" oninput="">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="settings-section">
+                <div>
+                    <strong>Java settings</strong>
+                </div>
+                <table class="table m-0">
+                    <tbody>
+                    <tr class="memory-range">
+                        <td class="left">Allocated memory (in MB) <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you specify how much RAM in megabytes (MB) the game uses by default."></i></td>
+                        <td>
+                            <label>
+                                <input class="number-display instance-JavaMemoryDisplay" type="number" min="512" max="16384" step="1" value="1024" onfocusout="setDefaultMemory(this.value);" onchange="document.body.querySelector('.instance-JavaMemory').value = this.value;">
+                            </label>
+                        </td>
+                        <td class="right">
+                            <label>
+                                <input type="range" class="range instance-JavaMemory form-range" min="512" value="1024" max="16384" step="1" onchange="setDefaultMemory(this.value);">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr class="java-args-input">
+                        <td class="left" colspan="2">Java arguments <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Sets the window height of the game."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="text-display instance-javaArgs" type="text" oninput="">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="environmental-args-input last">
+                        <td class="left" colspan="2">Environmental arguments <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Sets the window height of the game."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="text-display instance-environmentalArgs" type="text" oninput="">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="settings-section">
+                <div>
+                    <strong>Game hook settings</strong>
+                </div>
+                <table class="table m-0">
+                    <tbody>
+                    <tr class="java-args-input">
+                        <td class="left" colspan="2">Pre-launch command <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you execute a command right before the game starts."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="text-display instance-javaArgs" type="text" oninput="">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="java-args-input">
+                        <td class="left" colspan="2">On launch command <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you execute a command when the game starts."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="text-display instance-javaArgs" type="text" oninput="">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="environmental-args-input last">
+                        <td class="left" colspan="2">On exit command <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you execute a command when the game closes."></i></td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="text-display instance-environmentalArgs" type="text" oninput="">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<button onclick="loadScript('assets/nexus/js/settings.js', null); setTimeout(()=>{ initSettings(); }, 100);" class="onload d-none">On page load</button>

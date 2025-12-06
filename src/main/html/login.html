@@ -1,0 +1,55 @@
+<link href="assets/nexus/css/library.css" rel="stylesheet">
+<div id="library-bg"></div>
+<div id="library" class="nex-flex w-100 h-100">
+    <div class="card bg-dark-subtle submenu glass d-none"></div>
+    <div class="position-relative w-100 m-2 card glass shadow overflow-hidden p-0">
+        <div class="title-menu card-header shadow p-1 w-100 d-flex flex-row border-bottom-0">
+            <h4 class="m-0 w-100" style="padding: 0.5rem 0.5rem 0.75rem 0.75rem; ;">Library</h4>
+        </div>
+
+        <div class="nex-side-view login-view p-3" style="">
+            <div>
+
+            </div>
+            <div class="glass">
+                <div class="card glass w-100">
+                    <div class="card-header" style="">
+                        <strong>Information</strong>
+                    </div>
+                    <div class="card-body">
+                        You must sign in to your Microsoft account to download and play Minecraft.<br><br>
+                        Immediately after logging in, you can start managing, exploring, and playing mods, shaders, resource packs, modpacks, and much more from a variety of sources.
+                    </div>
+                </div>
+                <div class="card glass w-100">
+                    <div class="card-header" style="">
+                        <strong>Disclaimer</strong>
+                    </div>
+                    <div class="card-body">
+                        This is a third-party Minecraft Launcher by Zyneon Nexus and is in no way officially affiliated with Microsoft, Mojang Studios, Mojang AB, or Minecraft.
+                    </div>
+                </div>
+                <button onclick="console.log('[CONNECTOR] login'); this.onclick = null; this.classList.add('clicked'); this.innerText = 'Logging in...';" id="microsoft-button" type="button" class="btn btn-nex-primary w-100">
+                    <i class="bi bi-microsoft"></i>
+                    Microsoft Login
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addInstance" tabindex="-1" aria-labelledby="addInstanceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content rounded-2">
+            <div class="modal-header" id="addInstanceM-header">
+
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<button onclick="loadScript('assets/nexus/js/library.js', onload); highlight(document.getElementById('library-button'));" class="onload d-none">On page load</button>

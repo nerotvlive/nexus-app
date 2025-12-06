@@ -1,0 +1,70 @@
+<link href="assets/nexus/css/downloads.css" rel="stylesheet">
+
+<div class="position-absolute z-n1 p-3 w-100 h-100 d-flex justify-content-center align-items-center" id="downloads-loader">
+    <strong id="downloads-loading">Loading downloads...</strong>
+</div>
+
+<div id="downloads" class="position-absolute w-100 h-100 p-0 m-0 overflow-auto">
+    <div id="running-downloads" class="p-0 m-0"></div>
+    <div id="waiting-downloads" class="p-0 m-0"></div>
+    <div id="failed-downloads" class="p-0 m-0"></div>
+    <div id="finished-downloads" class="p-0 m-0"></div>
+
+    <div class="card m-3 bg-dark-subtle shadow disabled download-card d-none" id="template-download-card">
+        <!-- Card Header: Displays the status message when no download is running -->
+        <div class="card-header">
+            <span><strong class="download-title">-</strong> (<span class="download-state">-</span>)</span>
+        </div>
+        <!-- Card Body: Contains download information and progress bar -->
+        <div class="card-body">
+            <!-- Download Information: Displays elapsed time, download size, and download speed -->
+            <p class="extended-download-info d-none">
+                <strong>Download ID: </strong><span class="download-id">-</span>
+                <br><strong>Download Path: </strong><span class="download-path">-</span>
+                <br><strong>Download URL: </strong><span class="download-url">-</span>
+            </p>
+            <div class="d-flex download-info">
+                <!-- Elapsed Time -->
+                <div class="w-100">
+                <span>
+                    <strong>Elapsed time</strong>
+                    <br><span class="download-elapsed-time">-</span>
+                </span>
+                </div>
+                <!-- Download Size -->
+                <div class="w-100">
+                <span>
+                    <strong>Download size</strong>
+                    <br><span class="download-size">-</span>
+                </span>
+                </div>
+                <!-- Download Speed -->
+                <div class="w-100">
+                <span>
+                    <strong>Download speed</strong>
+                    <br><span class="download-speed">-</span>
+                </span>
+                </div>
+                <!-- Download Speed -->
+                <div class="w-100">
+                <span>
+                    <strong>Progress</strong>
+                    <br><span class="download-progress">-</span>
+                </span>
+                </div>
+            </div>
+            <br>
+            <!-- File Size: Displays the total file size -->
+            <span><strong>File size</strong> <span class="download-file-size">-</span></span>
+            <!-- Progress Bar: Shows the download progress -->
+            <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar download-progress-bar" style="width: 0%;"></div>
+            </div>
+            <!-- Remaining Time: Displays the estimated remaining time -->
+            <span>
+            <strong>Remaining time:</strong> <span class="download-estimated-time">-</span>
+        </span>
+        </div>
+    </div>
+</div>
+<button onclick="loadScript('assets/nexus/js/downloads.js', onload);  setTimeout(()=>{  }, 100);" class="onload d-none">On page load</button>

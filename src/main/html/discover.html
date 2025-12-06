@@ -1,0 +1,35 @@
+<link href="assets/nexus/css/discover.css" rel="stylesheet">
+<!-- Main container for the discover section -->
+<div id="discover" class="position-relative w-100 h-100 d-flex flex-column">
+    <!-- Navigation bar -->
+    <nav id="discover-menu" class="navbar position-absolute navbar-expand-lg glass rounded-2 overflow-hidden shadow"
+         style="z-index: 99; width: calc(100% - 2rem); height: 3.75rem; margin: 1rem; border: 1px solid var(--bs-border-color-translucent);">
+        <div class="container-fluid">
+            <!-- Navbar toggler button for smaller screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Collapsible navbar content -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Navbar links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="loadPage('dashboard.html',false);">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active">Discover</a>
+                    </li>
+                </ul>
+                <a onclick="loadPage('search.html',false);" class="search-button"><i class="bi bi-search"></i> Open Search</a>
+            </div>
+        </div>
+    </nav>
+    <div id="home" style="padding: 5.75rem 1rem 0 1rem;">
+
+    </div>
+</div>
+
+<!-- Button to trigger menu enabling (likely for JavaScript) -->
+<button onclick="loadScript('assets/nexus/js/discover.js', null); enableMenu(true); setTimeout(()=>{ initDiscover(); }, 100);" class="onload d-none">On page load</button>

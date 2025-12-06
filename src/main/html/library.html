@@ -1,0 +1,231 @@
+<link href="assets/nexus/css/library.css" rel="stylesheet">
+<div id="library-bg"></div>
+<div id="library" class="nex-flex w-100 h-100 p-0 m-0">
+    <div class="card bg-dark-subtle submenu glass">
+        <div class="card-header">
+            <strong>Library</strong>
+        </div>
+        <label>
+            <select disabled>
+                <option>Minecraft: Java Edition</option>
+            </select>
+        </label>
+        <div class="d-flex">
+            <button id="create-button" type="button" class="btn btn-nex-secondary flex-grow-1" data-bs-toggle="modal" data-bs-target="#addInstance">
+                <i class="bi bi-plus-lg"></i>
+                <span>Add instance</span>
+            </button>
+            <button id="reload-button" onclick="location.reload();" type="button" class="btn btn-nex-secondary">
+                <i class="bi bi-arrow-clockwise m-0 p-0"></i>
+            </button>
+        </div>
+        <div class="card-header" style="border-top: 1px solid var(--bs-border-color-translucent);">
+            <strong>Instances</strong>
+        </div>
+        <div id="instance-list" class="d-flex flex-column m-0 p-0">
+            <button type="button" class="btn btn-nex-secondary d-none instance-list-template instance-button-comp" style="margin: 0 0.5rem; width: calc(100% - 1rem);">
+                <i class="bi bi-dice-4 instance-button-comp"></i>
+                <img alt="" src="" class="instance-button-comp">
+                <span class="instance-button-comp">Instance</span>
+            </button>
+            <div class="instance-group-template submenu-group d-none">
+                <a><i class="bi bi-caret-down"></i></a>
+                <h6>Custom instance group</h6>
+                <div class="collapse m-0 p-0 w-100 position-relative">
+                    <div class="d-flex flex-column">
+                        <button type="button" class="btn btn-nex-secondary d-none w-100 instance-list-template instance-button-comp">
+                            <i class="bi bi-dice-6 instance-button-comp"></i>
+                            <img alt="" src="" style="display: none;" class="instance-button-comp">
+                            <span class="instance-button-comp">Instance</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="position-relative w-100 m-2 card glass shadow overflow-hidden p-0 m-3">
+        <div class="title-menu card-header shadow p-1 w-100 d-flex flex-row border-bottom-0">
+            <h4 class="m-0 w-100" style="padding: 0.5rem 0.5rem 0.75rem 0.75rem;" id="library-title"><img alt="" src=""><span>Library</span></h4>
+            <div class="buttons w-100 d-flex flex-row align-self-center justify-content-end">
+                <a id="update-button" class="update shadow d-none"><i class="bi bi-download"></i></a>
+                <a id="folder-button" class="folder shadow"><i class="bi bi-folder2"></i></a>
+                <a id="library-settings-button" class="settings shadow" onclick="showSettingsPane('general');"><i class="bi bi-gear"></i></a>
+            </div>
+        </div>
+
+        <div class="nex-side-view p-3" style="display: none" id="instance-view">
+            <button id="launch-button" type="button" class="btn btn-nex-primary w-100 text-nowrap overflow-hidden" style="width: 19rem !important;"></button>
+            <div id="instance-description">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <button class="nav-link left active" id="tab-about" data-bs-toggle="tab" data-bs-target="#tab-about-content" type="button" aria-controls="tab-about-content" aria-selected="true"><i class="bi bi-card-text"></i>About</button>
+                    </li>
+                    <li class="nav-item disabled active">
+                        <button disabled class="nav-link" id="tab-mods" data-bs-toggle="tab" data-bs-target="#tab-mods-content" type="button" aria-controls="tab-mods-content" aria-selected="false"><i class="bi bi-code-slash"></i>Mods</button>
+                    </li>
+                    <li class="nav-item disabled">
+                        <button disabled class="nav-link" id="tab-maps" data-bs-toggle="tab" data-bs-target="#tab-maps-content" type="button" aria-controls="tab-maps-content" aria-selected="false"><i class="bi bi-map"></i>Maps</button>
+                    </li>
+                    <li class="nav-item disabled">
+                        <button disabled class="nav-link" id="tab-resourcePacks" data-bs-toggle="tab" data-bs-target="#tab-resourcePacks-content" type="button" aria-controls="tab-resourcePacks-content" aria-selected="false"><i class="bi bi-brush"></i>Resource Packs</button>
+                    </li>
+                    <li class="nav-item disabled">
+                        <button disabled class="nav-link right" id="tab-shaders" data-bs-toggle="tab" data-bs-target="#tab-shaders-content" type="button" aria-controls="tab-shaders-content" aria-selected="false"><i class="bi bi-cloud-haze2"></i>Shaders</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane m-0 p-0 fade show active" id="tab-about-content" aria-labelledby="tab-about">${instance.description}</div>
+                    <div class="tab-pane m-0 p-0 fade" id="tab-mods-content" aria-labelledby="tab-mods">${instance.mods}</div>
+                    <div class="tab-pane m-0 p-0 fade" id="tab-maps-content" aria-labelledby="tab-maps">${instance.maps}</div>
+                    <div class="tab-pane m-0 p-0 fade" id="tab-resourcePacks-content" aria-labelledby="tab-resourcePacks">${instance.resourcePacks}</div>
+                    <div class="tab-pane m-0 p-0 fade" id="tab-shaders-content" aria-labelledby="tab-shaders">${instance.shaders}</div>
+                </div>
+            </div>
+            <div class="glass">
+                <div class="card glass w-100">
+                    <div class="card-header">
+                        <strong>Overview</strong>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <strong id="instance-name">${instance.name}</strong> v<span id="instance-version">${instance.version}</span><br><br>
+                            <span id="instance-summary">${instance.summary}</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="card glass w-100">
+                    <div class="card-header">
+                        <strong>Tags</strong>
+                    </div>
+                    <div class="card-body">
+                        <h5 id="library-tags">
+
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overflow-hidden" id="settings-pane">
+        <div class="instance-settings">
+            <div class="settings-menu">
+                <button type="button" class="general-button btn btn-nex-secondary flex-grow-1 top" onclick="showSettingsPane('general');">
+                    <i class="bi bi-wrench"></i>
+                    <span>General settings</span>
+                </button>
+                <button type="button" class="game-button btn btn-nex-secondary flex-grow-1" onclick="showSettingsPane('game');">
+                    <i class="bi bi-controller"></i>
+                    <span>Game settings</span>
+                </button>
+                <button type="button" class="java-button btn btn-nex-secondary flex-grow-1" onclick="showSettingsPane('java');">
+                    <i class="bi bi-cup-hot"></i>
+                    <span>Java settings</span>
+                </button>
+                <button type="button" class="hook-button btn btn-nex-secondary flex-grow-1" onclick="showSettingsPane('hook');">
+                    <i class="bi bi-code"></i>
+                    <span>Hook settings</span>
+                </button>
+                <div class="settings-menu-actions">
+                    <button type="button" class="delete-button btn btn-nex-red flex-grow-1 bottom" onclick="showSettingsPane('delete');">
+                        <i class="bi bi-trash"></i>
+                        <span>Delete instance</span>
+                    </button>
+                </div>
+            </div>
+            <div class="settings-content">
+                <i class="bi bi-x-lg close-button" onclick="document.getElementById('settings-pane').classList.remove('show');"></i>
+                <div class="general-settings settings-content-pane">
+                    <h5>General settings for <strong>Instance name</strong></h5>
+                </div>
+                <div class="game-settings settings-content-pane">
+                    <h5>Game settings for <strong>Instance name</strong></h5>
+                </div>
+                <div class="java-settings settings-content-pane">
+                    <h5>Java settings for <strong>Instance name</strong></h5>
+                </div>
+                <div class="hook-settings settings-content-pane">
+                    <h5>Hook settings for <strong>Instance name</strong></h5>
+                </div>
+                <div class="delete-settings settings-content-pane">
+                    <h5>Deletion settings for <strong>Instance name</strong></h5>
+                    <div class="alert alert-danger shadow" role="alert">
+                        <strong>Do you really want to delete this instance?</strong><br><br>
+                        <div class="alert alert-warning shadow" role="alert">
+                            <strong>ID: </strong><br>
+                            <strong>Name: </strong><br>
+                            <strong>Version: </strong><br>
+                            <strong>Path: </strong><br>
+                        </div>
+                        If you continue, this instance will be permanently deleted - <strong>Forever</strong>.<br>
+                        Think carefully about whether you want to do that.<br><br>
+                        Do you want to take another look at the contents of this instance?<br>
+                        <button type="button" class="btn btn-nex-red shadow btn-of">Open instance folder</button>
+                    </div>
+                    <div class="d-flex flex-row gap-3">
+                        <button onclick="showSettingsPane('general');" type="button" class="btn btn-nex-secondary shadow"><strong>Don't delete instance</strong></button>
+                        <div>
+                            <button type="button" class="btn btn-df btn-nex-red shadow">Delete instance <strong>forever</strong></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addInstance" tabindex="-1" aria-labelledby="addInstanceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content glass rounded-2">
+            <div class="modal-header" style="background: var(--nex-brighter-100);" id="addInstanceM-header">
+                <strong>Add an instance</strong>
+            </div>
+            <div class="modal-body instance-creator">
+                <div class="alert alert-warning d-none" id="creator-name-warning" role="alert">
+                    Please input an instance name.
+                </div>
+                <div class="d-flex creator-header">
+                    <div class="instance-image-container">
+
+                    </div>
+                    <div class="instance-main-information-container">
+                        <label>
+                            <input type="text" id="creator–instance-name" placeholder="* Instance name">
+                        </label>
+                        <div class="d-flex">
+                            <label>
+                                <select id="creator-mc-type" onchange="document.getElementById('creator-mc-versions').innerHTML = ''; document.getElementById('creator-ml-versions').innerHTML = ''; console.log('[CONNECTOR] library.creator.init.'+this.value);">
+                                    <option value="vanilla">Vanilla</option>
+                                    <option value="experimental">Experimental</option>
+                                    <option value="fabric">Fabric</option>
+                                    <option value="forge">Forge</option>
+                                    <option value="neoforge">NeoForge</option>
+                                    <option value="quilt">Quilt</option>
+                                </select>
+                            </label>
+                            <label>
+                                <select id="creator-mc-versions" onchange="document.getElementById('creator-ml-versions').innerHTML = ''; console.log('[CONNECTOR] library.creator.init.version.'+document.getElementById('creator-mc-type').value+'.'+this.value);">
+
+                                </select>
+                            </label>
+                        </div>
+                        <div class="d-flex">
+                            <label>
+                                <select id="creator-ml-versions" class="d-none" onchange="">
+
+                                </select>
+                            </label>
+                            <label>
+
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="background: var(--nex-brighter);">
+                <!--button type="button" data-bs-dismiss="modal" data-bs-target="#addInstance" class="btn btn-nex-secondary shadow"><i class="bi bi-file-earmark-arrow-down"></i> Import</button-->
+                <button type="button" data-bs-dismiss="modal" data-bs-target="#addInstance" onclick="loadPage('discover.html',false,'&dt=search');" class="btn btn-nex-primary shadow"><i class="bi bi-globe-europe-africa"></i> Discover modpacks</button>
+                <button type="button" class="btn btn-nex-primary shadow" onclick="requestInstanceCreation();"><i class="bi bi-plus-lg"></i> Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button onclick="loadScript('assets/nexus/js/library.js', onload);  setTimeout(()=>{ loadFolderButtonHoverEvent(); initLibrary(); }, 100);" class="onload d-none">On page load</button>

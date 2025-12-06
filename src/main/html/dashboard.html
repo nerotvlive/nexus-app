@@ -1,0 +1,511 @@
+<link href="assets/nexus/css/dashboard.css" rel="stylesheet">
+<!-- Main container for the dashboard section -->
+<div id="dashboard">
+    <!-- Navigation bar -->
+    <nav id="discover-menu" class="navbar position-absolute navbar-expand-lg glass rounded-2 overflow-hidden shadow"
+         style="z-index: 99; width: calc(100% - 2rem); height: 3.75rem; margin: 1rem; border: 1px solid var(--bs-border-color-translucent);">
+        <div class="container-fluid">
+            <!-- Navbar toggler button for smaller screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Collapsible navbar content -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Navbar links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="loadPage('discover.html',false);">Discover</a>
+                    </li>
+                </ul>
+                <a onclick="loadPage('search.html',false);" class="search-button"><i class="bi bi-search"></i> Open Search</a>
+            </div>
+        </div>
+    </nav>
+    <div id="home">
+        <div class="d-flex flex-column flex-xl-row gap-xl-3">
+            <div class="alert alert-danger shadow w-100" style="opacity: 1;" role="alert">
+                <strong>UNRELEASED BUILD! </strong><br>
+                This is an unreleased build of the NEXUS App. Except things to break or fix them yourself.<br>
+                This version makes no promises or guarantees, as it is likely an experimental test or development build.<br>
+                <hr>
+                <button onclick="this.parentElement.remove();" class="btn btn-nex-red">Hide</button>
+            </div>
+            <div id="dev-mode-warning" class="alert alert-dismissible alert-info shadow d-none w-100" style="opacity: 1" role="alert">
+                <strong>DEV MODE ACTIVE! </strong><br>
+                You have enabled the development mode of the NEXUS app. This gives the program access to some extended functions, such as more entries in the menu bar, and the updater is disabled.<br>
+                <hr>
+                <button onclick="this.parentElement.remove();" class="btn btn-nex-blue" style="opacity: 0.8">Hide</button>
+            </div>
+        </div>
+        <div class="alert alert-success shadow" role="alert">
+            <h5 class="m-0 p-0 mb-2">Development progress for stable/full release: 40%</h5>
+            <div class="progress flex-grow-1" role="progressbar" aria-label="Example 20px high" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
+                <div class="progress-bar bg-success" style="width: 40%"></div>
+            </div>
+        </div>
+        <div class="d-flex flex-column flex-xl-row gap-xl-3">
+            <div class="alert alert-warning shadow w-100" role="alert">
+                <strong>BETA BUILD! </strong><br>NEXUS App <span id="nappv"></span><br>
+                Expect issues and incomplete or missing features! If you want to contribute visit our GitHub repository and if you find bugs please report them - also on GitHub or Discord.
+                <hr>
+                <a href="https://github.com/nerofynetwork/NEXUS-App/" target="_blank" type="button" class="btn btn-warning">GitHub</a>
+                <a href="https://discord.gg/hbHDrqUjJ8" target="_blank" type="button" class="btn btn-outline-warning">Discord</a>
+                <button onclick="this.parentElement.remove();" class="btn btn-outline-light" style="opacity: 0.8">Hide</button>
+            </div>
+            <div class="alert alert-warning shadow w-100" role="alert">
+                <h5 class="m-0 p-0 mb-2">We are looking for developers!</h5>
+                Currently, the NEXUS app effectively has only one developer. This person works on it as a hobby and is entirely self-taught, so we are looking for support, as it is not possible to develop the app in a clear and easily expandable way over a large scope.</p>
+                <hr>
+                <a href="https://discord.gg/hbHDrqUjJ8" target="_blank" type="button" class="btn btn-warning">Discord</a>
+                <a href="https://github.com/nerofynetwork/NEXUS-App/" target="_blank" type="button" class="btn btn-outline-warning">GitHub</a>
+                <button onclick="this.parentElement.remove();" class="btn btn-outline-light" style="opacity: 0.8">Hide</button>
+            </div>
+        </div>
+        <div class="d-flex gap-3">
+            <div class="card glass p-3 shadow w-100">
+                <strong>Changelogs & News</strong>
+                <hr>
+                <div class="accordion shadow" id="changelognews">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow" data-bs-toggle="collapse" data-bs-target="#changelog-2026.1-beta.6" aria-expanded="true" aria-controls="changelog-2026.1-beta.6">
+                                Changelog 2026.1-beta.6 <span class="badge text-bg-dark">2025/11/30</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="changelog-2026.1-beta.6" class="accordion-collapse collapse show" data-bs-parent="#changelognews">
+                            <div class="accordion-body">
+                                <strong>Added features</strong><br>
+                                <ul>
+                                    <li>
+                                        Added warnings for unreleased builds and activated dev mode to the dashboard.
+                                    </li>
+                                    <li>
+                                        Added Discord and hide buttons to the beta dashboard warning.
+                                    </li>
+                                    <li>
+                                        The library now reloads automatically when a new instance is downloaded.
+                                    </li>
+                                    <li>
+                                        Made dynamic panel bell icon open notification center.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Changed features</strong><br>
+                                <ul>
+                                    <li>
+                                        Updated all Discord links to our new offical Discord server.
+                                    </li>
+                                    <li>
+                                        Split up the Beta Dashboard, Discover and Search to single but connected pages to reduce load time.<br>
+                                        You can change betweeten Discover, the Beta Dashboard and Search via the top menu.
+                                    </li>
+                                    <li>
+                                        Made Discover background transparent (gray) and moved Discover gradient background to search.
+                                    </li>
+                                    <li>
+                                        Reduced combined search from 25 to 15 hits per source per search to reduce loading time.
+                                    </li>
+                                    <li>
+                                        Improved search logic to optimize search performance.
+                                    </li>
+                                    <li>
+                                        Refactored and optimized backend code.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Removed features</strong><br>
+                                <ul>
+                                    <li>
+                                        No removed features.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Fixed bugs</strong><br>
+                                <ul>
+                                    <li>
+                                        Fixed side menu settings button.
+                                    </li>
+                                    <li>
+                                        Fixed looping NEX results in combined search.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" data-bs-toggle="collapse" data-bs-target="#changelog-2026.1-beta.5" aria-expanded="true" aria-controls="changelog-2026.1-beta.5">
+                                Changelog 2026.1-beta.5 <span class="badge text-bg-dark">2025/11/24</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="changelog-2026.1-beta.5" class="accordion-collapse collapse" data-bs-parent="#changelognews">
+                            <div class="accordion-body">
+                                <strong>Added features</strong><br>
+                                <ul>
+                                    <li>
+                                        No added features.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Changed features</strong><br>
+                                <ul>
+                                    <li>
+                                        No changed features.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Removed features</strong><br>
+                                <ul>
+                                    <li>
+                                        No removed features.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Fixed bugs</strong><br>
+                                <ul>
+                                    <li>
+                                        CurseForge is now back in the combined search ui.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" data-bs-toggle="collapse" data-bs-target="#changelog-2026.1-beta.4" aria-expanded="true" aria-controls="changelog-2026.1-beta.4">
+                                Changelog 2026.1-beta.4 <span class="badge text-bg-dark">2025/11/24</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="changelog-2026.1-beta.4" class="accordion-collapse collapse" data-bs-parent="#changelognews">
+                            <div class="accordion-body">
+                                <strong>Added features</strong><br>
+                                <ul>
+                                    <li>
+                                        No added features.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Changed features</strong><br>
+                                <ul>
+                                    <li>
+                                        Reactivated CurseForge search results
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Removed features</strong><br>
+                                <ul>
+                                    <li>
+                                        No removed features.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Fixed bugs</strong><br>
+                                <ul>
+                                    <li>
+                                        No fixed bugs.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" data-bs-toggle="collapse" data-bs-target="#changelog-2026.1-beta.3" aria-expanded="true" aria-controls="changelog-2026.1-beta.3">
+                                Changelog 2026.1-beta.3 <span class="badge text-bg-dark">2025/11/24</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="changelog-2026.1-beta.3" class="accordion-collapse collapse" data-bs-parent="#changelognews">
+                            <div class="accordion-body">
+                                <strong>Added features</strong><br>
+                                <ul>
+                                    <li>
+                                        Temporarily added this new home dashboard, to allow users to be up to date with the development process.
+                                    </li>
+                                    <li>
+                                        Added some instance settings functions/ui elements
+                                        <ul>
+                                            <li>
+                                                Instance deletion page
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Changed features</strong><br>
+                                <ul>
+                                    <li>
+                                        No changed features.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Removed features</strong><br>
+                                <ul>
+                                    <li>
+                                        No removed features.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Fixed bugs</strong><br>
+                                <ul>
+                                    <li>
+                                        No fixed bugs.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#changelog-2026.1-beta.2" aria-expanded="false" aria-controls="changelog-2026.1-beta.2">
+                                Changelog 2026.1-beta.2 <span class="badge text-bg-dark">2025/11/23</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="changelog-2026.1-beta.2" class="accordion-collapse collapse" data-bs-parent="#changelognews">
+                            <div class="accordion-body">
+                                <strong>Added features</strong><br>
+                                <ul>
+                                    <li>
+                                        Added a new library UI element for the instance settings.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Changed features</strong><br>
+                                <ul>
+                                    <li>
+                                        Temporarily disabled/removed CurseForge from CombinedSearch due to legal reasons.<br>
+                                        We have contacted Overwolf/CurseForge.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Removed features</strong><br>
+                                <ul>
+                                    <li>
+                                        No removed features.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <strong>Fixed bugs</strong><br>
+                                <ul>
+                                    <li>
+                                        No fixed bugs.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#changelog-2026.1-beta.1" aria-expanded="false" aria-controls="changelog-2026.1-beta.1">
+                                Changelog 2026.1-beta.1 <span class="badge text-bg-dark">2025/11/22</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="changelog-2026.1-beta.1" class="accordion-collapse collapse" data-bs-parent="#changelognews">
+                            <div class="accordion-body">
+                                <strong>Added features</strong><br>
+                                <ul>
+                                    <li>
+                                        Added basic functionality to the library instance creator. You can create instances now!
+                                    </li>
+                                    <li>
+                                        Added some instance settings functions
+                                    </li>
+                                </ul>
+                                <hr>
+
+
+                                <strong>Changed features</strong><br>
+                                <ul>
+                                    <li>
+                                        Updated the version name from "Pheonix" to "Reformatio".
+                                    </li>
+                                    <li>
+                                        Moved the release goal from 11/25 to 01/26.
+                                    </li>
+                                </ul>
+                                <hr>
+
+
+                                <strong>Removed features</strong><br>
+                                <ul>
+                                    <li>
+                                        No removed features.
+                                    </li>
+                                </ul>
+                                <hr>
+
+
+                                <strong>Fixed bugs</strong><br>
+                                <ul>
+                                    <li>
+                                        No fixed bugs.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card glass p-3 shadow w-100">
+                <strong>Missing/Incomplete Features & Known Bugs</strong>
+                <hr>
+
+                <div class="accordion shadow" id="missingfeaturesandbugs">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow" data-bs-toggle="collapse" data-bs-target="#curseforgeintegration" aria-expanded="true" aria-controls="curseforgeintegration">
+                                CurseForge integration <span class="badge text-bg-success">In progress</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="curseforgeintegration" class="accordion-collapse collapse show" data-bs-parent="#missingfeaturesandbugs">
+                            <div class="accordion-body">
+                                The CurseForge integration is not yet finished and is therefore incomplete.<br>
+                                Currently, you cannot install resources or modpacks from CurseForge.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" data-bs-toggle="collapse" data-bs-target="#combinedsearchincomplete" aria-expanded="true" aria-controls="combinedsearchincomplete">
+                                CombinedSearch incomplete <span class="badge text-bg-success">In progress</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="combinedsearchincomplete" class="accordion-collapse collapse" data-bs-parent="#missingfeaturesandbugs">
+                            <div class="accordion-body">
+                                The CombinedSearch feature is not yet finished and is therefore incomplete.<br>
+                                Currently, some optimizations and the entire filter/category functionality are still missing.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" data-bs-toggle="collapse" data-bs-target="#settingsincomplete" aria-expanded="true" aria-controls="settingsincomplete">
+                                Settings incomplete <span class="badge text-bg-success">In progress</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="settingsincomplete" class="accordion-collapse collapse" data-bs-parent="#missingfeaturesandbugs">
+                            <div class="accordion-body">
+                                The main settings page is very incomplete, as it is continuously being developed in conjunction with the other features for which it offers settings.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" data-bs-toggle="collapse" data-bs-target="#libraryincomplete" aria-expanded="true" aria-controls="libraryincomplete">
+                                Library incomplete <span class="badge text-bg-success">In progress</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="libraryincomplete" class="accordion-collapse collapse" data-bs-parent="#missingfeaturesandbugs">
+                            <div class="accordion-body">
+                                The library is incomplete and still under active development.<br><br>
+                                Missing/Incomplete Features:<br>
+                                Instance Sorting,<br>
+                                Instance Filtering,<br>
+                                Instance Settings,<br>
+                                Instance Deletion,<br>
+                                Instance Grouping,<br>
+                                Instance Import,<br>
+                                Instance Export
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" data-bs-toggle="collapse" data-bs-target="#uiincomplete" aria-expanded="true" aria-controls="uiincomplete">
+                                Missing/Buggy UI Features <span class="badge text-bg-success">In progress</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="uiincomplete" class="accordion-collapse collapse" data-bs-parent="#missingfeaturesandbugs">
+                            <div class="accordion-body">
+                                The User Interface (UI) is incomplete and still under active development.<br><br>
+                                Missing/Incomplete Features:<br>
+                                Notifications section,<br>
+                                Light mode,<br>
+                                Custom themes,<br>
+                                Disableable rendering effects,<br>
+                                Discover home/dashboard (this page overhaul and beta section removal),<br>
+                                CombinedSearch Background,<br>
+                                Light mode not working/not available,<br>
+                                Some UI behavior with the TAB key needs to be fixed
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" data-bs-toggle="collapse" data-bs-target="#neoforgenewerversions" aria-expanded="true" aria-controls="neoforgenewerversions">
+                                NeoForge versions gone <span class="badge text-bg-info">Investigating</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="neoforgenewerversions" class="accordion-collapse collapse" data-bs-parent="#missingfeaturesandbugs">
+                            <div class="accordion-body">
+                                Since Minecraft version 1.21.2 and higher, our API no longer detects compatible NeoForge modloader versions. Therefore, NeoForge is essentially unavailable for versions 1.21.2 and above.<br>
+                                We are currently investigating this issue and working to resolve it.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" data-bs-toggle="collapse" data-bs-target="#forgeissues" aria-expanded="true" aria-controls="forgeissues">
+                                Forge modloader problems <span class="badge text-bg-danger">Action needed</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="forgeissues" class="accordion-collapse collapse" data-bs-parent="#missingfeaturesandbugs">
+                            <div class="accordion-body">
+                                Unfortunately, there are currently several compatibility issues with many versions of the Forge modloader. Workarounds already exist, but these will no longer function once our fix is ​​released.
+                                <br>The problem is being addressed.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" data-bs-toggle="collapse" data-bs-target="#macos" aria-expanded="true" aria-controls="macos">
+                                Support for macOS <span class="badge text-bg-danger">Action needed</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="macos" class="accordion-collapse collapse" data-bs-parent="#missingfeaturesandbugs">
+                            <div class="accordion-body">
+                                macOS support cannot currently be verified at all, as we don't have anyone on the team who can test the app on a Mac. While the app should theoretically launch, permission level, compatibility, and Java issues are to be expected.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="shadow collapsed" data-bs-toggle="collapse" data-bs-target="#linuxframeresize" aria-expanded="true" aria-controls="linuxframeresize">
+                                Linux frame resize <span class="badge text-bg-secondary">Noticed</span>
+                                <i class="bi bi-caret-down"></i>
+                            </button>
+                        </h2>
+                        <div id="linuxframeresize" class="accordion-collapse collapse" data-bs-parent="#missingfeaturesandbugs">
+                            <div class="accordion-body">
+                                On Linux systems with custom frames enabled, the resize function does not work and causes window glitches. We are aware of this bug and will address it.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Button to trigger menu enabling (likely for JavaScript) -->
+<button onclick="loadScript('assets/nexus/js/dashboard.js', null); enableMenu(true); setTimeout(()=>{ initDashboard(); }, 100);" class="onload d-none">On page load</button>

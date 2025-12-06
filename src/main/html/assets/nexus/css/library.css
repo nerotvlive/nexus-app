@@ -1,0 +1,392 @@
+#library-bg {
+    background: url("https://www.wolkenspeicher.cloud/index.php/s/5KHwRFRHF7bGQeg/download") fixed !important;
+    background-size: cover !important;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#library {
+    background: linear-gradient(-45deg, #00000090, #00000085);
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    #settings-pane {
+        z-index: -1;
+        scale: 0;
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        background: #00000075;
+
+        .instance-settings {
+            position: absolute;
+            z-index: 10;
+            left: 2rem;
+            top: 2rem;
+            right: 2rem;
+            bottom: 2rem;
+            background: var(--nex-brighter);
+            border: 1px solid var(--bs-border-color-translucent);
+            border-radius: var(--bs-border-radius-xl);
+            backdrop-filter: blur(48px);
+            margin: 2rem;
+            display: flex;
+            box-shadow: 0 0 4rem #000000;
+            overflow: hidden;
+
+            .settings-menu {
+                position: relative;
+                background: var(--nex-brighter);
+                border-right: 1px solid var(--bs-border-color-translucent);
+                padding: 0.75rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+                .settings-menu-actions {
+                    position: absolute;
+                    bottom: 0.75rem;
+                }
+
+                button, select {
+                    text-align: left;
+                    border-radius: var(--bs-border-radius-lg);
+                    overflow: hidden;
+                    font-size: 1.05rem;
+                    box-shadow: 0 0 0.4rem #00000050;
+                    border: 1px solid var(--bs-border-color-translucent);
+                    background: var(--nex-brighter);
+                    padding: 0.25rem 1rem;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    width: 12rem;
+                    max-height: fit-content !important;
+
+                    img {
+                        height: 1.05rem;
+                        width: 1.05rem;
+                        margin: 0 0.5rem 0.25rem 0;
+                    }
+                }
+
+                button:hover, select:hover {
+                    background: var(--nex-brighter-100);
+                    cursor: pointer;
+                }
+
+                button.top {
+                    border-top-left-radius: 1rem;
+                }
+
+                button.bottom {
+                    border-bottom-left-radius: 1rem;
+                }
+
+                button.show {
+                    background: var(--nex-primary-darker);
+                    border: 1px solid var(--nex-primary-accent);
+                    box-shadow: 0 0 0.4rem var(--nex-primary);
+                }
+
+                button.btn-nex-red, select.btn-nex-red {
+                    background: linear-gradient(35deg, rgba(255, 128, 128, 0.44), rgba(255, 206, 206, 0.24));
+                }
+
+                button.btn-nex-red:hover, button.btn-nex-red.show, select.btn-nex-red:hover, select.btn-nex-red.show {
+                    background: linear-gradient(35deg, rgba(255, 0, 0, 0.53), rgba(255, 54, 54, 0.67));
+                    border: 1px solid var(--bs-border-color-translucent);
+                    box-shadow: 0 0 0.4rem  rgba(255, 0, 0, 0.53);
+                    animation: wiggle 0.1s infinite;
+                }
+            }
+
+            .settings-content {
+                position: relative;
+                .close-button {
+                    position: absolute;
+                    background: transparent;
+                    padding: 0;
+                    margin: 0;
+                    font-size: 1.2rem;
+                    top: 0.5rem;
+                    right: 1rem;
+                    opacity: 0.5;
+                }
+
+                .close-button:hover {
+                    opacity: 1;
+                    cursor: pointer;
+                }
+
+                .close-button:active {
+                    color: #ffd5d5;
+                }
+
+                flex: 1;
+
+                .settings-content-pane {
+                    display: none;
+                    padding: 0.5rem 0.75rem;
+
+                    .btn-of {
+                        margin-top: 0.25rem;
+                    }
+
+                    .btn-df:hover {
+                        animation: wiggle 0.075s infinite;
+                        background: linear-gradient(35deg, rgba(255, 0, 0, 0.53), rgba(255, 54, 54, 0.67));
+                        border: 1px solid var(--bs-border-color-translucent);
+                        box-shadow: 0 0 0.4rem  rgba(255, 0, 0, 0.53);
+                    }
+                }
+
+                .settings-content-pane.show {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    #settings-pane.show {
+        scale: 1;
+        opacity: 1;
+        z-index: 10;
+    }
+
+    #instance-view {
+        div.glass {
+            width: 20rem;
+            min-width: 20rem;
+            max-width: 20rem;
+
+            .card {
+                min-width: 19rem;
+                width: 19rem;
+                max-width: 19rem;
+
+                min-height: 8rem;
+                height: fit-content;
+                max-height: 12rem;
+
+                .card-header {
+                    max-height: fit-content;
+                }
+            }
+        }
+
+        #launch-button {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+            z-index: 10;
+            height: 4rem;
+            font-size: 1.2rem;
+            font-weight: 750;
+        }
+    }
+
+    #library-title {
+        span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        span.icon {
+            margin-left: 2.5rem;
+        }
+
+        img {
+            position: absolute;
+            max-height: 2rem;
+            max-width: 2rem;
+        }
+    }
+
+    .nav {
+        container-type: inline-size;
+        container-name: nav-container;
+
+        transition: none;
+        * {
+            transition: none;
+        }
+
+        .nav-item {
+            .nav-link {
+                color: var(--nex-iv);
+                padding: 0.25rem 0.5rem;
+                border-radius: 0;
+                background: var(--nex-brighter-200);
+                border: 1px solid transparent;
+                margin: 0 0 0.25rem 0;
+            }
+
+            .nav-link:hover {
+                background: var(--nex-brighter-300);
+                transition: all 0.15s ease;
+            }
+
+            .nav-link.active {
+                background: var(--nex-primary);
+                border: 1px solid var(--nex-primary-accent);
+                box-shadow: 0 0 0.3rem #00000050;
+                transition: all 0.15s ease;
+            }
+
+            .nav-link.left {
+                border-radius: var(--bs-border-radius-lg) 0 0 var(--bs-border-radius-lg);
+            }
+
+            .nav-link.right {
+                border-radius: 0 var(--bs-border-radius-lg) var(--bs-border-radius-lg) 0;
+            }
+        }
+
+        .nav-item.disabled {
+            opacity: 0.75;
+            cursor: not-allowed;
+        }
+    }
+
+    .submenu {
+        margin: 1rem 0 1rem 1rem !important;
+        padding: 0;
+        transition: none;
+    }
+
+    @container nav-container (max-width: 31rem) {
+        .nav-link {
+            font-size: 0;
+        }
+
+        .nav-link i {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+    }
+
+
+    * {
+        transition: all var(--nex-animation-speed) ease;
+    }
+
+    .submenu {
+        width: 100%;
+    }
+
+    #microsoft-button {
+        position: relative;
+        padding: 1rem 2rem;
+        font-size: 1.3rem;
+        margin-top: auto;
+        background: yellow;
+        color: black;
+        opacity: 0.80;
+
+        text-shadow: none !important;
+        letter-spacing: unset !important;
+        * {
+            box-shadow: none !important;
+            text-shadow: none !important;
+        }
+    }
+
+    #microsoft-button:hover {
+        opacity: 1;
+    }
+
+    #microsoft-button.clicked {
+        opacity: 0.25;
+        cursor: unset;
+    }
+
+    .login-view {
+        div {
+            flex: 1 !important;
+        }
+
+        div.glass {
+            width: fit-content !important;
+            max-width: fit-content !important;
+        }
+
+        .card.glass {
+            width: 100% !important;
+        }
+    }
+
+    .tab-pane {
+        padding: 0 0 2rem 0 !important;
+    }
+
+    #tab-about-content {
+        position: relative;
+        overflow: hidden;
+        overflow-y: auto;
+        img {
+            max-width: 100%;
+            object-fit: contain;
+        }
+    }
+}
+
+.instance-creator {
+    .creator-header {
+        position: relative;
+        height: 8rem;
+        width: 100%;
+
+        .instance-image-container {
+            border-radius: var(--bs-border-radius-lg);
+            background: var(--nex-darker-400);
+            flex-shrink: 0;
+            width: 8rem;
+        }
+
+        .instance-main-information-container {
+            position: relative;
+            flex-grow: 1;
+            margin-left: 0.5rem;
+
+            label {
+                width: 100% !important;
+                margin: 0 0 0.5rem 0;
+
+                input, select {
+                    border: none;
+                    border-radius: var(--bs-border-radius-lg);
+                    background: var(--nex-darker-400);
+                    width: 100%;
+                    padding: 0.425rem 0.5rem;
+                }
+
+                button {
+                    border-radius: var(--bs-border-radius-lg);
+                    padding: 0.375rem 0.5rem 0.475rem 0.5rem;
+                    width: 100%;
+                    height: calc(100% - 2px);
+                    opacity: 0.89;
+                }
+
+                button:hover {
+                    opacity: 1;
+                }
+            }
+
+            option {
+                background: var(--nex-bg);
+                color: var(--nex-iv);
+            }
+
+            .d-flex {
+                gap: 0.5rem !important;
+            }
+        }
+    }
+}

@@ -1,0 +1,67 @@
+<link href="assets/nexus/css/search.css" rel="stylesheet">
+<!-- Main container for the search section -->
+<div id="search" class="nex-flex w-100 h-100">
+    <div class="card bg-dark-subtle submenu glass d-none"></div>
+    <div class="position-relative w-100 m-2 card glass shadow overflow-hidden p-0">
+        <div class="title-menu card-header p-1 shadow border-bottom-0">
+            <h4><label id="search-label">
+                <input onkeydown="if(event.keyCode===13) { startSearch(0); }" onfocus="if(!document.getElementById('search').classList.contains('active')) { document.getElementById('search').classList.add('active'); } disableMenu(true);" type="text" placeholder="Search here...">
+            </label></h4>
+            <button onclick="loadPage('discover.html',false);" type="button">X</button>
+        </div>
+        <div class="nex-side-view position-relative p-3 overflow-hidden" style="">
+            <div class="p-0 m-0 w-100 h-100 ">
+                <div class="p-2 overflow-y-auto results-container">
+
+                </div>
+                <div class="d-none template-container">
+                    <div class="card glass shadow mw-100 w-100 overflow-hidden search-result search-result-template p-0" style="height: 9rem; display: none; margin-bottom: 0.5rem;">
+                        <img alt="search result-icon" src="">
+                        <div>
+                            <strong class="result-source"></strong>
+                            <h5><strong style="color: var(--nex-iv);" class="result-name"></strong> by <span class="result-authors"></span></h5>
+                            <div class="result-summary-container p-0 m-0"><span class="result-summary"></span></div>
+                            <div class="result-actions-container m-0">
+                                <div class="left p-0 m-0">
+                                    <p><i class="bi bi-download"></i> <span class="result-downloads">0</span></p>
+                                    <p><i class="bi bi-heart"></i> <span class="result-followers">0</span></p>
+                                </div>
+                                <div class="right p-0 m-0">
+                                    <button type="button" class="btn btn-nex-secondary result-url"><i class="bi bi-box-arrow-up-right"></i> View</button>
+                                    <button type="button" class="btn btn-nex-primary result-install"><i class="bi bi-download"></i> Install</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="searchOffset = searchOffset+1; startSearch(searchOffset);" id="loadmore" style="display: none">Load more</button>
+            </div>
+            <div class="glass" style="max-width: fit-content; width: fit-content; min-width: fit-content;">
+                <div class="p-0 m-0 category-container" id="search-source">
+                    <strong>Search sources</strong><br>
+                    <div onclick="console.log('[CONNECTOR] discover.search.enable.nex.'+!this.querySelector('input').checked); this.querySelector('input').checked = !this.querySelector('input').checked;" class="form-check form-switch d-flex category-row nex">
+                        NEX (Official)
+                        <label>
+                            <input disabled class="form-check-input switch" type="checkbox" role="switch" checked>
+                        </label>
+                    </div>
+                    <div onclick="console.log('[CONNECTOR] discover.search.enable.curseforge.'+!this.querySelector('input').checked); this.querySelector('input').checked = !this.querySelector('input').checked;" class="form-check form-switch d-flex category-row curseforge">
+                        CurseForge
+                        <label>
+                            <input disabled class="form-check-input switch" type="checkbox" role="switch" checked>
+                        </label>
+                    </div>
+                    <div onclick="console.log('[CONNECTOR] discover.search.enable.modrinth.'+!this.querySelector('input').checked); this.querySelector('input').checked = !this.querySelector('input').checked;" class="form-check form-switch d-flex category-row modrinth">
+                        Modrinth
+                        <label>
+                            <input disabled class="form-check-input switch" type="checkbox" role="switch" checked>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Button to trigger menu enabling (likely for JavaScript) -->
+<button onclick="loadScript('assets/nexus/js/search.js', null); disableMenu(true); setTimeout(()=>{ initSearch(); }, 100);" class="onload d-none">On page load</button>

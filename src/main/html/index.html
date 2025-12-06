@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Title of the application -->
+        <title>NEXUS App</title>
+        <!-- Character set and viewport settings -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/nexus/img/app.png">
+        <!-- Bootstrap CSS -->
+        <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="assets/bootstrap/icons/font/bootstrap-icons.min.css">
+        <!-- Shared CSS for the NEXUS App -->
+        <link href="assets/nexus/css/shared.css" rel="stylesheet">
+        <!-- Shared JavaScript for the NEXUS App -->
+        <script src="assets/nexus/js/shared.js"></script>
+    </head>
+    <!-- For sub-page specific scripts and more -->
+    <div class="d-none" id="page-specific"></div>
+
+    <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="notifications" aria-labelledby="notificationsLabel">
+        <div class="offcanvas-header" style="background: var(--nex-bg);">
+            <h5 class="offcanvas-title" id="notificationsLabel">Notification center</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" style="background: var(--nex-bg);">
+            <div>
+                I will not close if you click outside of me.
+            </div>
+        </div>
+    </div>
+
+    <div id="context-menu"></div>
+    <!-- Body of the application -->
+    <body data-bs-theme="dark" class="d-flex flex-column h-100 w-100 position-absolute">
+        <!-- Login overlay-->
+        <div id="login-overlay">
+            <p>
+                Please finish the login process...<br>
+                <a type="button" class="btn btn-danger" onclick="location.reload();">Cancel</a>
+            </p>
+        </div>
+        <!-- Screen saver-->
+        <div id="screensaver"></div>
+        <!-- Title bar (likely for custom window controls) -->
+        <div id="titlebar" style="height: 2rem;"></div>
+        <!-- Main content area -->
+        <div id="main" class="d-flex position-relative h-100">
+            <!-- Main menu -->
+            <div id="menu" class="transition">
+                <!-- NEXUS App menu logo -->
+                <img alt="NEXUS App logo" src="assets/nexus/img/logo.png">
+                <ul>
+                    <!-- Toggle menu button -->
+                    <li onclick="toggleMenu();">
+                        <i class="bi bi-list"></i>
+                        <span>Toggle menu</span>
+                    </li>
+                    <!-- Discover page button -->
+                    <li id="discover-button" onclick="loadPage('discover.html',false); highlight(this);">
+                        <i class="bi bi-globe-europe-africa"></i>
+                        <span>Discover</span>
+                    </li>
+                    <!-- Library page button -->
+                    <li id="library-button" onclick="loadPage('library.html',false); highlight(this);">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Library</span>
+                    </li>
+                    <!-- Library page button -->
+                    <li id="downloads-button" onclick="loadPage('downloads.html',false); highlight(this);">
+                        <i class="bi bi-download"></i>
+                        <span>Downloads</span>
+                    </li>
+                    <!-- Library page button -->
+                    <li id="settings-button" onclick="loadPage('settings.html',false); highlight(this);">
+                        <i class="bi bi-gear-wide"></i>
+                        <span>Settings</span>
+                    </li>
+                </ul>
+            </div>
+            <!-- Menu panel -->
+            <div class="menu-panel shadow card">
+                <!-- Menu panel header -->
+                <div class="card-header">
+                    <!-- Panel mode toggle -->
+                    <i class="mode bi" onclick="changePanelMode();"></i>
+                    <!-- App name -->
+                    <span><strong>NEXUS</strong> App</span>
+                    <!-- Panel toggle button -->
+                    <div class="panel-toggle" onclick="togglePanel();"></div>
+                    <!-- Panel buttons -->
+                    <div class="buttons">
+                        <!-- Downloads page button -->
+                        <i id="downloads-icon" class="bi bi-download" onclick="loadPage('downloads.html',false); highlight(this);"></i>
+                        <!-- Settings page button -->
+                        <i id="settings-icon" class="bi bi-gear-wide" onclick="loadPage('settings.html',false); highlight(this);"></i>
+                        <!-- Notifications button -->
+                        <i class="bi bi-bell" data-bs-toggle="offcanvas" onclick="openNotifications();"></i>
+                    </div>
+                </div>
+                <!-- Menu panel body -->
+                <div class="card-body p-0">
+
+                </div>
+            </div>
+            <!-- Main content area where pages are loaded -->
+            <div id="content" class="position-relative">
+
+            </div>
+            <!-- Cookie consent toast -->
+            <div class="toast position-absolute" style="bottom: 0.5rem; right: 0.5rem;" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Hey there!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Schließen"></button>
+                </div>
+                <div class="toast-body">
+                    Would you mind to enable Cookies, so that the app can work properly? We only use cookies that are necessary for functionality. No data is collected.<br><br>
+                    <button class="btn btn-nex-primary m-1" onclick="localStorage.setItem('enabled','true'); location.reload();">Enable cookies</button>
+                    <button class="btn btn-outline-secondary m-1" onclick="window.open('https://nerofy.de/rechtliches','_blank')">Imprint and privacy</button>
+                </div>
+            </div>
+        </div>
+        <!-- Popper.js for Bootstrap tooltips and popovers -->
+        <script src="assets/popper/dist/umd/popper.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/marked/marked.min.js"></script>
+    </body>
+</html>

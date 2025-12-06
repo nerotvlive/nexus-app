@@ -1,138 +1,59 @@
+### Zyneon Studios presents:
+![NEXUS App logo](https://i.ibb.co/McFGPDL/Logo-normal.png)
 
-# **a Minecraft Launcher** `2025.8.2`
+- - -
 
-A third party Minecraft launching library with an EULA compliant name. Based on [OpenLauncherLib](https://github.com/FlowArg/OpenLauncherLib) and [FlowUpdater](https://github.com/FlowArg/FlowUpdater) by [FlowArg](https://github.com/FlowArg).
+<details>
+    <summary>Warning</summary>
+    For your security, please download the NEXUS App directly from our official websites https://nexus.zyneonstudios.org and https://github.com/zyneonstudios/nexus-app. Downloading from other sources may expose you to risks such as malware. We cannot guarantee the safety of downloads from third-party links.
+</details>
 
-Used by the **[NEXUS App](https://github.com/nerofynetwork/NEXUS-App)**, a **free** and **open source** Desktop application to install, manage and play Minecraft: Java Edition which supports downloading **modpacks, mods, shaders, worlds, resource packs** and **more** from **Modrinth**, **CurseForge** and **Zyndex instances**.
-## Table of contents
+## We're searching for help
+Currently, the NEXUS app effectively has only one developer. This person works on it as a hobby and is entirely self-taught, so we are looking for support, as it is not possible to develop the app in a clear and easily expandable way over a large scope. GitHub contributions and/or contact from the team to support us are welcome. Discord account for contact: @dnl.nsmnn -> GitHub: https://github.com/nerotvlive
 
-- [How to this to your project](#how-to-add-this-library-to-your-project)
-- [How to install a Minecraft instance](#how-to-install-a-minecraft-instance)
-- [How to launch a Minecraft instance](#how-to-launch-a-minecraft-instance)
+## Description
+The NEXUS App is a modular and extensible Minecraft modding application which integrates various platforms.
 
-## How to add this library to your project
+<img src="https://raw.githubusercontent.com/nerofynetwork/NEXUS-App/refs/heads/main/src/main/html/assets/nexus/img/app-screenshot.png">
 
+## Supported platforms
+[<img src="https://i.ibb.co/FK4LNHm/platforms.png">](https://nexus.zyneonstudios.org/app#download)
+[<img src="https://i.ibb.co/nBLzRMT/download.png">](https://nexus.zyneonstudios.org/app#download)
+[Alternative/Direct Downloads](https://github.com/zyneonstudios/nexus-app/releases/)
 
+<details>
+    <summary>Old description</summary>
+    Download the Zyneon Application from https://github.com/zyneonstudios/nexus-app/releases and https://nexus.zyneonstudios.net/application only! All other sources are not verified and we assume no liability!
 
-**via Maven:**
+---
+![Zyneon Application logo and text](https://i.ibb.co/tsKhXtB/23.png)
+by [Zyneon Studios](https://www.zyneonstudios.net). Metadata and update repository: [here](https://github.com/zyneonstudios/nexus-nex)
+---
+Supported platforms:
+![Zyneon Application logo and text](https://i.ibb.co/FK4LNHm/platforms.png)
+---
+# Description
+The Zyneon Application allows you to create, launch, manage, download and share Minecraft instances and modpacks. It supports a variety of Minecraft versions and has integrations for CurseForge and Modrinth. Install shaders, mods, resource packs and much more in the Zyneon Application.
 
-Add the official Nerofy Network Maven repository to your pom.xml.
-```
-<repositories>
-    <!--Other repositories...-->
+---
+# Web version (alpha)
+The application also has a version that can be easily accessed from an Internet browser. This is currently still in a very early alpha phase and is missing a lot of features.
 
-    <repository>
-        <id>nerofy-releases</id>
-        <name>Nerofy Network Maven repository</name>
-        <url>https://maven.nrfy.net/releases</url>
-    </repository>
-</repositories>
-```
+[Click here to open web version](https://nexus.zyneonstudios.org/app/)
 
-After adding the repository, add the "a Minecraft Launcher" dependency.
-```
-<dependencies>
-    <!--Other dependencies...-->
+---
+[<img src="https://i.ibb.co/nBLzRMT/download.png">](https://nexus.zyneonstudios.org/app#download)
+[Alternative/Direct Downloads](https://github.com/zyneonstudios/nexus-app/releases/)
 
-    <dependency>
-        <groupId>live.nerotv</groupId>
-        <artifactId>a-minecraft-launcher</artifactId>
-        <version>2025.8.2</version>
-    </dependency>
-</dependencies>
-```
-
-
-**via Gradle (Kotlin)**
-
-Add the official Nerofy Network Maven repository to your project.
-```
-maven {
-    name = "nerofyReleases"
-    url = uri("https://maven.nrfy.net/releases")
-}
-```
-
-After adding the repository, add the "a Minecraft Launcher" dependency.
-```
-implementation("live.nerotv:a-minecraft-launcher:2025.8.2")
-```
-
-
-**via Gradle (Groovy)**
-
-Add the official Nerofy Network Maven repository to your project.
-```
-maven {
-    name "nerofyReleases"
-    url "https://maven.nrfy.net/releases"
-}
-```
-
-After adding the repository, add the "a Minecraft Launcher" dependency.
-```
-implementation "live.nerotv:a-minecraft-launcher:2025.8.2"
-```
-## How to install a Minecraft instance
-
-
-
-Vanilla:
-```java
-//A Minecraft Vanilla Installer that installs the latest game version in the current folder.
-new VanillaInstaller().install();
-
-//A Minecraft vanilla installer that installs a specific version in a specific folder. Info: If the game got successfully installed, the method will return true, if not, the method will return false, so you can handle the outcome of the installation try.
-if(new VanillaInstaller("1.16.5",".minecraft").install()) {
-    //TODO do something after a successful game install
-} else {
-    //TODO do something after a failed game installation try
-}
-
-//or
-VanillaInstaller installer = new VanillaInstaller();
-installer.setMinecraftVersion("1.21.8");
-installer.setInstallationPath(".minecraft"); //or use a path installer.setInstallationPath(Path.of(".minecraft"));
-installer.install();
-```
-
-If you want to install a modloader, you need to initialize the correct installer object. Supported modloaders: Fabric, Forge, NeoForge and Quilt. Here is an example with the Fabric modloader:
-```java
-//A Minecraft Fabric installer that installs the latest game and modloader version in the current folder.
-new FabricInstaller().install();
-
-//A Minecraft Fabric installer that installs a specific Minecraft and Fabric version in a specific folder. Info: If the game got successfully installed, the method will return true, if not, the method will return false, so you can handle the outcome of the installation try.
-if(new FabricInstaller("1.16.5","0.16.3",".minecraft-fabric").install()) {
-    //TODO do something after a successful game install
-} else {
-    //TODO do something after a failed game installation try
-}
-
-//or
-FabricInstaller installer = new FabricInstaller();
-installer.setMinecraftVersion("1.21.8");
-installer.setFabricVersion("0.17.2");
-installer.setInstallationPath(".minecraft-fabric"); //or use a path installer.setInstallationPath(Path.of(".minecraft"));
-installer.install();
-```
-
-If you want to use other modloaders than Fabric, just try to replace "Fabric" with your mod loaders name.
-
-
-## How to launch a Minecraft instance
-
-**Important:** The launcher will automatically install the specified Minecraft version and the selected modloader with its specific version if they are not present in the game path.
-
-**Important¹:** You'll need a valid AuthInfos object to initialize the game launchers. For more information visit [OpenAuth](https://github.com/Litarvan/OpenAuth) by [Litarvan](https://github.com/Litarvan).
-
-```java
-//Vanilla
-VanillaLauncher launcher = new VanillaLauncher(authInfos);
-//Minecraft 1.21.8 with 4GB (4096MB) of memory in the .minecraft folder with the ID "a-minecraft-installation"
-launcher.launch("1.21.8",4096,Path.of(".minecraft"),"a-minecraft-installation"));
-
-//Fabric
-FabricLauncher fabricLauncher = new FabricLauncher(authInfos);
-//Minecraft 1.21.8 with Fabric 0.17.2 with 4GB (4096MB) of memory in the .minecraft-fabric folder with the ID "a-minecraft-fabric-installation"
-fabricLauncher.launch("1.21.8","0.17.2",4096,Path.of(".minecraft-fabric"),"a-minecraft-fabric-installation");
-```
+---
+# Images
+![Zyneon application start screen](https://i.ibb.co/GJqWk0n/start.png)
+![Zyneon application general settings](https://i.ibb.co/8Xcbj6N/general.png)
+![Zyneon application global settings](https://i.ibb.co/MChrbNt/global.png)
+![Zyneon application profile settings](https://i.ibb.co/YcZkyf6/profile.png)
+![Zyneon application instance view](https://i.ibb.co/g7v9bzt/zyneonplus.png)
+![Zyneon application instance creator](https://i.ibb.co/nLv9k26/creator.png)
+![Zyneon application instance content manager](https://i.ibb.co/DL16dk4/mods.png)
+![Zyneon application resources page](https://i.ibb.co/ys5tdv9/resources.png)
+![Zyneon application official packs](https://i.ibb.co/RchrH1j/official.png)
+</details>

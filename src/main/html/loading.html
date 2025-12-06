@@ -1,0 +1,21 @@
+<!-- Link to Boxicons CSS (assuming it's not already included elsewhere) -->
+<link href="assets/boxicons/css/boxicons.min.css" rel="stylesheet">
+<!-- Loading Container: Covers the entire parent element and centers the loading icon -->
+<div class="loading-container w-100 h-100 position-absolute d-flex justify-content-center align-items-center">
+    <!-- Loading Icon: Using Boxicons' loader icon with spinning animation -->
+    <i class='bx bx-loader-alt bx-spin bx-rotate-90 loading-icon'></i>
+</div>
+
+<style>
+    /* Basic styling for the loading container */
+    .loading-container {
+        /* w-100, h-100, position-absolute, d-flex, justify-content-center, align-items-center are already set by classes */
+        z-index: 1000; /* Ensure it's on top of other content */
+    }
+
+    /* Styling for the loading icon */
+    .loading-icon {
+        font-size: 4rem; /* Adjust the size as needed */
+        color: white; /* Change the color of the icon */
+    }
+</style>

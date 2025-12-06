@@ -4,58 +4,87 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>live.nerotv</groupId>
-    <artifactId>a-minecraft-launcher</artifactId>
-    <version>2025.9</version>
+    <groupId>net.nrfy.nexus</groupId>
+    <artifactId>nexus-app</artifactId>
+    <version>2026.1-beta.6</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <nexus.name>Reformatio</nexus.name>
+        <nexus.type>unstable</nexus.type>
     </properties>
 
     <repositories>
         <repository>
             <id>nerofy-releases</id>
-            <name>Nerofy repository</name>
             <url>https://maven.nrfy.net/releases</url>
         </repository>
         <repository>
             <id>nerofy-snapshots</id>
-            <name>Nerofy repository</name>
             <url>https://maven.nrfy.net/snapshots</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>jcenter</id>
+            <url>https://jcenter.bintray.com</url>
+            <name>jcenter-bintray</name>
         </repository>
     </repositories>
 
     <dependencies>
-        <!--Dependencies by Zyneon Studios' NEXUS Team-->
         <dependency>
             <groupId>com.zyneonstudios.nexus</groupId>
-            <artifactId>verget-all</artifactId>
-            <version>2024.8.2</version>
-            <scope>compile</scope>
+            <artifactId>base-desktop</artifactId>
+            <version>2025.9</version>
         </dependency>
         <dependency>
             <groupId>com.zyneonstudios.nexus</groupId>
-            <artifactId>base-utilities</artifactId>
-            <version>2025.5.2</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!--Dependencies by FlowArg-->
-        <dependency>
-            <groupId>fr.flowarg</groupId>
-            <artifactId>flowupdater</artifactId>
-            <version>1.9.3</version>
-            <scope>compile</scope>
+            <artifactId>mojang-auth</artifactId>
+            <version>2025.8.1</version>
         </dependency>
         <dependency>
-            <groupId>fr.flowarg</groupId>
-            <artifactId>openlauncherlib</artifactId>
-            <version>3.2.11</version>
-            <scope>compile</scope>
+            <groupId>com.zyneonstudios.nexus</groupId>
+            <artifactId>zyndex-java</artifactId>
+            <version>2025.9</version>
+        </dependency>
+        <dependency>
+            <groupId>live.nerotv</groupId>
+            <artifactId>a-minecraft-launcher</artifactId>
+            <version>2025.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>3.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.starxg</groupId>
+            <artifactId>java-keytar</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.steos</groupId>
+            <artifactId>jnafilechooser</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MinnDevelopment</groupId>
+            <artifactId>java-discord-rpc</artifactId>
+            <version>2.0.1</version>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>nerofy-snapshots</id>
+            <name>Nerofy Network Maven repository</name>
+            <url>https://maven.nrfy.net/snapshots</url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <resources>
@@ -69,6 +98,13 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.zyneonstudios.nexus.application.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -77,7 +113,6 @@
                 <version>3.8.1</version>
                 <configuration>
                     <source>21</source>
-                    <target>21</target>
                     <release>21</release>
                 </configuration>
             </plugin>
@@ -92,6 +127,14 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.zyneonstudios.nexus.application.Main</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -100,15 +143,17 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.3.1</version>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>eot</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>zip</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>nerofy-releases</id>
-            <name>Nerofy Network Maven repository</name>
-            <url>https://maven.nrfy.net/releases</url>
-        </repository>
-    </distributionManagement>
 </project>
