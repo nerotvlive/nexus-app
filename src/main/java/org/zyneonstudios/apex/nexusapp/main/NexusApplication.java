@@ -115,12 +115,6 @@ public class NexusApplication {
         setupWebEnvironment(workingDirFile);
         getLogger().log("Initializing application...");
 
-        settings.ensure("settings.minecraft.defaultPath",workingDirFile.getAbsolutePath().replace("\\", "/") + "/instances/");
-        localSettings.setDefaultMinecraftPath(settings.getString("settings.minecraft.defaultPath"));
-
-        settings.ensure("settings.minecraft.defaultMemory",2048);
-        localSettings.setDefaultMemory(settings.getInt("settings.minecraft.defaultMemory"));
-
         settings.ensure("settings.window.nativeDecorations", OperatingSystem.getType().equals(OperatingSystem.Type.Windows));
         localSettings.setUseNativeWindow(settings.getBool("settings.window.nativeDecorations"));
 
@@ -148,8 +142,6 @@ public class NexusApplication {
         settings.ensure("settings.java.path8",workingDir+"/libs/jre-8");
         localSettings.setJre8path(settings.getString("settings.java.path8"));
 
-        instanceManager = new LocalInstanceManager(new JsonStorage(workingDirFile.getAbsolutePath() + "/data/instances.json"));
-
         boolean rpc = true;
         if(settings.has("settings.discord.rpc")) {
             rpc = settings.getBool("settings.discord.rpc");
@@ -157,6 +149,46 @@ public class NexusApplication {
         if(rpc) {
             DiscordRichPresence.startRPC();
         }
+
+        if(settings.has("settings.minecraft.defaultPath")) {
+            settings.set("settings.minecraft.path",settings.getString("settings.minecraft.defaultPath"));
+            settings.delete("settings.minecraft.defaultPath");
+        }
+        settings.ensure("settings.minecraft.path",workingDir + "/instances/");
+        localSettings.setDefaultMinecraftPath(settings.getString("settings.minecraft.path"));
+
+        settings.ensure("settings.minecraft.fullscreen",false);
+        localSettings.setDefaultMinecraftFullscreen(settings.getBool("settings.minecraft.fullscreen"));
+
+        settings.ensure("settings.minecraft.width",854);
+        localSettings.setDefaultMinecraftWindowWidth(settings.getInt("settings.minecraft.width"));
+
+        settings.ensure("settings.minecraft.height",480);
+        localSettings.setDefaultMinecraftWindowHeight(settings.getInt("settings.minecraft.height"));
+
+        if(settings.has("settings.minecraft.defaultMemory")) {
+            settings.set("settings.minecraft.memory",settings.getInt("settings.minecraft.defaultMemory"));
+            settings.delete("settings.minecraft.defaultMemory");
+        }
+        settings.ensure("settings.minecraft.memory",2048);
+        localSettings.setDefaultMinecraftMemory(settings.getInt("settings.minecraft.memory"));
+
+        settings.ensure("settings.minecraft.jvmArgs",new ArrayList<>());
+        localSettings.setDefaultMinecraftJVMArgs((ArrayList<String>)settings.get("settings.minecraft.jvmArgs"));
+
+        settings.ensure("settings.minecraft.envArgs",new ArrayList<>());
+        localSettings.setDefaultMinecraftEnvArgs((ArrayList<String>)settings.get("settings.minecraft.envArgs"));
+
+        settings.ensure("settings.minecraft.preLaunchCommands",new ArrayList<>());
+        localSettings.setDefaultMinecraftPreLaunchCommands((ArrayList<String>)settings.get("settings.minecraft.preLaunchCommands"));
+
+        settings.ensure("settings.minecraft.onLaunchCommands",new ArrayList<>());
+        localSettings.setDefaultMinecraftOnLaunchCommands((ArrayList<String>)settings.get("settings.minecraft.onLaunchCommands"));
+
+        settings.ensure("settings.minecraft.onExitCommands",new ArrayList<>());
+        localSettings.setDefaultMinecraftOnExitCommands((ArrayList<String>)settings.get("settings.minecraft.onExitCommands"));
+
+        instanceManager = new LocalInstanceManager(new JsonStorage(workingDirFile.getAbsolutePath() + "/data/instances.json"));
 
         CurseForgeCategories.init();
 

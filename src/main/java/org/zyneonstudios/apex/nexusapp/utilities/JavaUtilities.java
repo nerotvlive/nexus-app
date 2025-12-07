@@ -86,9 +86,9 @@ public class JavaUtilities {
     }
 
     public static void setJava(MinecraftVersion.Type type) {
-        String javaHome = "";
         try {
             NexusApplication.getLogger().log("Detected Minecraft version type " + type + "!");
+            String javaHome = System.getProperty("java.home");
             if (type.equals(MinecraftVersion.Type.LEGACY)) {
                 JavaUtil.setJavaCommand(null);
                 String java = NexusApplication.getInstance().getLocalSettings().getJava8Path();
