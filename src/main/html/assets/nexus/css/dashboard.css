@@ -70,3 +70,11 @@
         }
     }
 }
+
+[data-bs-theme="light"] {
+    ul {
+        li:hover {
+            color: unset;
+        }
+    }
+}

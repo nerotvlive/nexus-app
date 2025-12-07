@@ -263,3 +263,21 @@
         }
     }
 }
+
+[data-bs-theme="light"] {
+    .card {
+        background: var(--nex-brighter-300);
+
+        input::placeholder {
+            color: var(--nex-darker-500);
+        }
+
+        * {
+            text-shadow: none !important;
+        }
+
+        .result-source, .category-row {
+            background: var(--nex-brighter-200) !important;
+        }
+    }
+}

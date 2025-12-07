@@ -1,5 +1,8 @@
 #settings {
     background: linear-gradient(-45deg, #00000090, #00000085);
+    button.btn-warning {
+        box-shadow: 0 0 0.4rem #00000050;
+    }
 }
 
 .settings-card {
@@ -54,7 +57,7 @@ table.table {
                     margin: 0.1rem 0 0 0;
                     padding: 0.2rem 0.5rem 0.3rem 0.5rem;
                     border-radius: var(--bs-border-radius-lg);
-                    background: var(--nex-darker-300);
+                    background: none;
                     border: 1px solid var(--bs-border-color-translucent);
                 }
 
@@ -303,5 +306,39 @@ table.table {
 [data-bs-theme="light"] {
     #settings {
         background: var(--bs-body-bg)
+    }
+
+    .btn-outline-light {
+        background: var(--nex-darker-300);
+        border: 1px solid var(--bs-border-color-translucent)
+    }
+
+    .btn-outline-light:hover {
+        background: var(--nex-darker-600);
+        border: 1px solid var(--bs-border-color-translucent);
+        color: white;
+    }
+
+    tr {
+        td {
+            a:hover {
+                background: var(--nex-darker) !important;
+            }
+        }
+    }
+
+    tr:hover {
+        td {
+            background: var(--nex-darker) !important;
+            transition: all var(--nex-animation-speed) ease;
+        }
+    }
+
+    input.number-display {
+        background: var(--nex-darker-100) !important;
+    }
+
+    input.text-display {
+        background: var(--nex-darker-100) !important;
     }
 }

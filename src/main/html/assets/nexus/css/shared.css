@@ -1,4 +1,5 @@
 :root,[data-bs-theme="light"],[data-bs-theme="dark"] {
+    --nex-submenu-bg: var(--nex-brighter);
     --nex-bg: black;
     --nex-fg: #d7d7d7;
     --nex-iv: white;
@@ -762,7 +763,7 @@ body {
                 overflow-y: auto;
                 gap: 0.4rem;
                 box-shadow: 0 0 0.5rem #00000075;
-                background: var(--nex-brighter) !important;
+                background: var(--nex-submenu-bg) !important;
 
                 .card-header:hover {
                     background: var(--nex-brighter) !important;
@@ -1077,6 +1078,7 @@ body {
     --bs-dark-bg-subtle: #fff;
     --bs-border-color: #8c8c8c;
     --bs-border-color-translucent: #8c8c8c;
+    --nex-submenu-bg: var(--nex-brighter-300);
 
     .menu-panel {
         background: var(--nex-brighter-400);
@@ -1091,9 +1093,18 @@ body {
     }
 
     .submenu {
+        button:hover {
+            background: var(--nex-darker-200) !important;
+            color: white;
+        }
+
         button.active {
             background: var(--nex-primary) !important;
         }
+    }
+
+    .big-card {
+        background: var(--nex-brighter-200) !important;
     }
 
     #content::after {

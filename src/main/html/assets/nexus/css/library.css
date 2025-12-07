@@ -392,9 +392,53 @@
 }
 
 [data-bs-theme="light"] {
+    .instance-creator {
+        color: white !important;
+
+        select, input {
+            color: white !important;
+        }
+    }
+
     #library {
+        background: linear-gradient(-45deg, #ffffff25, #ffffff15);
+
         * {
             text-shadow: none !important;
+        }
+
+        #launch-button {
+            background: var(--nex-primary);
+            border: 1px solid var(--nex-primary-accent);
+        }
+
+        #launch-button:hover {
+            background: var(--nex-primary-accent);
+            border: 1px solid var(--nex-primary);
+        }
+
+        #settings-pane {
+            i {
+                color: black;
+            }
+
+            .settings-menu {
+                button {
+                    background: var(--nex-brighter-100);
+                    i {
+                        color: unset;
+                    }
+                }
+
+                button:hover {
+                    background: var(--nex-brighter-300);
+                }
+
+                button.show {
+                    background: var(--nex-primary) !important;
+                    color: white;
+                }
+            }
         }
     }
 }
