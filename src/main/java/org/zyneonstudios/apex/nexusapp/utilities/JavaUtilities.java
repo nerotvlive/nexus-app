@@ -1,6 +1,5 @@
 package org.zyneonstudios.apex.nexusapp.utilities;
 
-import com.zyneonstudios.nexus.utilities.NexusUtilities;
 import com.zyneonstudios.nexus.utilities.system.OperatingSystem;
 import fr.flowarg.azuljavadownloader.*;
 import fr.theshark34.openlauncherlib.JavaUtil;
@@ -56,20 +55,26 @@ public class JavaUtilities {
 
             AzulJavaBuildInfo buildInfo;
             if(OperatingSystem.getType().equals(OperatingSystem.Type.Windows)) {
-                buildInfo = downloader.getBuildInfo(new RequestedJavaInfo(version, AzulJavaType.JDK, AzulJavaOS.WINDOWS, arch));
+                buildInfo = downloader.getBuildInfo(new RequestedJavaInfo(version, AzulJavaType.JRE, AzulJavaOS.WINDOWS, arch));
             } else if(OperatingSystem.getType().equals(OperatingSystem.Type.macOS)) {
-                buildInfo = downloader.getBuildInfo(new RequestedJavaInfo(version, AzulJavaType.JDK, AzulJavaOS.MACOS, arch));
+                buildInfo = downloader.getBuildInfo(new RequestedJavaInfo(version, AzulJavaType.JRE, AzulJavaOS.MACOS, arch));
             } else {
-                buildInfo = downloader.getBuildInfo(new RequestedJavaInfo(version, AzulJavaType.JDK, AzulJavaOS.LINUX, arch));
+                buildInfo = downloader.getBuildInfo(new RequestedJavaInfo(version, AzulJavaType.JRE, AzulJavaOS.LINUX, arch));
             }
             Path javaPath = downloader.downloadAndInstall(buildInfo, tempFolder.toPath());
 
-            switch (version) {
-                case "8" -> FileUtils.moveDirectory(javaPath.toFile(), new File(NexusApplication.getInstance().getLocalSettings().getJava8Path()));
-                case "17" -> FileUtils.moveDirectory(javaPath.toFile(), new File(NexusApplication.getInstance().getLocalSettings().getJava17Path()));
-                case "21" -> FileUtils.moveDirectory(javaPath.toFile(), new File(NexusApplication.getInstance().getLocalSettings().getJava21Path()));
-                default -> FileUtils.moveDirectory(javaPath.toFile(), new File(path));
+            if(path.equals("default")) {
+                switch (version) {
+                    case "8" -> path = NexusApplication.getInstance().getLocalSettings().getJava8Path();
+                    case "17" -> path = NexusApplication.getInstance().getLocalSettings().getJava17Path();
+                    case "21" -> path = NexusApplication.getInstance().getLocalSettings().getJava21Path();
+                }
             }
+
+            if(!path.equals("default")) {
+                FileUtils.moveDirectory(javaPath.toFile(), new File(path));
+            }
+
             NexusApplication.getInstance().getApplicationFrame().executeJavaScript("console.log('[CONNECTOR] settings.init.java');");
             System.gc();
             return true;
@@ -80,35 +85,43 @@ public class JavaUtilities {
         return false;
     }
 
-    public void setJava(MinecraftVersion.Type type) {
-        NexusUtilities.getLogger().log("[LAUNCHER] Detected Minecraft version type "+type+"!");
-        if(type.equals(MinecraftVersion.Type.LEGACY)) {
-            JavaUtil.setJavaCommand(null);
-            String java = NexusApplication.getInstance().getLocalSettings().getJava8Path();
-            if(!new File(java).exists()) {
-                NexusUtilities.getLogger().err("[LAUNCHER] Couldn't find compatible Java Runtime Environment!");
-                installJava("8",java);
-                NexusUtilities.getLogger().dbg("[LAUNCHER] Starting installation of missing java runtime 8...");
+    public static void setJava(MinecraftVersion.Type type) {
+        String javaHome = "";
+        try {
+            NexusApplication.getLogger().log("Detected Minecraft version type " + type + "!");
+            if (type.equals(MinecraftVersion.Type.LEGACY)) {
+                JavaUtil.setJavaCommand(null);
+                String java = NexusApplication.getInstance().getLocalSettings().getJava8Path();
+                if (!new File(java).exists()) {
+                    NexusApplication.getLogger().log("Couldn't find compatible Java Runtime Environment! Starting download of Java 8...");
+                    installJava("8", java);
+                }
+                javaHome = java;
+            } else if (type.equals(MinecraftVersion.Type.SEMI_NEW)) {
+                JavaUtil.setJavaCommand(null);
+                String java = NexusApplication.getInstance().getLocalSettings().getJava17Path();
+                if (!new File(java).exists()) {
+                    NexusApplication.getLogger().log("Couldn't find compatible Java Runtime Environment! Starting download of Java 17...");
+                    installJava("17", java);
+                }
+                javaHome = java;
+            } else if (type.equals(MinecraftVersion.Type.NEW)) {
+                JavaUtil.setJavaCommand(null);
+                String java = NexusApplication.getInstance().getLocalSettings().getJava21Path();
+                if (!new File(java).exists()) {
+                    NexusApplication.getLogger().log("Couldn't find compatible Java Runtime Environment! Starting download of Java 21...");
+                    installJava("21", java);
+                }
+                javaHome = java;
             }
-            System.setProperty("java.home", java);
-        } else if(type.equals(MinecraftVersion.Type.SEMI_NEW)) {
-            JavaUtil.setJavaCommand(null);
-            String java = NexusApplication.getInstance().getLocalSettings().getJava17Path();
-            if(!new File(java).exists()) {
-                NexusUtilities.getLogger().err("[LAUNCHER] Couldn't find compatible Java Runtime Environment!");
-                installJava("17",java);
-                NexusUtilities.getLogger().deb("[LAUNCHER] Starting installation of missing java runtime 17...");
+            javaHome = javaHome.replace("\\","/");
+            if(!javaHome.endsWith("/")) {
+                javaHome += "/";
             }
-            System.setProperty("java.home", java);
-        } else if(type.equals(MinecraftVersion.Type.NEW)) {
-            JavaUtil.setJavaCommand(null);
-            String java = NexusApplication.getInstance().getLocalSettings().getJava21Path();
-            if(!new File(java).exists()) {
-                NexusUtilities.getLogger().err("[LAUNCHER] Couldn't find compatible Java Runtime Environment!");
-                installJava("21",java);
-                NexusUtilities.getLogger().deb("[LAUNCHER] Starting installation of missing java runtime 21...");
-            }
-            System.setProperty("java.home", java);
+            System.setProperty("java.home", javaHome);
+            NexusApplication.getLogger().log("Set Java Home to: " + javaHome);
+        } catch (Exception e) {
+            NexusApplication.getLogger().err("Couldn't set java version: "+e.getMessage());
         }
     }
 }
