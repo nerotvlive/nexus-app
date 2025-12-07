@@ -52,7 +52,7 @@ public class NexusApplication {
 
     private static final Logger log = LoggerFactory.getLogger(NexusApplication.class);
     private ReadableZyndex NEX = null;
-    private LocalInstanceManager instanceManager;
+    private final LocalInstanceManager instanceManager;
 
     //Authentication
     private static AuthInfos authInfos = null;
@@ -62,7 +62,7 @@ public class NexusApplication {
 
     // Static Instance and Directories
     private static NexusApplication instance = null;
-    private String workingDir;
+    private final String workingDir;
     private String uiPath = null;
 
     // Application Components
@@ -138,6 +138,15 @@ public class NexusApplication {
 
         settings.ensure("settings.library.instance.last","");
         localSettings.setLastInstanceId(settings.getString("settings.library.instance.last"));
+
+        settings.ensure("settings.java.path21",workingDir+"/libs/jre-21");
+        localSettings.setJre21path(settings.getString("settings.java.path21"));
+
+        settings.ensure("settings.java.path17",workingDir+"/libs/jre-17");
+        localSettings.setJre17path(settings.getString("settings.java.path17"));
+
+        settings.ensure("settings.java.path8",workingDir+"/libs/jre-8");
+        localSettings.setJre8path(settings.getString("settings.java.path8"));
 
         instanceManager = new LocalInstanceManager(new JsonStorage(workingDirFile.getAbsolutePath() + "/data/instances.json"));
 

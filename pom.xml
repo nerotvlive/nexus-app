@@ -54,12 +54,12 @@
         <dependency>
             <groupId>live.nerotv</groupId>
             <artifactId>a-minecraft-launcher</artifactId>
-            <version>2025.9</version>
+            <version>2025.12.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.5.4</version>
+            <version>3.5.8</version>
         </dependency>
         <dependency>
             <groupId>com.starxg</groupId>
@@ -75,6 +75,11 @@
             <groupId>com.github.MinnDevelopment</groupId>
             <artifactId>java-discord-rpc</artifactId>
             <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.flowarg</groupId>
+            <artifactId>azuljavadownloader</artifactId>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
 

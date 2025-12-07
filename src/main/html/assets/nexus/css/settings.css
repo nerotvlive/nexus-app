@@ -84,7 +84,7 @@ table.table {
                     display: flex;
                     overflow: hidden;
                     width: fit-content;
-                    max-width: 20vw;
+                    max-width: 50vw;
                     text-overflow: ellipsis;
                     padding: 0 0.5rem;
                     border-radius: var(--bs-border-radius-lg);
@@ -104,6 +104,16 @@ table.table {
                     background: var(--bs-body-bg);
                     box-shadow: 0 0 0.4rem black;
                     border: 1px solid var(--bs-border-color-translucent);
+                }
+
+                .path-value.disabled {
+                    z-index: unset;
+                    max-width: 50vw;
+                    cursor: unset;
+                    color: unset;
+                    background: unset;
+                    box-shadow: unset;
+                    border: unset;
                 }
 
                 .text-switch {

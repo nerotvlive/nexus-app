@@ -1,5 +1,6 @@
 #search {
     background: url("../img/bg/discover-home.png") no-repeat center;
+    background-size: cover;
     z-index: 100;
     position: absolute;
     top: 0;

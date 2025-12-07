@@ -1076,8 +1076,8 @@ body {
     --bs-body-bg: #d2d2d2;
     --bs-body-bg-rgb: 210, 210, 210;
     --bs-dark-bg-subtle: #fff;
-    --bs-border-color: #8c8c8c;
-    --bs-border-color-translucent: #8c8c8c;
+    --bs-border-color: #9a9a9a;
+    --bs-border-color-translucent: #9a9a9a;
     --nex-submenu-bg: var(--nex-brighter-300);
 
     .menu-panel {

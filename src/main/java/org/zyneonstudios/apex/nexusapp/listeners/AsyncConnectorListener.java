@@ -8,6 +8,7 @@ import com.zyneonstudios.nexus.desktop.frame.web.WebFrame;
 import com.zyneonstudios.nexus.instance.ReadableZynstance;
 import com.zyneonstudios.nexus.instance.Zynstance;
 import com.zyneonstudios.nexus.instance.ZynstanceBuilder;
+import com.zyneonstudios.nexus.utilities.file.FileActions;
 import com.zyneonstudios.verget.Verget;
 import com.zyneonstudios.verget.fabric.FabricVerget;
 import com.zyneonstudios.verget.minecraft.MinecraftVerget;
@@ -25,10 +26,7 @@ import org.zyneonstudios.apex.nexusapp.search.modrinth.ModrinthResource;
 import org.zyneonstudios.apex.nexusapp.search.modrinth.search.facets.categories.ModrinthCategory;
 import org.zyneonstudios.apex.nexusapp.search.zyndex.ZyndexIntegration;
 import org.zyneonstudios.apex.nexusapp.search.zyndex.local.LocalInstance;
-import org.zyneonstudios.apex.nexusapp.utilities.DiscordRichPresence;
-import org.zyneonstudios.apex.nexusapp.utilities.FileUtilities;
-import org.zyneonstudios.apex.nexusapp.utilities.MicrosoftAuthenticator;
-import org.zyneonstudios.apex.nexusapp.utilities.StringUtility;
+import org.zyneonstudios.apex.nexusapp.utilities.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -162,10 +160,114 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
         } else if(s.startsWith("settings.")) {
             s = s.replace("settings.", "");
             if(s.equals("init")) {
+                if(!NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPath().equals(NexusApplication.getInstance().getWorkingPath()+"/instances/")) {
+                    frame.executeJavaScript("document.querySelector('.instance-default-path').querySelector('.right').querySelector('.d-none').classList.remove('d-none');");
+                }
+
                 long maxMemoryInMegabytes = ((com.sun.management.OperatingSystemMXBean) java.lang.management.ManagementFactory.getOperatingSystemMXBean()).getTotalMemorySize() / (1024 * 1024);
                 frame.executeJavaScript("document.querySelector('.instance-default-path-value').innerText = '" + NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPath() + "';");
-                frame.executeJavaScript("document.querySelector('.instance-JavaMemoryDisplay').min = 1024; document.querySelector('.instance-JavaMemoryDisplay').max = "+maxMemoryInMegabytes+"; document.querySelector('.instance-JavaMemoryDisplay').value = "+NexusApplication.getInstance().getLocalSettings().getDefaultMemory()+";");
-                frame.executeJavaScript("document.querySelector('.instance-JavaMemory').min = 1024; document.querySelector('.instance-JavaMemory').max = "+maxMemoryInMegabytes+"; document.querySelector('.instance-JavaMemory').value = "+NexusApplication.getInstance().getLocalSettings().getDefaultMemory()+";");
+                frame.executeJavaScript("document.querySelector('.instance-JavaMemoryDisplay').min = 1024; document.querySelector('.instance-JavaMemoryDisplay').max = " + maxMemoryInMegabytes + "; document.querySelector('.instance-JavaMemoryDisplay').value = " + NexusApplication.getInstance().getLocalSettings().getDefaultMemory() + ";");
+                frame.executeJavaScript("document.querySelector('.instance-JavaMemory').min = 1024; document.querySelector('.instance-JavaMemory').max = " + maxMemoryInMegabytes + "; document.querySelector('.instance-JavaMemory').value = " + NexusApplication.getInstance().getLocalSettings().getDefaultMemory() + ";");
+            } else if(s.startsWith("init.")) {
+                s = s.replace("init.", "");
+                if(s.equals("java")) {
+                    String p21 = NexusApplication.getInstance().getLocalSettings().getJava21Path();
+                    String p17 = NexusApplication.getInstance().getLocalSettings().getJava17Path();
+                    String p8 = NexusApplication.getInstance().getLocalSettings().getJava8Path();
+                    if(!p21.equals(NexusApplication.getInstance().getWorkingPath()+"/libs/jre-21")) {
+                        frame.executeJavaScript("document.querySelector('.java-21-path-value').querySelector('.right').querySelector('.d-none').classList.remove('d-none');");
+                    }
+                    if(!p17.equals(NexusApplication.getInstance().getWorkingPath()+"/libs/jre-17")) {
+                        frame.executeJavaScript("document.querySelector('.java-17-path-value').querySelector('.right').querySelector('.d-none').classList.remove('d-none');");
+                    }
+                    if(!p8.equals(NexusApplication.getInstance().getWorkingPath()+"/libs/jre-8")) {
+                        frame.executeJavaScript("document.querySelector('.java-8-path-value').querySelector('.right').querySelector('.d-none').classList.remove('d-none');");
+                    }
+                    frame.executeJavaScript("document.querySelector('.jre-21-path-value').innerText = '" + p21.replace("\\","/") + "';","document.querySelector('.jre-17-path-value').innerText = '" + p17.replace("\\","/") + "';","document.querySelector('.jre-8-path-value').innerText = '" + p8.replace("\\","/") + "';");
+
+                    if(JavaUtilities.getJavaVersion(p8)==null) {
+                        frame.executeJavaScript("document.querySelector('.jre-8-installed').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-8-warning').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-8-notInstalled').classList.remove('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-8-install-button').innerText = 'Install';");
+                        frame.executeJavaScript("document.querySelector('.jre-8-warning').innerText = '';");
+                    } else if(Objects.equals(JavaUtilities.getJavaVersion(p8), "8")) {
+                        frame.executeJavaScript("document.querySelector('.jre-8-installed').classList.remove('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-8-install-button').innerText = 'Reinstall';");
+                        frame.executeJavaScript("document.querySelector('.jre-8-warning').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-8-notInstalled').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-8-warning').innerText = '';");
+                    } else {
+                        frame.executeJavaScript("document.querySelector('.jre-8-installed').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-8-notInstalled').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-8-warning').innerText = 'Wrong Java version installed! Java "+ JavaUtilities.getJavaVersion(p8)+" is installed.';");
+                        frame.executeJavaScript("document.querySelector('.jre-8-warning').classList.remove('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-8-install-button').innerText = 'Fix';");
+                    }
+
+                    if(JavaUtilities.getJavaVersion(p17)==null) {
+                        frame.executeJavaScript("document.querySelector('.jre-17-installed').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-17-warning').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-17-notInstalled').classList.remove('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-17-warning').innerText = '';");
+                        frame.executeJavaScript("document.querySelector('.jre-17-install-button').innerText = 'Install';");
+                    } else if(Objects.equals(JavaUtilities.getJavaVersion(p17), "17")) {
+                        frame.executeJavaScript("document.querySelector('.jre-17-installed').classList.remove('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-17-install-button').innerText = 'Reinstall';");
+                        frame.executeJavaScript("document.querySelector('.jre-17-warning').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-17-notInstalled').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-17-warning').innerText = '';");
+                    } else {
+                        frame.executeJavaScript("document.querySelector('.jre-17-installed').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-17-notInstalled').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-17-warning').innerText = 'Wrong Java version installed! Java "+ JavaUtilities.getJavaVersion(p17)+" is installed.';");
+                        frame.executeJavaScript("document.querySelector('.jre-17-warning').classList.remove('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-17-install-button').innerText = 'Fix';");
+                    }
+
+                    if(JavaUtilities.getJavaVersion(p21)==null) {
+                        frame.executeJavaScript("document.querySelector('.jre-21-installed').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-21-warning').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-21-notInstalled').classList.remove('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-21-warning').innerText = '';");
+                        frame.executeJavaScript("document.querySelector('.rß').innerText = 'Install';");
+                    } else if(Objects.equals(JavaUtilities.getJavaVersion(p21), "21")) {
+                        frame.executeJavaScript("document.querySelector('.jre-21-installed').classList.remove('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-21-install-button').innerText = 'Reinstall';");
+                        frame.executeJavaScript("document.querySelector('.jre-21-warning').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-21-notInstalled').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-21-warning').innerText = '';");
+                    } else {
+                        frame.executeJavaScript("document.querySelector('.jre-21-installed').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-21-notInstalled').classList.add('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-21-warning').innerText = 'Wrong Java version installed! Java "+ JavaUtilities.getJavaVersion(p21)+" is installed.';");
+                        frame.executeJavaScript("document.querySelector('.jre-21-warning').classList.remove('d-none');");
+                        frame.executeJavaScript("document.querySelector('.jre-21-install-button').innerText = 'Fix';");
+                    }
+                }
+            } else if(s.startsWith("installJava.")) {
+                s = s.replaceFirst("installJava.","");
+                switch (s) {
+                    case "8" -> {if(new File(NexusApplication.getInstance().getLocalSettings().getJava8Path()).exists()) { FileActions.deleteFolder(new File(NexusApplication.getInstance().getLocalSettings().getJava8Path())); }}
+                    case "17" -> {if(new File(NexusApplication.getInstance().getLocalSettings().getJava17Path()).exists()) { FileActions.deleteFolder(new File(NexusApplication.getInstance().getLocalSettings().getJava17Path())); }}
+                    case "21" -> {if(new File(NexusApplication.getInstance().getLocalSettings().getJava21Path()).exists()) { FileActions.deleteFolder(new File(NexusApplication.getInstance().getLocalSettings().getJava21Path())); }}
+                }
+                JavaUtilities.installJava(s,"default");
+            } else if(s.startsWith("reset.")) {
+                s = s.replace("reset.", "");
+                if(s.startsWith("javaPath.")) {
+                    s = s.replaceFirst("javaPath.","");
+                    switch (s) {
+                        case "21" -> NexusApplication.getInstance().getLocalSettings().setJre21path(NexusApplication.getInstance().getWorkingPath()+"/libs/jre-21");
+                        case "17" -> NexusApplication.getInstance().getLocalSettings().setJre17path(NexusApplication.getInstance().getWorkingPath()+"/libs/jre-17");
+                        case "8" -> NexusApplication.getInstance().getLocalSettings().setJre8path(NexusApplication.getInstance().getWorkingPath()+"/libs/jre-8");
+                    }
+                    resolveMessage("settings.init.java");
+                } else if(s.equals("instancePath")) {
+                    String path = NexusApplication.getInstance().getWorkingPath()+"/instances/";
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftPath(path);
+                    frame.executeJavaScript("document.querySelector('.instance-default-path-value').innerText = '" + path + "';");
+                }
             } else if(s.startsWith("select.")) {
                 s = s.replace("select.", "");
                 if(s.equals("instancePath")) {
@@ -180,11 +282,67 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                             }
                             NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftPath(pathString);
                             frame.executeJavaScript("document.querySelector('.instance-default-path-value').innerText = '" + pathString + "';");
+                            if(!pathString.equals(NexusApplication.getInstance().getWorkingPath()+"/instances/")) {
+                                frame.executeJavaScript("document.querySelector('.instance-default-path').querySelector('.right').querySelector('.d-none').classList.remove('d-none');");
+                            }
+                        } else {
+                            NexusApplication.getLogger().err("[NEXUS] The selected path is not a directory: " + path.getAbsolutePath());
+                        }
+                    }
+                } else if(s.startsWith("javaPath.")) {
+                    s = s.replaceFirst("javaPath.","");
+                    JnaFileChooser fc = new JnaFileChooser();
+                    fc.setMode(JnaFileChooser.Mode.Directories);
+                    if (fc.showOpenDialog(frame)) {
+                        File path = fc.getSelectedFile();
+                        if(path.isDirectory()) {
+                            String pathString = path.getAbsolutePath().replace("\\","/");
+                            if(!pathString.endsWith("/")) {
+                                pathString += "/";
+                            }
+                            switch (s) {
+                                case "21" -> NexusApplication.getInstance().getLocalSettings().setJre21path(pathString);
+                                case "17" -> NexusApplication.getInstance().getLocalSettings().setJre17path(pathString);
+                                case "8" -> NexusApplication.getInstance().getLocalSettings().setJre8path(pathString);
+                            }
+                            resolveMessage("settings.init.java");
                         } else {
                             NexusApplication.getLogger().err("[NEXUS] The selected path is not a directory: " + path.getAbsolutePath());
                         }
                     }
                 }
+            } else if(s.startsWith("open.")) {
+                s = s.replace("open.", "");
+                if (s.startsWith("javaPath.")) {
+                    s = s.replaceFirst("javaPath.", "");
+                    try {
+                        if (Desktop.isDesktopSupported()) {
+                            String path = null;
+                            switch (s) {
+                                case "21" -> path = NexusApplication.getInstance().getLocalSettings().getJava21Path();
+                                case "17" -> path = NexusApplication.getInstance().getLocalSettings().getJava17Path();
+                                case "8" -> path = NexusApplication.getInstance().getLocalSettings().getJava8Path();
+                            }
+                            if (path != null) {
+                                new File(path).mkdirs();
+                                Desktop.getDesktop().open(new File(path));
+                            }
+                        }
+                    } catch (Exception e) {
+                        NexusApplication.getLogger().err(e.getMessage());
+                    }
+                } else if (s.equals("instancePath")) {
+                    try {
+                        if (Desktop.isDesktopSupported()) {
+                            if(Desktop.isDesktopSupported()) {
+                                Desktop.getDesktop().open(new File(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPath()));
+                            }
+                        }
+                    } catch (Exception e) {
+                        NexusApplication.getLogger().err(e.getMessage());
+                    }
+                }
+
             } else if(s.startsWith("set.")) {
                 s = s.replace("set.","");
                 if(s.startsWith("defaultMemory.")) {
@@ -431,16 +589,19 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                     }
                 }
             } else if(s.startsWith("delete.")) {
+                frame.executeJavaScript("document.body.querySelector('.settings-deletion-delete').innerHTML = 'Deleting instance...';");
                 String id = s.replace("delete.", "");
                 NexusApplication.getInstance().getInstanceManager().removeInstance(id);
                 String absolutePath = new File(id).getAbsolutePath();
                 System.gc();
                 try {
                     if(!FileUtilities.deleteDirectory(new File(absolutePath))) {
-                        throw new RuntimeException("Couldn't delete instance folder: "+id);
-                    } else {
-                        frame.getBrowser().reload();
+                        Thread.sleep(1000);
+                        if(!FileUtilities.deleteDirectory(new File(absolutePath))) {
+                            throw new RuntimeException("Couldn't delete instance folder: "+absolutePath);
+                        }
                     }
+                    frame.getBrowser().reload();
                 } catch (Exception e) {
                     NexusApplication.getLogger().err(e.getMessage());
                 }

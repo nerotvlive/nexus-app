@@ -10,50 +10,53 @@
             <!-- Button for Appearance Settings -->
             <button id="appearance-settings-button" onclick="showSettingsCategory('appearance-settings');" type="button" class="btn btn-nex-secondary">
                 <i class="bi bi-brush"></i>
-                <span>Appearance settings</span>
+                <span>Appearance</span>
             </button>
             <!-- Button for Download Settings -->
-            <button id="download-settings-button" onclick="showSettingsCategory('download-settings');" type="button" class="btn btn-nex-secondary">
+            <button id="download-settings-button" onclick="showSettingsCategory('download-settings');" type="button" class="btn btn-nex-secondary d-none">
                 <i class="bi bi-download"></i>
                 <span>Download settings</span>
             </button>
             <!-- Button for Java Settings -->
-            <button id="java-settings-button" onclick="showSettingsCategory('java-settings');" type="button" class="btn btn-nex-secondary">
+            <button id="java-settings-button" onclick="showSettingsCategory('java-settings'); console.log('[CONNECTOR] settings.init.java');" type="button" class="btn btn-nex-secondary">
                 <i class="bi bi-cup-hot"></i>
-                <span>Java settings</span>
+                <span>Java versions</span>
             </button>
             <!-- Button for Module Settings -->
-            <button id="module-settings-button" onclick="showSettingsCategory('module-settings');" type="button" class="btn btn-nex-secondary">
+            <button id="module-settings-button" onclick="showSettingsCategory('module-settings');" type="button" class="btn btn-nex-secondary d-none">
                 <i class="bi bi-puzzle-fill"></i>
                 <span>Module settings</span>
             </button>
-        </div>
-        <div class="card-header" style="border-top: 1px solid var(--bs-border-color-translucent);">
-            <strong>User settings</strong>
-        </div>
-        <div class="submenu-group">
-            <!-- Button for Account Settings -->
-            <button id="account-settings-button" onclick="showSettingsCategory('account-settings'); console.log('[CONNECTOR] initAccountSettings');" type="button" class="btn btn-nex-secondary">
+            <button id="account-settings-button" onclick="showSettingsCategory('account-settings'); console.log('[CONNECTOR] initAccountSettings'); console.log('[CONNECTOR] initDiscordRPC');" type="button" class="btn btn-nex-secondary">
                 <i class="bi bi-person-circle"></i>
-                <span>Account settings</span>
+                <span>Accounts & Privacy</span>
             </button>
-
-            <!-- Button for Privacy Settings -->
-            <button id="privacy-settings-button" onclick="showSettingsCategory('privacy-settings'); console.log('[CONNECTOR] initDiscordRPC');" type="button" class="btn btn-nex-secondary">
-                <i class="bi bi-shield"></i>
-                <span>Privacy settings</span>
-            </button>
-        </div>
-        <div class="card-header" style="border-top: 1px solid var(--bs-border-color-translucent);">
-            <strong>Instance settings</strong>
-        </div>
-        <div class="submenu-group">
             <!-- Button for Default Instance Settings -->
             <button id="default-instance-settings-button" onclick="showSettingsCategory('default-instance-settings');" type="button" class="btn btn-nex-secondary">
                 <i class="bi bi-controller"></i>
                 <span>Default instance settings</span>
             </button>
         </div>
+        <!--div class="card-header" style="border-top: 1px solid var(--bs-border-color-translucent);">
+            <strong>User settings</strong>
+        </div>
+        <div class="submenu-group">
+            <button id="account-settings-button" onclick="showSettingsCategory('account-settings'); console.log('[CONNECTOR] initAccountSettings');" type="button" class="btn btn-nex-secondary">
+                <i class="bi bi-person-circle"></i>
+                <span>Account settings</span>
+            </button>
+
+            <button id="privacy-settings-button" onclick="showSettingsCategory('privacy-settings'); console.log('[CONNECTOR] initDiscordRPC');" type="button" class="btn btn-nex-secondary">
+                <i class="bi bi-shield"></i>
+                <span>Privacy settings</span>
+            </button>
+        </div-->
+        <!--div class="card-header" style="border-top: 1px solid var(--bs-border-color-translucent);">
+            <strong>Instance settings</strong>
+        </div>
+        <div class="submenu-group">
+
+        </div-->
         <div class="card-header" style="border-top: 1px solid var(--bs-border-color-translucent);">
             <strong>Actions</strong>
         </div>
@@ -296,31 +299,31 @@
                     <!-- Java 21 path selection row -->
                     <tr class="java-21-path-value">
                         <td class="left" colspan="2">Java 21 installation path <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you select an installed Java 21 version or the path where the NEXUS App should install Java 21."></i></td>
-                        <td>
-                            <span class="java-21-path-value path-value">C:\Program Files\Java\jdk-21\</span>
+                        <td class="center" onclick="console.log('[CONNECTOR] settings.open.javaPath.21');">
+                            <span class="jre-21-path-value path-value">${jre.21.path}</span>
                         </td>
                         <td class="right">
-                            <a>Select path</a>
+                            <a class="d-none" onclick="console.log('[CONNECTOR] settings.reset.javaPath.21'); this.classList.add('d-none');"><i class="bi bi-arrow-clockwise" style="cursor: pointer"></i></a> <a onclick="console.log('[CONNECTOR] settings.select.javaPath.21')">Select path</a>
                         </td>
                     </tr>
-                    <!-- Java 21 path selection row -->
-                    <tr class="java-11-path-value">
-                        <td class="left" colspan="2">Java 11 installation path <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you select an installed Java 11 version or the path where the NEXUS App should install Java 21."></i></td>
-                        <td>
-                            <span class="java-11-path-value path-value">C:\Program Files\Java\jdk-11\</span>
+                    <!-- Java 17 path selection row -->
+                    <tr class="java-17-path-value">
+                        <td class="left" colspan="2">Java 17 installation path <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you select an installed Java 17 version or the path where the NEXUS App should install Java 17."></i></td>
+                        <td class="center" onclick="console.log('[CONNECTOR] settings.open.javaPath.17');">
+                            <span class="jre-17-path-value path-value">${jre.17.path}</span>
                         </td>
                         <td class="right">
-                            <a>Select path</a>
+                            <a class="d-none" onclick="console.log('[CONNECTOR] settings.reset.javaPath.17'); this.classList.add('d-none');"><i class="bi bi-arrow-clockwise" style="cursor: pointer"></i></a> <a onclick="console.log('[CONNECTOR] settings.select.javaPath.17')">Select path</a>
                         </td>
                     </tr>
-                    <!-- Java 21 path selection row -->
+                    <!-- Java 8 path selection row -->
                     <tr class="java-8-path-value last">
-                        <td class="left" colspan="2">Java 8 installation path <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you select an installed Java 8 version or the path where the NEXUS App should install Java 21."></i></td>
-                        <td>
-                            <span class="java-8-path-value path-value">C:\Program Files\Java\jdk-8\</span>
+                        <td class="left" colspan="2">Java 8 installation path <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you select an installed Java 8 version or the path where the NEXUS App should install Java 8."></i></td>
+                        <td class="center" onclick="console.log('[CONNECTOR] settings.open.javaPath.8');">
+                            <span class="jre-8-path-value path-value">${jre.8.path}</span>
                         </td>
                         <td class="right">
-                            <a>Select path</a>
+                            <a class="d-none" onclick="console.log('[CONNECTOR] settings.reset.javaPath.8'); this.classList.add('d-none');"><i class="bi bi-arrow-clockwise" style="cursor: pointer"></i></a> <a onclick="console.log('[CONNECTOR] settings.select.javaPath.8')">Select path</a>
                         </td>
                     </tr>
                     </tbody>
@@ -336,30 +339,48 @@
                     <tr class="java-21-installer">
                         <td class="left" colspan="2">Install Java 21 <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="This action lets you (re)install Java 21 in the specified path."></i></td>
                         <td>
-                            <span class="java-8-path-value path-value">No Java detected</span>
+                            <div class="alert d-none alert-danger jre-21-notInstalled" role="alert">
+                                Java 21 is not installed!
+                            </div>
+                            <div class="alert alert-warning jre-21-warning" role="alert">Fetching...</div>
+                            <div class="alert d-none alert-success jre-21-installed" role="alert">
+                                Java 21 is installed!
+                            </div>
                         </td>
                         <td class="right">
-                            <a>Install</a>
+                            <a class="jre-21-install-button text-decoration-none" onclick="console.log('[CONNECTOR] settings.installJava.21'); this.innerText = 'Installing Java 21...';"></a>
                         </td>
                     </tr>
-                    <!-- Java 11 installation button -->
-                    <tr class="java-11-installer">
-                        <td class="left" colspan="2">Install Java 11 <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="This action lets you (re)install Java 11 in the specified path."></i></td>
+                    <!-- Java 17 installation button -->
+                    <tr class="java-17-installer">
+                        <td class="left" colspan="2">Install Java 17 <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="This action lets you (re)install Java 17 in the specified path."></i></td>
                         <td>
-                            <span class="java-8-path-value path-value">No Java detected</span>
+                            <div class="alert d-none alert-danger jre-17-notInstalled" role="alert">
+                                Java 17 is not installed!
+                            </div>
+                            <div class="alert alert-warning jre-17-warning" role="alert">Fetching...</div>
+                            <div class="alert d-none alert-success jre-17-installed" role="alert">
+                                Java 17 is installed!
+                            </div>
                         </td>
                         <td class="right">
-                            <a>Install</a>
+                            <a class="jre-17-install-button text-decoration-none" onclick="console.log('[CONNECTOR] settings.installJava.17'); this.innerText = 'Installing Java 17...';"></a>
                         </td>
                     </tr>
                     <!-- Java 8 installation button -->
                     <tr class="java-8-installer last">
                         <td class="left" colspan="2">Install Java 8 <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="This action lets you (re)install Java 8 in the specified path."></i></td>
                         <td>
-                            <span class="java-8-path-value path-value">No Java detected</span>
+                            <div class="alert d-none alert-danger jre-8-notInstalled" role="alert">
+                                Java 8 is not installed!
+                            </div>
+                            <div class="alert alert-warning jre-8-warning" role="alert">Fetching...</div>
+                            <div class="alert d-none alert-success jre-8-installed" role="alert">
+                                Java 8 is installed!
+                            </div>
                         </td>
                         <td class="right">
-                            <a>Install</a>
+                            <a class="jre-8-install-button text-decoration-none" onclick="console.log('[CONNECTOR] settings.installJava.8'); this.innerText = 'Installing Java 8...';"></a>
                         </td>
                     </tr>
                     </tbody>
@@ -416,17 +437,49 @@
                     </tbody>
                 </table>
             </div>
+            <div id="privacy-settings" class="p-0 m-0">
+                <div class="settings-section">
+                    <div>
+                        <strong>User related privacy settings</strong>
+                    </div>
+                    <table class="table m-0">
+                        <tbody>
+                        <!-- Telemetry Toggle Row -->
+                        <tr class="telemetry-switch disabled">
+                            <td class="left" colspan="2">Enable telemetry <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="For now, telemetry is disabled by default and can't be enabled. Perhaps this option will be removed entirely after the beta anyway."></i></td>
+                            <td class="right">
+                                <div class="form-switch">
+                                    <label>
+                                        <input disabled class="form-check-input privacy-enableTelemetry switch" type="checkbox" role="switch">
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Discord RPC Toggle Row -->
+                        <tr class="discord-rpc-switch last">
+                            <td class="left" colspan="2">Enable Discord Rich Presence <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose whether you want to use Discord Rich Presence to show your friends that you are using the NEXUS App."></i></td>
+                            <td class="right">
+                                <div class="form-switch">
+                                    <label>
+                                        <input class="form-check-input privacy-enableDiscordRPC switch" type="checkbox" onchange="console.log('[CONNECTOR] discordrpc.'+this.checked);" role="switch">
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <!-- Privacy Settings Section -->
-        <div id="privacy-settings" class="settings-card overflow-auto flex-column gap-3">
+        <!--div id="privacy-settings" class="settings-card overflow-auto flex-column gap-3">
             <div class="settings-section">
                 <div>
                     <strong>User related privacy settings</strong>
                 </div>
                 <table class="table m-0">
                     <tbody>
-                    <!-- Telemetry Toggle Row -->
                     <tr class="telemetry-switch disabled">
                         <td class="left" colspan="2">Enable telemetry <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="For now, telemetry is disabled by default and can't be enabled. Perhaps this option will be removed entirely after the beta anyway."></i></td>
                         <td class="right">
@@ -437,21 +490,10 @@
                             </div>
                         </td>
                     </tr>
-                    <!-- Discord RPC Toggle Row -->
-                    <tr class="discord-rpc-switch last">
-                        <td class="left" colspan="2">Enable Discord Rich Presence <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose whether you want to use Discord Rich Presence to show your friends that you are using the NEXUS App."></i></td>
-                        <td class="right">
-                            <div class="form-switch">
-                                <label>
-                                    <input class="form-check-input privacy-enableDiscordRPC switch" type="checkbox" onchange="console.log('[CONNECTOR] discordrpc.'+this.checked);" role="switch">
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div-->
 
         <!-- Default Instance Settings Section -->
         <div id="default-instance-settings" class="settings-card overflow-auto flex-column gap-3">
@@ -463,11 +505,11 @@
                     <tbody>
                     <tr class="instance-default-path last">
                         <td class="left" colspan="2">Default instance installation path <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you select an installed Java 8 version or the path where the NEXUS App should install Java 21."></i></td>
-                        <td>
+                        <td class="center" onclick="console.log('[CONNECTOR] settings.open.instancePath');">
                             <span class="instance-default-path-value path-value"></span>
                         </td>
                         <td class="right">
-                            <a onclick="console.log('[CONNECTOR] settings.select.instancePath')">Select path</a>
+                            <a class="d-none" onclick="console.log('[CONNECTOR] settings.reset.instancePath'); this.classList.add('d-none');"><i class="bi bi-arrow-clockwise" style="cursor: pointer"></i></a> <a onclick="console.log('[CONNECTOR] settings.select.instancePath')">Select path</a>
                         </td>
                     </tr>
                     </tbody>

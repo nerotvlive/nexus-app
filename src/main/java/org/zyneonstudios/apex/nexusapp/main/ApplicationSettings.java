@@ -13,6 +13,9 @@ public class ApplicationSettings {
     private boolean discoverSearchModrinth = true;
     private String defaultMinecraftPath = "instances/";
     private String lastInstanceId = "";
+    private String jre21path = "";
+    private String jre17path = "";
+    private String jre8path = "";
 
     public HashMap<String, Object> getTemporarySettings() {
         return temporarySettings;
@@ -48,6 +51,42 @@ public class ApplicationSettings {
 
     public void removeTemporarySetting(String path) {
         temporarySettings.remove(path);
+    }
+
+    public String getJava21Path() {
+        if(jre21path==null) {
+            return NexusApplication.getInstance().getWorkingPath()+"/libs/jre-21";
+        }
+        return jre21path;
+    }
+
+    public String getJava17Path() {
+        if(jre17path==null) {
+            return NexusApplication.getInstance().getWorkingPath()+"/libs/jre-17";
+        }
+        return jre17path;
+    }
+
+    public String getJava8Path() {
+        if(jre8path==null) {
+            return NexusApplication.getInstance().getWorkingPath()+"/libs/jre-8";
+        }
+        return jre8path;
+    }
+
+    public void setJre21path(String jre21path) {
+        this.jre21path = jre21path;
+        NexusApplication.getInstance().getSettings().set("settings.java.path21", jre21path);
+    }
+
+    public void setJre17path(String jre17path) {
+        this.jre17path = jre17path;
+        NexusApplication.getInstance().getSettings().set("settings.java.path17", jre17path);
+    }
+
+    public void setJre8path(String jre8path) {
+        this.jre8path = jre8path;
+        NexusApplication.getInstance().getSettings().set("settings.java.path8", jre8path);
     }
 
     public int getDefaultMemory() {
@@ -105,6 +144,9 @@ public class ApplicationSettings {
     }
 
     public String getDefaultMinecraftPath() {
+        if(defaultMinecraftPath==null) {
+            return NexusApplication.getInstance().getWorkingPath()+"/instances/";
+        }
         return defaultMinecraftPath;
     }
 
