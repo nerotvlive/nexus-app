@@ -877,60 +877,30 @@ function closeContextMenu() {
     }
 }
 
-let arrayBoxMap = new Map();
 function initArrayBoxes() {
     const arrayBoxes = document.querySelectorAll('.array-box');
     arrayBoxes.forEach(box => {
-        if(box.id) {
-            box.innerHTML = "<input type='text' class='tag-input' placeholder='Write here to add...' onkeydown='if (event.key === `Enter`) { event.preventDefault(); if(this.value&&this.value.replaceAll(` `,``)) { addToArrayBox(this.parentElement.id,this.value,true); this.value = ``; }}' style='outline: none !important;'>";            let array = [];
-            if(getStorageItem("arrayBoxMap."+box.id)) {
-                array = JSON.parse(getStorageItem("arrayBoxMap."+box.id));
-            }
-            array.forEach((item) => {
-                addToArrayBox(box.id,item,false);
-            })
-            if(!arrayBoxMap.has(box.id)) {
-                arrayBoxMap.set(box.id, array);
-            }
-        }
+        initArrayBox(box);
     });
 }
 
-function removeFromArrayBox(boxId,value,save) {
-    const box = document.getElementById(boxId);
-    if(save) {
-        let array = [];
-        if(arrayBoxMap.has(box.id)) {
-            array = arrayBoxMap.get(box.id);
-            arrayBoxMap.delete(box.id)
-        }
-        array = array.filter(element => element !== value);
-        setStorageItem("arrayBoxMap."+box.id,JSON.stringify(array))
-        arrayBoxMap.set(box.id, array);
+function initArrayBox(box) {
+    if(box.id) {
+        box.innerHTML = "<input type='text' class='tag-input' placeholder='Write here to add...' onkeydown='if (event.key === `Enter`) { event.preventDefault(); if(this.value&&this.value.replaceAll(` `,``)) { console.log(`[CONNECTOR] settings.add."+box.id+".`+this.value+``); this.value = ``; }}' style='outline: none !important;'>";
     }
 }
 
-function addToArrayBox(boxId,value,save) {
+function addToArrayBox(boxId,value,onclick_) {
     const box = document.getElementById(boxId);
-    appendSafeTag(box,value);
-    if(save) {
-        let array = [];
-        if(arrayBoxMap.has(box.id)) {
-            array = arrayBoxMap.get(box.id);
-            arrayBoxMap.delete(box.id)
-        }
-        array.push(value);
-        setStorageItem("arrayBoxMap."+box.id,JSON.stringify(array))
-        arrayBoxMap.set(box.id, array);
-    }
+    appendSafeTag(box, value, onclick_);
     box.querySelector("input").focus();
 }
 
-function appendSafeTag(boxElement, value) {
+function appendSafeTag(boxElement, value, onclick_) {
     const tempElement = document.createElement('div');
     tempElement.textContent = value;
     const safeValue = tempElement.innerHTML;
-    boxElement.innerHTML += `<div><span data-value="${safeValue.replace(/"/g, '&quot;')}" onmouseover="startScrolling(this)" onmouseout="stopScrolling(this)">${safeValue}</span><i onclick='removeFromArrayBox(parentElement.parentElement.id,parentElement.querySelector("span").dataset.value,true); parentElement.remove();' class='bi bi-x-lg'></i></div>`;
+    boxElement.innerHTML += `<div><span data-value="${safeValue.replace(/"/g, '&quot;')}" onmouseover="startScrolling(this)" onmouseout="stopScrolling(this)">${safeValue}</span><i onclick="console.log('[CONNECTOR] `+onclick_+`');" class='bi bi-x-lg'></i></div>`;
 }
 
 let scrollInterval;

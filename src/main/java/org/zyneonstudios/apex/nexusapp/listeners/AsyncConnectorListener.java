@@ -170,9 +170,33 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
             } else if(s.startsWith("init.")) {
                 s = s.replace("init.", "");
                 if(s.equals("defaultInstanceSettings")) {
-                    frame.executeJavaScript("document.querySelector('.instance-useFullscreen').checked = "+NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftFullscreen()+";");
-                    frame.executeJavaScript("document.querySelector('.instance-windowWidth').value = "+NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftWindowWidth()+";");
-                    frame.executeJavaScript("document.querySelector('.instance-windowHeight').value = "+NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftWindowHeight()+";");
+                    frame.executeJavaScript("initArrayBox(document.getElementById('pre-launch-hook-array-box'));","initArrayBox(document.getElementById('on-launch-hook-array-box'));","initArrayBox(document.getElementById('on-exit-hook-array-box'));","initArrayBox(document.getElementById('jvm-args-array-box'));","initArrayBox(document.getElementById('env-args-array-box'));","document.querySelector('.instance-useFullscreen').checked = "+NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftFullscreen()+";","document.querySelector('.instance-windowWidth').value = "+NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftWindowWidth()+";","document.querySelector('.instance-windowHeight').value = "+NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftWindowHeight()+";");
+
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftJVMArgs().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftJVMArgs().get(i);
+                        frame.executeJavaScript("addToArrayBox('jvm-args-array-box',\""+arg+"\",'settings.remove.jvm-args-array-box."+i+"');");
+                    }
+
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftEnvArgs().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftEnvArgs().get(i);
+                        frame.executeJavaScript("addToArrayBox('env-args-array-box',\""+arg+"\",'settings.remove.env-args-array-box."+i+"');");
+                    }
+
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPreLaunchCommands().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPreLaunchCommands().get(i);
+                        frame.executeJavaScript("addToArrayBox('pre-launch-hook-array-box',\""+arg+"\",'settings.remove.pre-launch-hook-array-box."+i+"');");
+                    }
+
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnLaunchCommands().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnLaunchCommands().get(i);
+                        frame.executeJavaScript("addToArrayBox('on-launch-hook-array-box',\""+arg+"\",'settings.remove.on-launch-hook-array-box."+i+"');");
+                    }
+
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnExitCommands().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnExitCommands().get(i);
+                        frame.executeJavaScript("addToArrayBox('on-exit-hook-array-box',\""+arg+"\",'settings.remove.on-exit-hook-array-box."+i+"');");
+                    }
+
                 } else if(s.equals("java")) {
                     String p21 = NexusApplication.getInstance().getLocalSettings().getJava21Path();
                     String p17 = NexusApplication.getInstance().getLocalSettings().getJava17Path();
@@ -246,6 +270,102 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                         frame.executeJavaScript("document.querySelector('.jre-21-warning').innerText = 'Wrong Java version installed! Java "+ JavaUtilities.getJavaVersion(p21)+" is installed.';");
                         frame.executeJavaScript("document.querySelector('.jre-21-warning').classList.remove('d-none');");
                         frame.executeJavaScript("document.querySelector('.jre-21-install-button').innerText = 'Fix';");
+                    }
+                }
+            } else if(s.startsWith("add.")) {
+                s = s.replaceFirst("add.","");
+                if(s.startsWith("jvm-args-array-box.")) {
+                    s = s.replaceFirst("jvm-args-array-box.","");
+                    frame.executeJavaScript("initArrayBox(document.getElementById('jvm-args-array-box'));");
+                    NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftJVMArgs().add(s);
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftJVMArgs(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftJVMArgs());
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftJVMArgs().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftJVMArgs().get(i);
+                        frame.executeJavaScript("addToArrayBox('jvm-args-array-box',\""+arg+"\",'settings.remove.jvm-args-array-box."+i+"');");
+                    }
+                } else if(s.startsWith("env-args-array-box.")) {
+                    s = s.replaceFirst("env-args-array-box.","");
+                    frame.executeJavaScript("initArrayBox(document.getElementById('env-args-array-box'));");
+                    NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftEnvArgs().add(s);
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftEnvArgs(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftEnvArgs());
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftEnvArgs().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftEnvArgs().get(i);
+                        frame.executeJavaScript("addToArrayBox('env-args-array-box',\""+arg+"\",'settings.remove.env-args-array-box."+i+"');");
+                    }
+                } else if(s.startsWith("pre-launch-hook-array-box.")) {
+                    s = s.replaceFirst("pre-launch-hook-array-box.","");
+                    frame.executeJavaScript("initArrayBox(document.getElementById('pre-launch-hook-array-box'));");
+                    NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPreLaunchCommands().add(s);
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftPreLaunchCommands(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPreLaunchCommands());
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPreLaunchCommands().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPreLaunchCommands().get(i);
+                        frame.executeJavaScript("addToArrayBox('pre-launch-hook-array-box',\""+arg+"\",'settings.remove.pre-launch-hook-array-box."+i+"');");
+                    }
+                } else if(s.startsWith("on-launch-hook-array-box.")) {
+                    s = s.replaceFirst("on-launch-hook-array-box.","");
+                    frame.executeJavaScript("initArrayBox(document.getElementById('on-launch-hook-array-box'));");
+                    NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnLaunchCommands().add(s);
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftOnLaunchCommands(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnLaunchCommands());
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnLaunchCommands().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnLaunchCommands().get(i);
+                        frame.executeJavaScript("addToArrayBox('on-launch-hook-array-box',\""+arg+"\",'settings.remove.on-launch-hook-array-box."+i+"');");
+                    }
+                } else if(s.startsWith("on-exit-hook-array-box.")) {
+                    s = s.replaceFirst("on-exit-hook-array-box.","");
+                    frame.executeJavaScript("initArrayBox(document.getElementById('on-exit-hook-array-box'));");
+                    NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnExitCommands().add(s);
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftOnExitCommands(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnExitCommands());
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnExitCommands().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnExitCommands().get(i);
+                        frame.executeJavaScript("addToArrayBox('on-exit-hook-array-box',\""+arg+"\",'settings.remove.on-exit-hook-array-box."+i+"');");
+                    }
+                }
+            } else if(s.startsWith("remove.")) {
+                s = s.replaceFirst("remove.","");
+                if(s.startsWith("jvm-args-array-box.")) {
+                    int index = Integer.parseInt(s.replaceFirst("jvm-args-array-box.",""));
+                    frame.executeJavaScript("initArrayBox(document.getElementById('jvm-args-array-box'));");
+                    NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftJVMArgs().remove(index);
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftJVMArgs(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftJVMArgs());
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftJVMArgs().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftJVMArgs().get(i);
+                        frame.executeJavaScript("addToArrayBox('jvm-args-array-box',\""+arg+"\",'settings.remove.jvm-args-array-box."+i+"');");
+                    }
+                } else if(s.startsWith("env-args-array-box.")) {
+                    int index = Integer.parseInt(s.replaceFirst("env-args-array-box.",""));
+                    frame.executeJavaScript("initArrayBox(document.getElementById('env-args-array-box'));");
+                    NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftEnvArgs().remove(index);
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftEnvArgs(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftEnvArgs());
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftEnvArgs().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftEnvArgs().get(i);
+                        frame.executeJavaScript("addToArrayBox('env-args-array-box',\""+arg+"\",'settings.remove.env-args-array-box."+i+"');");
+                    }
+                } else if(s.startsWith("pre-launch-hook-array-box.")) {
+                    int index = Integer.parseInt(s.replaceFirst("pre-launch-hook-array-box.",""));
+                    frame.executeJavaScript("initArrayBox(document.getElementById('pre-launch-hook-array-box'));");
+                    NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPreLaunchCommands().remove(index);
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftPreLaunchCommands(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPreLaunchCommands());
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPreLaunchCommands().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPreLaunchCommands().get(i);
+                        frame.executeJavaScript("addToArrayBox('pre-launch-hook-array-box',\""+arg+"\",'settings.remove.pre-launch-hook-array-box."+i+"');");
+                    }
+                } else if(s.startsWith("on-launch-hook-array-box.")) {
+                    int index = Integer.parseInt(s.replaceFirst("on-launch-hook-array-box.",""));
+                    frame.executeJavaScript("initArrayBox(document.getElementById('on-launch-hook-array-box'));");
+                    NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnLaunchCommands().remove(index);
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftOnLaunchCommands(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnLaunchCommands());
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnLaunchCommands().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnLaunchCommands().get(i);
+                        frame.executeJavaScript("addToArrayBox('on-launch-hook-array-box',\""+arg+"\",'settings.remove.on-launch-hook-array-box."+i+"');");
+                    }
+                } else if(s.startsWith("on-exit-hook-array-box.")) {
+                    int index = Integer.parseInt(s.replaceFirst("on-exit-hook-array-box.",""));
+                    frame.executeJavaScript("initArrayBox(document.getElementById('on-exit-hook-array-box'));");
+                    NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnExitCommands().remove(index);
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftOnExitCommands(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnExitCommands());
+                    for(int i = 0; i < NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnExitCommands().size(); i++) {
+                        String arg = NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftOnExitCommands().get(i);
+                        frame.executeJavaScript("addToArrayBox('on-exit-hook-array-box',\""+arg+"\",'settings.remove.on-exit-hook-array-box."+i+"');");
                     }
                 }
             } else if(s.startsWith("installJava.")) {
@@ -497,6 +617,7 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                 }
             } else if(s.startsWith("showInstance.")) {
                 String showId = s.replace("showInstance.", "");
+                NexusApplication.getInstance().getLocalSettings().setLastInstanceId(showId);
                 LocalInstance lI = NexusApplication.getInstance().getInstanceManager().getInstance(showId);
                 ReadableZynstance show = lI.getInstance();
                 String tags = show.getTagString();
@@ -521,6 +642,7 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                 NexusApplication.getInstance().getLocalSettings().setLastInstanceId(showId);
             } else if(s.startsWith("start.")) {
                 String id = s.replace("start.", "");
+                LocalInstance lI = NexusApplication.getInstance().getInstanceManager().getInstance(id);
                 ReadableZynstance instance = NexusApplication.getInstance().getInstanceManager().getInstance(id).getInstance();
                 if(instance != null) {
                     String mc = instance.getMinecraftVersion();
@@ -532,9 +654,9 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                             JavaUtilities.setJava(type);
                         }
                         FabricLauncher launcher = NexusApplication.getInstance().getFabricLauncher();
-                        launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher));
-                        launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher));
-                        launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher));
+                        launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher,lI));
+                        launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher,lI));
+                        launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher,lI));
                         launcher.launch(mc, modloaderVersion, NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory(), Path.of(NexusApplication.getInstance().getInstanceManager().getInstance(id).getPath()), instance.getId());
                         NexusApplication.getInstance().getInstanceManager().addRunningInstance(launcher.getGameProcess(), id);
                     } else if(instance.getModloader().equalsIgnoreCase("forge")) {
@@ -544,9 +666,9 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                             JavaUtilities.setJava(type);
                         }
                         ForgeLauncher launcher = NexusApplication.getInstance().getForgeLauncher();
-                        launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher));
-                        launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher));
-                        launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher));
+                        launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher,lI));
+                        launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher,lI));
+                        launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher,lI));
                         launcher.launch(mc,modloaderVersion,NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory(), Path.of(NexusApplication.getInstance().getInstanceManager().getInstance(id).getPath()),instance.getId());
                         NexusApplication.getInstance().getInstanceManager().addRunningInstance(launcher.getGameProcess(), id);
                     } else if(instance.getModloader().equalsIgnoreCase("neoforge")) {
@@ -556,9 +678,9 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                             JavaUtilities.setJava(type);
                         }
                         NeoForgeLauncher launcher = NexusApplication.getInstance().getNeoForgeLauncher();
-                        launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher));
-                        launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher));
-                        launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher));
+                        launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher,lI));
+                        launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher,lI));
+                        launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher,lI));
                         launcher.launch(mc, modloaderVersion, NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory(), Path.of(NexusApplication.getInstance().getInstanceManager().getInstance(id).getPath()), instance.getId());
                         NexusApplication.getInstance().getInstanceManager().addRunningInstance(launcher.getGameProcess(), id);
                     } else if(instance.getModloader().equalsIgnoreCase("quilt")) {
@@ -568,9 +690,9 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                             JavaUtilities.setJava(type);
                         }
                         QuiltLauncher launcher = NexusApplication.getInstance().getQuiltLauncher();
-                        launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher));
-                        launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher));
-                        launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher));
+                        launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher,lI));
+                        launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher,lI));
+                        launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher,lI));
                         launcher.launch(mc, modloaderVersion, NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory(), Path.of(NexusApplication.getInstance().getInstanceManager().getInstance(id).getPath()), instance.getId());
                         NexusApplication.getInstance().getInstanceManager().addRunningInstance(launcher.getGameProcess(), id);
                     } else {
@@ -579,9 +701,9 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                         if(type!=null) {
                             JavaUtilities.setJava(type);
                         }
-                        launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher));
-                        launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher));
-                        launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher));
+                        launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher,lI));
+                        launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher,lI));
+                        launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher,lI));
                         launcher.launch(mc, NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory(), Path.of(NexusApplication.getInstance().getInstanceManager().getInstance(id).getPath()), instance.getId());
                         NexusApplication.getInstance().getInstanceManager().addRunningInstance(launcher.getGameProcess(), id);
                     }

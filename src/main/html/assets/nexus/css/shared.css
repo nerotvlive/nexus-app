@@ -960,6 +960,7 @@ body {
                 overflow: hidden;
                 white-space: nowrap;
                 width: fit-content;
+                user-select: all;
             }
 
             i {

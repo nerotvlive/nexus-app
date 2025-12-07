@@ -150,6 +150,7 @@ public class ApplicationSettings {
 
     public void setLastInstanceId(String lastInstanceId) {
         this.lastInstanceId = lastInstanceId;
+        NexusApplication.getInstance().getSettings().set("settings.library.instance.last", lastInstanceId);
     }
 
     public String getDefaultMinecraftPath() {
