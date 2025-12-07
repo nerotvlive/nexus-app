@@ -72,6 +72,17 @@
 }
 
 [data-bs-theme="light"] {
+    .btn-outline-light {
+        border: 1px solid var(--bs-dark-text-emphasis);
+        color: var(--bs-dark-text-emphasis);
+    }
+
+    .btn-outline-light:hover {
+        border: 1px solid var(--bs-dark-text-emphasis);
+        color: white;
+        background: var(--bs-dark);
+    }
+
     ul {
         li:hover {
             color: unset;
