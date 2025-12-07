@@ -1,4 +1,4 @@
-<link href="assets/nexus/css/settings.css" rel="stylesheet">
+<link href="assets/nexus/css/settings.css" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
 
 <div id="settings" class="nex-flex w-100 h-100">
     <!-- Sidebar/Submenu for Settings Categories -->
@@ -32,7 +32,7 @@
                 <span>Accounts & Privacy</span>
             </button>
             <!-- Button for Default Instance Settings -->
-            <button id="default-instance-settings-button" onclick="showSettingsCategory('default-instance-settings');" type="button" class="btn btn-nex-secondary">
+            <button id="default-instance-settings-button" onclick="showSettingsCategory('default-instance-settings'); console.log('[CONNECTOR] settings.init.defaultInstanceSettings');" type="button" class="btn btn-nex-secondary">
                 <i class="bi bi-controller"></i>
                 <span>Default instance settings</span>
             </button>
@@ -536,7 +536,7 @@
                         <td class="right">
                             <div class="form-switch">
                                 <label>
-                                    <input class="number-display instance-windowWidth" type="number" step="1" value="854" oninput="">
+                                    <input class="number-display instance-windowWidth" type="number" step="1" value="0" oninput="">
                                 </label>
                             </div>
                         </td>
@@ -546,7 +546,7 @@
                         <td class="right">
                             <div class="form-switch">
                                 <label>
-                                    <input class="number-display instance-windowHeight" type="number" step="1" value="480" oninput="">
+                                    <input class="number-display instance-windowHeight" type="number" step="1" value="0" oninput="">
                                 </label>
                             </div>
                         </td>
@@ -562,9 +562,9 @@
                     <tbody>
                     <tr class="memory-range">
                         <td class="left">Allocated memory (in MB) <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you specify how much RAM in megabytes (MB) the game uses by default."></i></td>
-                        <td>
+                        <td class="">
                             <label>
-                                <input class="number-display instance-JavaMemoryDisplay" type="number" min="512" max="16384" step="1" value="1024" onfocusout="setDefaultMemory(this.value);" onchange="document.body.querySelector('.instance-JavaMemory').value = this.value;">
+                                <input class="number-display instance-JavaMemoryDisplay" type="number" min="512" max="16384" step="1" value="1024" onfocusout="setDefaultMemory(this.value);" onchange="document.body.querySelector('.instance-JavaMemory').value = this.value;"> (mb)
                             </label>
                         </td>
                         <td class="right">
@@ -573,23 +573,23 @@
                             </label>
                         </td>
                     </tr>
-                    <tr class="java-args-input">
-                        <td class="left" colspan="2">Java arguments <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Sets the window height of the game."></i></td>
+                    <tr class="java-args-input array-box-row">
+                        <td class="left" colspan="2">Java arguments <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you add additional arguments to the Java Virtual Machine."></i><br>Separate arguments by pressing enter</td>
                         <td class="right">
                             <div class="form-switch">
-                                <label>
-                                    <input class="text-display instance-javaArgs" type="text" oninput="">
-                                </label>
+                                <div id="jvm-args-array-box" class="array-box instance-javaArgs" onclick="this.querySelector('input').focus();">
+
+                                </div>
                             </div>
                         </td>
                     </tr>
-                    <tr class="environmental-args-input last">
-                        <td class="left" colspan="2">Environmental arguments <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Sets the window height of the game."></i></td>
+                    <tr class="environmental-args-input array-box-row last">
+                        <td class="left" colspan="2">Environmental arguments <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you add additional arguments to the Game Environment."></i><br>Separate arguments by pressing enter</td>
                         <td class="right">
                             <div class="form-switch">
-                                <label>
-                                    <input class="text-display instance-environmentalArgs" type="text" oninput="">
-                                </label>
+                                <div id="env-args-array-box" class="array-box instance-environmentalArgs" onclick="this.querySelector('input').focus();">
+
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -602,33 +602,33 @@
                 </div>
                 <table class="table m-0">
                     <tbody>
-                    <tr class="java-args-input">
-                        <td class="left" colspan="2">Pre-launch command <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you execute a command right before the game starts."></i></td>
+                    <tr class="preLaunchHook-input array-box-row">
+                        <td class="left" colspan="2">Pre-launch commands <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you execute specific commands right before the game starts."></i><br>Separate commands by pressing enter</td>
                         <td class="right">
                             <div class="form-switch">
-                                <label>
-                                    <input class="text-display instance-javaArgs" type="text" oninput="">
-                                </label>
+                                <div id="pre-launch-hook-array-box" class="array-box instance-preLaunchHook" onclick="this.querySelector('input').focus();">
+
+                                </div>
                             </div>
                         </td>
                     </tr>
-                    <tr class="java-args-input">
-                        <td class="left" colspan="2">On launch command <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you execute a command when the game starts."></i></td>
+                    <tr class="onLaunchHook-input array-box-row">
+                        <td class="left" colspan="2">On-launch commands <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you execute specific commands when the game starts."></i><br>Separate commands by pressing enter</td>
                         <td class="right">
                             <div class="form-switch">
-                                <label>
-                                    <input class="text-display instance-javaArgs" type="text" oninput="">
-                                </label>
+                                <div id="on-launch-hook-array-box" class="array-box instance-onLaunchHook" onclick="this.querySelector('input').focus();">
+
+                                </div>
                             </div>
                         </td>
                     </tr>
-                    <tr class="environmental-args-input last">
-                        <td class="left" colspan="2">On exit command <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you execute a command when the game closes."></i></td>
+                    <tr class="onExitHook-input array-box-row last">
+                        <td class="left" colspan="2">Pre-launch commands <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you execute specific commands when the game stops."></i><br>Separate commands by pressing enter</td>
                         <td class="right">
                             <div class="form-switch">
-                                <label>
-                                    <input class="text-display instance-environmentalArgs" type="text" oninput="">
-                                </label>
+                                <div id="on-exit-hook-array-box" class="array-box instance-onExitHook" onclick="this.querySelector('input').focus();">
+
+                                </div>
                             </div>
                         </td>
                     </tr>

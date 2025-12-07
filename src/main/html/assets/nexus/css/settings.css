@@ -279,6 +279,16 @@ table.table {
             }
         }
 
+        .array-box-row {
+            td.right {
+                min-width: 50% !important;
+                width: 50% !important;
+                max-width: 25rem !important;
+                height: fit-content;
+                overflow: hidden;
+            }
+        }
+
         tr:hover {
             td {
                 background: var(--nex-brighter);

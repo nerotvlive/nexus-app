@@ -63,7 +63,7 @@ function initSettings() {
     if(urlParams.has("st")) {
         document.getElementById(urlParams.get("st")+"-button").click();
     }
-
+    initArrayBoxes();
     console.log("[CONNECTOR] settings.init");
 }
 

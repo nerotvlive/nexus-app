@@ -931,6 +931,74 @@ body {
             background: none !important;
         }
     }
+
+    .array-box {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 0.5rem;
+        position: relative;
+        border: none;
+        border-radius: var(--bs-border-radius) var(--bs-border-radius) 0 0;
+        background: var(--nex-darker-200);
+        padding: 0.5rem;
+        min-height: 3rem;
+        margin-bottom: 2.5rem;
+        min-width: 12rem;
+
+        div {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            width: fit-content;
+            border-radius: var(--bs-border-radius);
+            padding: 0.5rem;
+            height: fit-content;
+            background: var(--nex-brighter-400);
+
+            span {
+                height: 100%;
+                overflow: hidden;
+                white-space: nowrap;
+                width: fit-content;
+            }
+
+            i {
+                color: black;
+                opacity: 0.9;
+                padding: 0.1rem;
+            }
+
+            i:hover {
+                cursor: pointer !important;
+                opacity: 1;
+            }
+        }
+
+        input {
+            position: absolute;
+            left: 0; right: 0;
+            padding: 0 0.5rem 0.5rem 0.5rem;
+            border: none;
+            background: none;
+            border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius);
+            overflow: hidden;
+            bottom: -2.5rem;
+            height: 2.5rem;
+            background: var(--nex-darker-200);
+        }
+
+        input:focus {
+            outline: #0a53be;
+        }
+    }
+
+    .array-box:hover {
+        background: var(--nex-darker-300);
+
+        input {
+            background: var(--nex-darker-300);
+        }
+    }
 }
 
 .card {
@@ -1026,6 +1094,18 @@ body {
     100% {
         display: none;
         opacity: 0;
+    }
+}
+
+@keyframes move-left {
+    0% {
+        text-align: left;
+        transform: translateX(0);
+    }
+
+    100% {
+        text-align: right;
+        transform: translateX(-100%);
     }
 }
 

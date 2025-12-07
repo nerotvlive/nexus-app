@@ -10,7 +10,6 @@ import com.zyneonstudios.nexus.instance.Zynstance;
 import com.zyneonstudios.nexus.instance.ZynstanceBuilder;
 import com.zyneonstudios.nexus.utilities.file.FileActions;
 import com.zyneonstudios.verget.Verget;
-import com.zyneonstudios.verget.fabric.FabricVerget;
 import com.zyneonstudios.verget.minecraft.MinecraftVerget;
 import jnafilechooser.api.JnaFileChooser;
 import live.nerotv.aminecraftlauncher.launcher.*;
@@ -170,7 +169,11 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                 frame.executeJavaScript("document.querySelector('.instance-JavaMemory').min = 1024; document.querySelector('.instance-JavaMemory').max = " + maxMemoryInMegabytes + "; document.querySelector('.instance-JavaMemory').value = " + NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory() + ";");
             } else if(s.startsWith("init.")) {
                 s = s.replace("init.", "");
-                if(s.equals("java")) {
+                if(s.equals("defaultInstanceSettings")) {
+                    frame.executeJavaScript("document.querySelector('.instance-useFullscreen').checked = "+NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftFullscreen()+";");
+                    frame.executeJavaScript("document.querySelector('.instance-windowWidth').value = "+NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftWindowWidth()+";");
+                    frame.executeJavaScript("document.querySelector('.instance-windowHeight').value = "+NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftWindowHeight()+";");
+                } else if(s.equals("java")) {
                     String p21 = NexusApplication.getInstance().getLocalSettings().getJava21Path();
                     String p17 = NexusApplication.getInstance().getLocalSettings().getJava17Path();
                     String p8 = NexusApplication.getInstance().getLocalSettings().getJava8Path();
@@ -616,15 +619,6 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                     }
                 }
             }
-        } else if(s.equals("run.test")) {
-
-            FabricLauncher launcher = NexusApplication.getInstance().getFabricLauncher();
-            launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher));
-            launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher));
-            launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher));
-            String version = FabricVerget.getSupportedMinecraftVersions(false).getFirst();
-            launcher.launch(version, FabricVerget.getVersions(true).getFirst(),NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory(), Path.of("target/run/game/"+version+"/"),"test");
-
         }
     }
 }
