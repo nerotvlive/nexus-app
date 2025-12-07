@@ -107,8 +107,7 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                 switch (p) {
                     case "nex" -> NexusApplication.getInstance().getLocalSettings().setDiscoverSearchNEX(e);
                     case "modrinth" -> NexusApplication.getInstance().getLocalSettings().setDiscoverSearchModrinth(e);
-                    case "curseforge" ->
-                            NexusApplication.getInstance().getLocalSettings().setDiscoverSearchCurseForge(e);
+                    case "curseforge" -> NexusApplication.getInstance().getLocalSettings().setDiscoverSearchCurseForge(e);
                 }
                 frame.executeJavaScript("startSearch(0);");
             }
