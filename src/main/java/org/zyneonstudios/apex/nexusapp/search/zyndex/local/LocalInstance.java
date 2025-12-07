@@ -37,14 +37,11 @@ public class LocalInstance {
         }
         this.instance = new Zynstance(instanceFile);
         this.path = path.replace("\\","/");
-        if(!this.path.endsWith("/")) {
-            this.path += "/";
-        }
         reloadSettings();
     }
 
     public void reloadSettings() {
-        this.settings = new JsonStorage(this.path+"/zyneonSettings.json");
+        this.settings = new JsonStorage(this.path.replace("zyneonInstance.json","zyneonSettings.json"));
         if (settings.has("settings.fullscreen")) {
             this.fullscreen = settings.getBool("settings.fullscreen");
         }
