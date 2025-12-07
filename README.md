@@ -14,7 +14,7 @@ Currently, the NEXUS app effectively has only one developer. This person works o
 ## Description
 The NEXUS App is a modular and extensible Minecraft modding application which integrates various platforms.
 
-<img src="https://raw.githubusercontent.com/nerotvlive/nexus-app/refs/heads/main/src/main/html/assets/nexus/img/app-screenshot.png">
+<img src="https://github.com/nerotvlive/nexus-app/blob/master/src/main/html/assets/nexus/img/app-screenshot.png?raw=true">
 
 ## Supported platforms
 [<img src="https://i.ibb.co/FK4LNHm/platforms.png">](https://apex.zyneonstudios.org/nexus-app#download)
