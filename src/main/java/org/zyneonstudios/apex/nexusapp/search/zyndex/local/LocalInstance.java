@@ -79,6 +79,10 @@ public class LocalInstance {
         return path.replace("zyneonInstance.json","").replace("\\","/");
     }
 
+    public boolean isFullscreen() {
+        return fullscreen;
+    }
+
     public ArrayList<String> getEnvArgs() {
         return envArgs;
     }

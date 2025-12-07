@@ -471,6 +471,15 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                 if(s.startsWith("defaultMemory.")) {
                     int memory = Integer.parseInt(s.replace("defaultMemory.", ""));
                     NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftMemory(memory);
+                } else if(s.startsWith("windowWidth.")) {
+                    int width = Integer.parseInt(s.replace("windowWidth.", ""));
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftWindowWidth(width);
+                } else if(s.startsWith("windowHeight.")) {
+                    int height = Integer.parseInt(s.replace("windowHeight.", ""));
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftWindowHeight(height);
+                } else if(s.startsWith("fullscreen.")) {
+                    boolean bool = s.replace("fullscreen.", "").equals("true");
+                    NexusApplication.getInstance().getLocalSettings().setDefaultMinecraftFullscreen(bool);
                 }
             }
         } else if(s.equals("initAccountSettings")) {
@@ -657,6 +666,12 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                         launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher,lI));
                         launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher,lI));
                         launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher,lI));
+
+                        if(lI.isFullscreen()) {
+                            launcher.addAdditionalEnvironmentalArgs("--fullscreen");
+                        }
+                        launcher.addAdditionalEnvironmentalArgs("--width",lI.getWidth()+"","--height",lI.getHeight()+"");
+
                         launcher.launch(mc, modloaderVersion, NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory(), Path.of(NexusApplication.getInstance().getInstanceManager().getInstance(id).getPath()), instance.getId());
                         NexusApplication.getInstance().getInstanceManager().addRunningInstance(launcher.getGameProcess(), id);
                     } else if(instance.getModloader().equalsIgnoreCase("forge")) {
@@ -669,6 +684,12 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                         launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher,lI));
                         launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher,lI));
                         launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher,lI));
+
+                        if(lI.isFullscreen()) {
+                            launcher.addAdditionalEnvironmentalArgs("--fullscreen");
+                        }
+                        launcher.addAdditionalEnvironmentalArgs("--width",lI.getWidth()+"","--height",lI.getHeight()+"");
+
                         launcher.launch(mc,modloaderVersion,NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory(), Path.of(NexusApplication.getInstance().getInstanceManager().getInstance(id).getPath()),instance.getId());
                         NexusApplication.getInstance().getInstanceManager().addRunningInstance(launcher.getGameProcess(), id);
                     } else if(instance.getModloader().equalsIgnoreCase("neoforge")) {
@@ -681,6 +702,12 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                         launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher,lI));
                         launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher,lI));
                         launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher,lI));
+
+                        if(lI.isFullscreen()) {
+                            launcher.addAdditionalEnvironmentalArgs("--fullscreen");
+                        }
+                        launcher.addAdditionalEnvironmentalArgs("--width",lI.getWidth()+"","--height",lI.getHeight()+"");
+
                         launcher.launch(mc, modloaderVersion, NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory(), Path.of(NexusApplication.getInstance().getInstanceManager().getInstance(id).getPath()), instance.getId());
                         NexusApplication.getInstance().getInstanceManager().addRunningInstance(launcher.getGameProcess(), id);
                     } else if(instance.getModloader().equalsIgnoreCase("quilt")) {
@@ -693,6 +720,12 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                         launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher,lI));
                         launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher,lI));
                         launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher,lI));
+
+                        if(lI.isFullscreen()) {
+                            launcher.addAdditionalEnvironmentalArgs("--fullscreen");
+                        }
+                        launcher.addAdditionalEnvironmentalArgs("--width",lI.getWidth()+"","--height",lI.getHeight()+"");
+
                         launcher.launch(mc, modloaderVersion, NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory(), Path.of(NexusApplication.getInstance().getInstanceManager().getInstance(id).getPath()), instance.getId());
                         NexusApplication.getInstance().getInstanceManager().addRunningInstance(launcher.getGameProcess(), id);
                     } else {
@@ -704,6 +737,12 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                         launcher.setPreLaunchHook(GameHooks.getPreLaunchHook(launcher,lI));
                         launcher.setPostLaunchHook(GameHooks.getPostLaunchHook(launcher,lI));
                         launcher.setGameCloseHook(GameHooks.getGameCloseHook(launcher,lI));
+
+                        if(lI.isFullscreen()) {
+                            launcher.addAdditionalEnvironmentalArgs("--fullscreen");
+                        }
+                        launcher.addAdditionalEnvironmentalArgs("--width",lI.getWidth()+"","--height",lI.getHeight()+"");
+
                         launcher.launch(mc, NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftMemory(), Path.of(NexusApplication.getInstance().getInstanceManager().getInstance(id).getPath()), instance.getId());
                         NexusApplication.getInstance().getInstanceManager().addRunningInstance(launcher.getGameProcess(), id);
                     }

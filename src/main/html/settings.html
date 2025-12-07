@@ -526,7 +526,7 @@
                         <td class="right">
                             <div class="form-switch">
                                 <label>
-                                    <input class="form-check-input instance-useFullscreen switch" type="checkbox" onchange="" role="switch">
+                                    <input class="form-check-input instance-useFullscreen switch" type="checkbox" onchange="console.log('[CONNECTOR] settings.set.fullscreen.'+this.checked);" role="switch">
                                 </label>
                             </div>
                         </td>
@@ -536,7 +536,7 @@
                         <td class="right">
                             <div class="form-switch">
                                 <label>
-                                    <input class="number-display instance-windowWidth" type="number" step="1" value="0" oninput="">
+                                    <input class="number-display instance-windowWidth" type="text" onkeypress="if (event.key === `Enter`) { console.log('[CONNECTOR] settings.set.windowWidth.'+this.value); } else { return (event.charCode >= 48 && event.charCode <= 57) }" onchange="console.log('[CONNECTOR] settings.set.windowWidth.'+this.value);">
                                 </label>
                             </div>
                         </td>
@@ -546,7 +546,7 @@
                         <td class="right">
                             <div class="form-switch">
                                 <label>
-                                    <input class="number-display instance-windowHeight" type="number" step="1" value="0" oninput="">
+                                    <input class="number-display instance-windowHeight" type="text" onkeypress="if (event.key === `Enter`) { console.log('[CONNECTOR] settings.set.windowHeight.'+this.value); } else { return (event.charCode >= 48 && event.charCode <= 57) }" onchange="console.log('[CONNECTOR] settings.set.windowHeight.'+this.value);">
                                 </label>
                             </div>
                         </td>
