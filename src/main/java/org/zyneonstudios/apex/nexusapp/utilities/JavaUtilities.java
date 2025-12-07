@@ -72,7 +72,9 @@ public class JavaUtilities {
             }
 
             if(!path.equals("default")) {
-                FileUtils.moveDirectory(javaPath.toFile(), new File(path));
+                File dest = new File(path);
+                FileUtils.moveDirectory(javaPath.toFile(), dest);
+                fixPermissions(path);
             }
 
             NexusApplication.getInstance().getApplicationFrame().executeJavaScript("console.log('[CONNECTOR] settings.init.java');");
@@ -122,6 +124,21 @@ public class JavaUtilities {
             NexusApplication.getLogger().log("Set Java Home to: " + javaHome);
         } catch (Exception e) {
             NexusApplication.getLogger().err("Couldn't set java version: "+e.getMessage());
+        }
+    }
+
+    private static void fixPermissions(String path) {
+        try {
+            if(!OperatingSystem.getType().equals(OperatingSystem.Type.Windows)) {
+                ProcessBuilder pb = new ProcessBuilder("chmod", "-R", "+x", path);
+                Process process = pb.start();
+                int exitCode = process.waitFor();
+                if(exitCode != 0) {
+                    throw new RuntimeException("Failed to execute chmod command: " + path);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
