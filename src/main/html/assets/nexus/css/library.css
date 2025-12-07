@@ -390,3 +390,11 @@
         }
     }
 }
+
+[data-bs-theme="light"] {
+    #library {
+        * {
+            text-shadow: none !important;
+        }
+    }
+}

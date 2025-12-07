@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 import org.zyneonstudios.apex.nexusapp.downloads.Download;
 import org.zyneonstudios.apex.nexusapp.events.DownloadFinishEvent;
 import org.zyneonstudios.apex.nexusapp.main.NexusApplication;
-import org.zyneonstudios.apex.nexusapp.search.modrinth.resource.ModrinthProject;
 import com.zyneonstudios.nexus.instance.ZynstanceBuilder;
 import com.zyneonstudios.nexus.utilities.file.FileActions;
 import com.zyneonstudios.nexus.utilities.json.GsonUtility;
@@ -29,10 +28,10 @@ public class ModrinthIntegration {
 
     public static void installModpack(File installDir, String projectId, String versionId) {
         JsonObject data = GsonUtility.getObject("https://api.modrinth.com/v2/version/"+versionId);
-        ModrinthProject project = new ModrinthProject(projectId);
+        ModrinthResource project = new ModrinthResource(projectId);
         installDir = getInstallDir(installDir,project.getSlug());
 
-        project.getTeam();
+        project.getTeamId();
 
         String fileName = "modrinth-"+projectId+"-"+versionId+".mrpack";
         String downloadName = (NexusApplication.getInstance().getWorkingPath()+"/temp/"+fileName).replace("\\","/").replace("//","/");

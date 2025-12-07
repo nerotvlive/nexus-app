@@ -4,7 +4,6 @@ import org.zyneonstudios.apex.nexusapp.downloads.Download;
 import org.zyneonstudios.apex.nexusapp.downloads.DownloadManager;
 import org.zyneonstudios.apex.nexusapp.events.DownloadFinishEvent;
 import org.zyneonstudios.apex.nexusapp.main.NexusApplication;
-import org.zyneonstudios.apex.nexusapp.search.modrinth.resource.ModrinthProject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,7 +27,7 @@ public class ModrinthDownload extends Download {
     private DownloadFinishEvent event = null;
     private final Collection<Download> fileDownloads;
 
-    public ModrinthDownload(ModrinthProject project, Collection<Download> fileDownloads, Path basePath) throws MalformedURLException {
+    public ModrinthDownload(ModrinthResource project, Collection<Download> fileDownloads, Path basePath) throws MalformedURLException {
         super(UUID.randomUUID(), project.getTitle(), new URL(project.getUrl()), basePath);
         this.fileDownloads = fileDownloads;
     }

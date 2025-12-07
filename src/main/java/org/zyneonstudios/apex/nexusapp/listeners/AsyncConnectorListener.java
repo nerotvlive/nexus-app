@@ -3,21 +3,6 @@ package org.zyneonstudios.apex.nexusapp.listeners;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.starxg.keytar.Keytar;
-import com.zyneonstudios.nexus.utilities.file.FileActions;
-import org.zyneonstudios.apex.nexusapp.events.PageLoadedEvent;
-import org.zyneonstudios.apex.nexusapp.frame.AppFrame;
-import org.zyneonstudios.apex.nexusapp.launchprocess.GameHooks;
-import org.zyneonstudios.apex.nexusapp.main.NexusApplication;
-import org.zyneonstudios.apex.nexusapp.search.CombinedSearch;
-import org.zyneonstudios.apex.nexusapp.search.modrinth.ModrinthIntegration;
-import org.zyneonstudios.apex.nexusapp.search.modrinth.resource.ModrinthProject;
-import org.zyneonstudios.apex.nexusapp.search.modrinth.search.facets.categories.ModrinthCategory;
-import org.zyneonstudios.apex.nexusapp.search.zyndex.ZyndexIntegration;
-import org.zyneonstudios.apex.nexusapp.search.zyndex.local.LocalInstance;
-import org.zyneonstudios.apex.nexusapp.utilities.DiscordRichPresence;
-import org.zyneonstudios.apex.nexusapp.utilities.FileUtilities;
-import org.zyneonstudios.apex.nexusapp.utilities.MicrosoftAuthenticator;
-import org.zyneonstudios.apex.nexusapp.utilities.StringUtility;
 import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.frame.web.WebFrame;
 import com.zyneonstudios.nexus.instance.ReadableZynstance;
@@ -30,6 +15,20 @@ import jnafilechooser.api.JnaFileChooser;
 import live.nerotv.aminecraftlauncher.launcher.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zyneonstudios.apex.nexusapp.events.PageLoadedEvent;
+import org.zyneonstudios.apex.nexusapp.frame.AppFrame;
+import org.zyneonstudios.apex.nexusapp.launchprocess.GameHooks;
+import org.zyneonstudios.apex.nexusapp.main.NexusApplication;
+import org.zyneonstudios.apex.nexusapp.search.CombinedSearch;
+import org.zyneonstudios.apex.nexusapp.search.modrinth.ModrinthIntegration;
+import org.zyneonstudios.apex.nexusapp.search.modrinth.ModrinthResource;
+import org.zyneonstudios.apex.nexusapp.search.modrinth.search.facets.categories.ModrinthCategory;
+import org.zyneonstudios.apex.nexusapp.search.zyndex.ZyndexIntegration;
+import org.zyneonstudios.apex.nexusapp.search.zyndex.local.LocalInstance;
+import org.zyneonstudios.apex.nexusapp.utilities.DiscordRichPresence;
+import org.zyneonstudios.apex.nexusapp.utilities.FileUtilities;
+import org.zyneonstudios.apex.nexusapp.utilities.MicrosoftAuthenticator;
+import org.zyneonstudios.apex.nexusapp.utilities.StringUtility;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -233,7 +232,7 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                 case "nex" ->
                         ZyndexIntegration.install(NexusApplication.getInstance().getNEX().getInstancesById().get(id), NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPath());
                 case "modrinth" -> {
-                    ModrinthProject project = new ModrinthProject(id);
+                    ModrinthResource project = new ModrinthResource(id);
                     String version = project.getVersions()[project.getVersions().length - 1];
                     ModrinthIntegration.installModpack(new File(NexusApplication.getInstance().getLocalSettings().getDefaultMinecraftPath()), project.getId(), version);
                 }
@@ -434,15 +433,12 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
                 }
             } else if(s.startsWith("delete.")) {
                 String id = s.replace("delete.", "");
-                LocalInstance instance = NexusApplication.getInstance().getInstanceManager().getInstance(id);
-                String path = instance.getPath();
-                String absolutePath = new File(path).getAbsolutePath();
-                instance = null;
-                NexusApplication.getInstance().getInstanceManager().removeInstance(path);
+                NexusApplication.getInstance().getInstanceManager().removeInstance(id);
+                String absolutePath = new File(id).getAbsolutePath();
                 System.gc();
                 try {
                     if(!FileUtilities.deleteDirectory(new File(absolutePath))) {
-                        throw new RuntimeException("Couldn't delete instance folder: "+path);
+                        throw new RuntimeException("Couldn't delete instance folder: "+id);
                     } else {
                         frame.getBrowser().reload();
                     }

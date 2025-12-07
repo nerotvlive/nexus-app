@@ -937,30 +937,6 @@ body {
     text-shadow: none;
 }
 
-[data-bs-theme="light"] {
-    --nex-bg: white;
-    --nex-iv: black;
-    --nex-fg: #272727;
-    --bs-body-bg: #d2d2d2;
-    --bs-body-bg-rgb: 210, 210, 210;
-    --bs-dark-bg-subtle: #fff;
-    --bs-border-color: #8c8c8c;
-
-    li:hover {
-        color: var(--nex-bg);
-    }
-
-    li.active {
-        background: var(--nex-primary) !important;
-    }
-
-    .submenu {
-        button.active {
-            background: var(--nex-primary) !important;
-        }
-    }
-}
-
 #context-menu {
     user-select: none;
     position: fixed;
@@ -1090,4 +1066,37 @@ body {
     height: 100%;
     opacity: 0.5;
     display: none;
+}
+
+[data-bs-theme="light"] {
+    --nex-bg: white;
+    --nex-iv: black;
+    --nex-fg: #272727;
+    --bs-body-bg: #d2d2d2;
+    --bs-body-bg-rgb: 210, 210, 210;
+    --bs-dark-bg-subtle: #fff;
+    --bs-border-color: #8c8c8c;
+    --bs-border-color-translucent: #8c8c8c;
+
+    .menu-panel {
+        background: var(--nex-brighter-400);
+    }
+
+    li:hover {
+        color: var(--nex-bg);
+    }
+
+    li.active {
+        background: var(--nex-primary) !important;
+    }
+
+    .submenu {
+        button.active {
+            background: var(--nex-primary) !important;
+        }
+    }
+
+    #content::after {
+        box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.25) !important;
+    }
 }

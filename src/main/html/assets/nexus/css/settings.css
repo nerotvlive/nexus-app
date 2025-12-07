@@ -299,3 +299,9 @@ table.table {
     background: var(--bs-danger) !important;
     animation: wiggle 0.1s linear infinite;
 }
+
+[data-bs-theme="light"] {
+    #settings {
+        background: var(--bs-body-bg)
+    }
+}
