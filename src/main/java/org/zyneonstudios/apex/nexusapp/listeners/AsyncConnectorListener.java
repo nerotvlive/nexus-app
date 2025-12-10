@@ -652,6 +652,11 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
             } else if(s.startsWith("start.")) {
                 String id = s.replace("start.", "");
                 LocalInstance lI = NexusApplication.getInstance().getInstanceManager().getInstance(id);
+                ZyndexIntegration.update(lI);
+                NexusApplication.getInstance().getInstanceManager().reload();
+                lI = null; System.gc();
+                lI = NexusApplication.getInstance().getInstanceManager().getInstance(id);
+                frame.executeJavaScript("console.log('[CONNECTOR] library.showInstance."+id+"');");
                 ReadableZynstance instance = NexusApplication.getInstance().getInstanceManager().getInstance(id).getInstance();
                 if(instance != null) {
                     String mc = instance.getMinecraftVersion();

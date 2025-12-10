@@ -1,5 +1,13 @@
 package org.zyneonstudios.apex.nexusapp.search.zyndex;
 
+import com.google.gson.JsonObject;
+import com.zyneonstudios.nexus.instance.ReadableZynstance;
+import com.zyneonstudios.nexus.utilities.file.FileActions;
+import com.zyneonstudios.nexus.utilities.json.GsonUtility;
+import com.zyneonstudios.nexus.utilities.storage.JsonStorage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cglib.core.Local;
 import org.zyneonstudios.apex.nexusapp.downloads.Download;
 import org.zyneonstudios.apex.nexusapp.main.NexusApplication;
 import org.zyneonstudios.apex.nexusapp.search.zyndex.local.LocalInstance;
@@ -12,9 +20,33 @@ import java.io.File;
 import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ZyndexIntegration {
+
+    private static final Logger log = LoggerFactory.getLogger(ZyndexIntegration.class);
+
+    public static boolean update(LocalInstance localInstance) {
+        try {
+            JsonObject data = GsonUtility.getObject(localInstance.getInstance().getLocation()).getAsJsonObject("instance");
+            if(!data.getAsJsonObject("info").get("version").getAsString().equals(localInstance.getInstance().getVersion())) {
+                File json = new File(localInstance.getPath().replace("\\","/"));
+                File dir = new File(json.getAbsolutePath().replace("/zyneonInstance.json", ""));
+                File mods = new File(json.getAbsolutePath()+"/mods");
+                if(mods.exists()) {
+                    FileActions.deleteFolder(mods);
+                }
+                if(installInstance(new ReadableZynstance(localInstance.getInstance().getLocation()),dir)) {
+                    new JsonStorage(localInstance.getPath()).set("instance",data);
+                    System.gc();
+                    return true;
+                }
+            }
+        } catch (Exception ignore) {}
+        System.gc();
+        return false;
+    }
 
     public static boolean install(Instance instance, Path installDirPath) {
         return install(instance,installDirPath.toString());
