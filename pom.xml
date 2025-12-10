@@ -6,7 +6,7 @@
 
     <groupId>org.zyneonstudios.apex</groupId>
     <artifactId>nexus-app</artifactId>
-    <version>2026.1-beta.7</version>
+    <version>2026.1-beta.8</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
