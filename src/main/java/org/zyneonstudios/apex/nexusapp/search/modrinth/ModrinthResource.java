@@ -85,7 +85,7 @@ public class ModrinthResource {
         slug = json.get("slug").getAsString();
         projectType = json.get("project_type").getAsString();
 
-        if (json.has("team")) {
+        if (json.has("team") && !json.get("team").toString().equals("null")) {
             if (json.get("team").getAsString().isEmpty()) {
                 teamId = null;
             } else {
@@ -95,7 +95,8 @@ public class ModrinthResource {
             teamId = null;
         }
 
-        if (json.has("organization")) {
+
+        if(json.has("organization") && !json.get("organization").toString().equals("null")) {
             if (json.get("organization").getAsString().isEmpty()) {
                 organizationId = null;
             } else {
@@ -107,7 +108,7 @@ public class ModrinthResource {
 
         title = json.get("title").getAsString();
 
-        if (json.has("description")) {
+        if (json.has("description") && !json.get("description").toString().equals("null")) {
             if (json.get("description").getAsString().isEmpty()) {
                 description = null;
             } else {
@@ -117,7 +118,7 @@ public class ModrinthResource {
             description = null;
         }
 
-        if (json.has("body")) {
+        if (json.has("body") && !json.get("body").toString().equals("null")) {
             if (json.get("body").getAsString().isEmpty()) {
                 body = null;
             } else {
@@ -127,7 +128,7 @@ public class ModrinthResource {
             body = null;
         }
 
-        if (json.has("published")) {
+        if (json.has("published") && !json.get("published").toString().equals("null")) {
             if (json.get("published").getAsString().isEmpty()) {
                 published = null;
             } else {
@@ -137,7 +138,7 @@ public class ModrinthResource {
             published = null;
         }
 
-        if (json.has("updated")) {
+        if (json.has("updated") && !json.get("updated").toString().equals("null")) {
             if (json.get("updated").getAsString().isEmpty()) {
                 updated = null;
             } else {
@@ -147,7 +148,7 @@ public class ModrinthResource {
             updated = null;
         }
 
-        if (json.has("approved")) {
+        if (json.has("approved") && !json.get("approved").toString().equals("null")) {
             if (json.get("approved").getAsString().isEmpty()) {
                 approved = null;
             } else {
@@ -157,7 +158,7 @@ public class ModrinthResource {
             approved = null;
         }
 
-        if (json.has("status")) {
+        if (json.has("status") && !json.get("status").toString().equals("null")) {
             if (json.get("status").getAsString().isEmpty()) {
                 status = null;
             } else {
@@ -167,7 +168,7 @@ public class ModrinthResource {
             status = null;
         }
 
-        if (json.has("license")) {
+        if (json.has("license") && !json.get("license").toString().equals("null")) {
             JsonObject license = json.getAsJsonObject("license");
             if (license.has("id")) {
                 if (license.get("id").getAsString().isEmpty()) {
@@ -194,13 +195,13 @@ public class ModrinthResource {
             licenseName = null;
         }
 
-        if (json.has("downloads")) {
+        if (json.has("downloads") && !json.get("downloads").toString().equals("null")) {
             downloads = json.get("downloads").getAsInt();
         } else {
             downloads = 0;
         }
 
-        if (json.has("followers")) {
+        if (json.has("followers") && !json.get("followers").toString().equals("null")) {
             followers = json.get("followers").getAsInt();
         } else {
             followers = 0;
@@ -306,7 +307,7 @@ public class ModrinthResource {
             this.versions = null;
         }
 
-        if (json.has("icon_url")) {
+        if (json.has("icon_url") && !json.get("icon_url").toString().equals("null")) {
             if (json.get("icon_url").getAsString().isEmpty()) {
                 iconUrl = null;
             } else {
@@ -316,7 +317,7 @@ public class ModrinthResource {
             iconUrl = null;
         }
 
-        if (json.has("issues_url")) {
+        if (json.has("issues_url") && !json.get("issues_url").toString().equals("null")) {
             if (json.get("issues_url").getAsString().isEmpty()) {
                 issuesUrl = null;
             } else {
@@ -326,7 +327,7 @@ public class ModrinthResource {
             issuesUrl = null;
         }
 
-        if (json.has("source_url")) {
+        if (json.has("source_url") && !json.get("source_url").toString().equals("null")) {
             if (json.get("source_url").getAsString().isEmpty()) {
                 sourceUrl = null;
             } else {
@@ -336,7 +337,7 @@ public class ModrinthResource {
             sourceUrl = null;
         }
 
-        if (json.has("wiki_url")) {
+        if (json.has("wiki_url") && !json.get("wiki_url").toString().equals("null")) {
             if (json.get("wiki_url").getAsString().isEmpty()) {
                 wikiUrl = null;
             } else {
@@ -346,7 +347,7 @@ public class ModrinthResource {
             wikiUrl = null;
         }
 
-        if (json.has("discord_url")) {
+        if (json.has("discord_url") && !json.get("discord_url").toString().equals("null")) {
             if (json.get("discord_url").getAsString().isEmpty()) {
                 discordUrl = null;
             } else {
@@ -356,19 +357,19 @@ public class ModrinthResource {
             discordUrl = null;
         }
 
-        if (json.has("donation_urls")) {
+        if (json.has("donation_urls") && !json.get("donation_urls").toString().equals("null")) {
             donationUrls = json.getAsJsonArray("donation_urls");
         } else {
             donationUrls = null;
         }
 
-        if (json.has("gallery")) {
+        if (json.has("gallery") && !json.get("gallery").toString().equals("null")) {
             gallery = json.getAsJsonArray("gallery");
         } else {
             gallery = null;
         }
 
-        if (json.has("color")) {
+        if (json.has("color") && !json.get("color").toString().equals("null")) {
             if (json.get("color").getAsString().isEmpty()) {
                 color = null;
             } else {
@@ -378,7 +379,7 @@ public class ModrinthResource {
             color = null;
         }
 
-        if (json.has("thread_id")) {
+        if (json.has("thread_id") && !json.get("thread_id").toString().equals("null")) {
             if (json.get("thread_id").getAsString().isEmpty()) {
                 threadId = null;
             } else {
@@ -388,7 +389,7 @@ public class ModrinthResource {
             threadId = null;
         }
 
-        if (json.has("monetization_status")) {
+        if (json.has("monetization_status") && !json.get("monetization_status").toString().equals("null")) {
             if (json.get("monetization_status").getAsString().isEmpty()) {
                 monetizationStatus = null;
             } else {

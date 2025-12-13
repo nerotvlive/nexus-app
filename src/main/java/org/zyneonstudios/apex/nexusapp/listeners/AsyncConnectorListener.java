@@ -50,6 +50,7 @@ public class AsyncConnectorListener extends AsyncWebFrameConnectorEvent {
 
     @Override
     protected void resolveMessage(String s) {
+        NexusApplication.getLogger().deb("[CONNECTOR] Resolving "+s);
         if (s.startsWith("event.theme.changed.")) {
             if (s.endsWith("dark")) {
                 frame.setTitleBackground(Color.black);
