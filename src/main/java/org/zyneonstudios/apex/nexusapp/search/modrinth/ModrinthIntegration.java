@@ -144,7 +144,9 @@ public class ModrinthIntegration {
                                 }
                                 instanceConverter.setDownloadUrl("modrinth");
                                 instanceConverter.setOriginUrl("local");
-                                instanceConverter.setTags(new ArrayList<>(Arrays.asList(project.getCategories())));
+                                ArrayList<String> tags = new ArrayList<>(Arrays.asList(project.getCategories()));
+                                tags.add("modrinth");
+                                instanceConverter.setTags(tags);
 
                                 ArrayList<String> authors = new ArrayList<>();
                                 JsonArray members = new Gson().fromJson(GsonUtility.getFromURL("https://api.modrinth.com/v2/project/"+projectId+"/members"), JsonArray.class);
