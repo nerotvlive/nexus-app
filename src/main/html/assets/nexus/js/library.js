@@ -82,6 +82,7 @@ function loadFolderButtonHoverEvent() {
 
 function initLibrary() {
     console.log("[CONNECTOR] library.init");
+    initArrayBoxes();
 }
 
 function showInstance(id,name,version,summary,description,tagsString) {

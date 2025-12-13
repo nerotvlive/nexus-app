@@ -133,6 +133,70 @@
                     display: none;
                     padding: 0.5rem 0.75rem;
 
+                    p, a.btn{
+                        padding: 0.25rem 0;
+                        margin: 0.33rem;
+                        border: 1px solid transparent;
+                    }
+
+                    a.btn.btn-nex-secondary {
+                        padding: 0.25rem 1rem 0.3rem 1rem;
+                        background: var(--nex-brighter-100);
+                        border: 1px solid var(--bs-border-color-translucent);
+                    }
+
+                    a.btn.btn-nex-secondary:hover {
+                        background: var(--nex-brighter-200);
+                        border: 1px solid var(--bs-border-color-translucent);
+                    }
+
+                    a.btn.btn-nex-secondary:active {
+                        background: var(--nex-brighter-300);
+                        scale: 0.95;
+                    }
+
+                    input.range, input.number {
+                        border: none;
+                        border-radius: var(--bs-border-radius-lg);
+                        background: var(--nex-darker-200);
+                        padding: 0.25rem 1rem;
+                        margin: 0;
+                        font-size: 0.9rem;
+                    }
+
+                    input.range:hover,input.range:focus,input.range:active,input.number:hover,input.number:focus,input.number:active {
+                        background: var(--nex-darker-300);
+                    }
+
+                    .memory-slider {
+                        position: relative;
+
+                        input.range {
+                            position: absolute;
+                            height: 1.8rem;
+                            right: 0.25rem;
+                            width: 10rem;
+                            bottom: -0.9rem;
+                        }
+                    }
+
+                    .array-box {
+
+                        input {
+                            border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius);
+                        }
+
+                        input:hover, input:active, input:focus {
+                            background: var(--nex-darker-300);
+                        }
+                    }
+
+                    .array-box:hover {
+                        input {
+                            background: var(--nex-darker-300);
+                        }
+                    }
+
                     .btn-of {
                         margin-top: 0.25rem;
                     }
