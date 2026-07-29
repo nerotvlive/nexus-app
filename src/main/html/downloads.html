@@ -1,0 +1,125 @@
+<link href="assets/nexus/css/downloads.css" rel="stylesheet">
+<div id="bg-div"></div>
+
+<div id="downloads" class="position-absolute d-flex w-100 h-100 p-0 m-0">
+    <div class="downloads-content position-relative">
+
+        <!--Loading downloads "running" card-->
+        <div id="downloads-loader-card" class="card download-card loading-download-card shadow m-3">
+            <div class="card-header">
+                <div class="d-flex" id="downloads-loader">
+                    <div class="spinner-border p-2 me-2" style="height: 1rem; width: 1rem;" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <strong>Loading downloads...</strong>
+                </div>
+            </div>
+            <div class="card-body">
+                Checkout the combined search or discover to find new content!<br>
+                <button onclick="loadPage('search.html');" type="button" class="btn btn-nex-glass mt-2">
+                    <i class='bi bi-search'></i> Open Search
+                </button>
+                <button onclick="loadPage('discover.html');" type="button" class="btn btn-nex-glass mx-2 mt-2">
+                    <i class='bi bi-globe-europe-africa'></i> Open Discover
+                </button>
+            </div>
+        </div>
+
+        <!--Real running download card-->
+        <div id="running-download-template" class="card d-none download-card running-download-card shadow m-3">
+            <div class="card-header">
+                <strong class="download-name"></strong>
+            </div>
+            <div class="card-body">
+                <div class="debug-info d-none">
+                    <h6><strong>Download ID: </strong><span class="downloadId user-select-all"></span></h6>
+                    <h6><strong>Download URL: </strong><span class="downloadUrl user-select-all"></span></h6>
+                    <h6><strong>Download path: </strong><span class="downloadPath user-select-all"></span></h6>
+                </div>
+                <div class="download-info d-flex justify-content-between align-items-center my-3">
+                    <h6 class="text-center">
+                        Elapsed time<br><span class="timeElapsed"></span>
+                    </h6>
+                    <h6 class="text-center">
+                        Download size<br><span class="downloadSize"></span>
+                    </h6>
+                    <h6 class="text-center">
+                        Download speed<br><span class="downloadSpeed"></span>
+                    </h6>
+                    <h6 class="text-center">
+                        Progress<br><span class="progressInfo"></span>
+                    </h6>
+                    <h6 class="d-none d-xl-block"></h6>
+                </div>
+                <div class="download-progress my-3">
+                    <h6 class="">
+                        File size: <span class="fileSize"></span>
+                    </h6>
+                    <div class="progress shadow" role="progressbar">
+                        <div class="progress-bar" style="width: 10%"></div>
+                    </div>
+                    <h6 class="mt-1">
+                        Remaining time: <span class="timeRemaining"></span>
+                    </h6>
+                </div>
+                <button onclick="console.log('[CONNECTOR] download.pauseRunning');" type="button" class="btn btn-nex-glass">Skip (for now)</button>
+                <button onclick="console.log('[CONNECTOR] download.cancelRunning');" type="button" class="btn btn-nex-glass btn-nex-glass-red">Cancel</button>
+            </div>
+        </div>
+
+        <!--div style="width: calc(100vw - 22rem); -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%);">
+            <div class="d-flex gap-3 px-3 pb-3" style="overflow-x: auto;">
+                <div class="card d-none" style="flex-shrink: 0;">
+                    <div class="card-header position-relative">
+                        <strong style="padding-right: 1.5rem;">Download title</strong>
+                        <div class="spinner-grow" style="scale: 0.75; color: gray; position: absolute; right: 0.25rem; top: 0.25rem;" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        Preparing download...
+                    </div>
+                </div>
+            </div>
+        </div-->
+
+        <div class="waiting-downloads h-100 overflow-auto shadow">
+            <h6 class="px-3 pt-3">Paused downloads</h6>
+            <h6 class="px-3 pt-3">Waiting downloads</h6>
+            <div id="waiting-download-template" class="card d-none download-card waiting-download-card shadow m-3">
+                <div class="card-header">
+                    <strong class="download-name"></strong>
+                </div>
+                <div class="card-body">
+                    <div class="debug-info d-none">
+                        <h6><strong>Download ID: </strong><span class="downloadId"></span></h6>
+                        <h6><strong>Download URL: </strong><span class="downloadUrl"></span></h6>
+                        <h6><strong>Download path: </strong><span class="downloadPath"></span></h6>
+                    </div>
+                    <h6 class="d-none"><strong>Index: </strong><span class="downloadIndex"></span></h6>
+                    <h6>Waiting...</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="downloads-sidecard d-lg-block d-none shadow">
+        <div class="p-3 pb-1">
+        <h4><strong>Downloads</strong></h4>
+        <hr>
+        <h5><strong>Download speed</strong></h5>
+        <p class="m-0"><strong>Maximum: </strong><span id="max-speed">0 MB/s</span></p>
+        <p class="m-0"><strong>Average: </strong><span id="avg-speed">0 MB/s</span></p>
+        <hr>
+        <h5><strong>Download history</strong></h5>
+        </div>
+        <div class="history">
+            <div class="d-flex flex-column gap-2 download-history">
+                <div id="history-download-template" class="card d-none history-card d-flex shadow justify-content-between py-2 px-3">
+                    <strong class="downloadName"></strong>
+                    <i class="bi downloadSuccessIcon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button onclick="loadScript('assets/nexus/js/downloads.js', onload);  setTimeout(()=>{  }, 100);" class="onload d-none">On page load</button>

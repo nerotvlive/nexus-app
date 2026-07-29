@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.zyneonstudios.apex</groupId>
+    <artifactId>nexus-app</artifactId>
+    <version>3.0.0-pre.33</version>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <nexus.name>Reformatio</nexus.name>
+        <nexus.type>stable</nexus.type>
+        <app.mainClass>org.zyneonstudios.apex.nexusapp.Main</app.mainClass>
+        <app.name>NEXUS App</app.name>
+        <app.vendor>Zyneon Studios</app.vendor>
+        <app.version.jpackage>3.0.0</app.version.jpackage>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>nerofy-releases</id>
+            <url>https://maven.nrfy.net/releases</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- MAVEN CENTRAL REPOSITORY -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.starxg</groupId>
+            <artifactId>java-keytar</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.flowarg</groupId>
+            <artifactId>azuljavadownloader</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <!-- to fix dependency security issues -->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.20.0</version>
+        </dependency>
+
+        <!-- NEROFY PUBLIC REPOSITORY -->
+        <dependency>
+            <groupId>live.nerotv</groupId>
+            <artifactId>a-minecraft-launcher</artifactId>
+            <version>2025.12.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zyneonstudios.nexus</groupId>
+            <artifactId>base-desktop</artifactId>
+            <version>2025.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zyneonstudios.nexus</groupId>
+            <artifactId>zyndex-java</artifactId>
+            <version>2025.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zyneonstudios.apex</groupId>
+            <artifactId>mojang-auth</artifactId>
+            <version>2025.12</version>
+        </dependency>
+
+        <!-- JITPACK.IO REPOSITORY -->
+        <dependency>
+            <groupId>com.github.steos</groupId>
+            <artifactId>jnafilechooser</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MinnDevelopment</groupId>
+            <artifactId>java-discord-rpc</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Querz</groupId>
+            <artifactId>NBT</artifactId>
+            <version>6.1</version>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>nerofy-snapshots</id>
+            <name>Nerofy Network Maven repository</name>
+            <url>https://maven.nrfy.net/snapshots</url>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.source}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>false</shadedArtifactAttached>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>${app.mainClass}</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>zip</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>windows-exe</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.panteleyev</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <version>1.7.4</version>
+                        <executions>
+                            <execution>
+                                <id>jpackage</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jpackage</goal>
+                                </goals>
+                                <configuration>
+                                    <input>${project.build.directory}</input>
+                                    <destination>${project.build.directory}/jpackage</destination>
+                                    <name>${app.name}</name>
+                                    <appVersion>${app.version.jpackage}</appVersion>
+                                    <vendor>${app.vendor}</vendor>
+                                    <mainJar>${project.build.finalName}.jar</mainJar>
+                                    <mainClass>${app.mainClass}</mainClass>
+                                    <icon>${project.basedir}/src/main/html/favicon.ico</icon>
+                                    <type>APP_IMAGE</type>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

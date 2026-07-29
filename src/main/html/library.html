@@ -1,0 +1,490 @@
+<link href="assets/nexus/css/library.css" rel="stylesheet">
+<div id="bg-div"></div>
+<div id="library-bg"></div>
+<div id="library" class="nex-flex w-100 h-100 p-0 m-0 opacity-0 gap-0">
+    <div class="position-relative d-flex big-card">
+        <div class="content-table submenu shadow">
+            <table class="w-100">
+                <tr style="height: calc(100vh - 3.75rem); !important;">
+                    <td class="nohover p-0 m-0">
+                        <div style="height: calc(100vh - 3.75rem);" class="p-0 w-100 m-0">
+                            <table class="w-100">
+                                <tr class="p-0 m-0">
+                                    <td class="nohover bg-transparent p-2 m-0">
+                                        <strong class="p-0 m-0 position-absolute" style="left: 1rem; top: 0.3rem;">Library</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="nohover p-0 m-0 py-1 bg-transparent">
+                                        <button onclick="showOverview();" id="overview-button" type="button" class="btn btn-nex-glass">
+                                            <i class="bi bi-house"></i>
+                                            <span>Home & Overview</span>
+                                        </button>
+                                        <div class="d-flex m-0 px-2 py-1 bg-transparent">
+                                            <button id="create-button" type="button" class="btn btn-nex-glass flex-grow-1" data-bs-toggle="modal" data-bs-target="#addInstance">
+                                                <i class="bi bi-plus-lg"></i>
+                                                <span>Add instance</span>
+                                            </button>
+                                            <button id="reload-button" onclick="location.reload();" type="button" class="btn btn-nex-glass">
+                                                <i class="bi bi-arrow-clockwise m-0 p-0"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="nohover position-relative bg-transparent">
+                                        <strong>Instances</strong> <i onclick="toggleInstanceGrouping();" class="shadow-sm btn btn-nex-glass m-0 p-0 py-0 px-2 position-absolute bi bi-list-task instanceGroupingToggle" style="transition: background-color 0.15s ease !important; right: 0.5rem; font-size: 0.9rem"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="instance-list" class="p-0 pb-5 m-0 nohover bg-transparent">
+                                        <button type="button" class="btn btn-nex-secondary d-none instance-list-template instance-button-comp" style="margin: 0 0.5rem 0.25rem 0.5rem; width: calc(100% - 1rem);">
+                                            <i class="bi bi-dice-4 instance-button-comp"></i>
+                                            <img alt="" src="" class="instance-button-comp">
+                                            <span class="instance-button-comp">Instance</span>
+                                        </button>
+                                        <span class="instance-group-template submenu-group shadow d-none" style="margin: 0.5rem 0.25rem; padding: 0.5rem 0.5rem; border-radius: var(--bs-border-radius-lg)">
+                                            <a style="top: 0.5rem"><i class="bi bi-caret-down"></i></a>
+                                            <span class="group-title">Custom instance group</span>
+                                            <span class="collapse m-0 p-0 w-100 position-relative">
+                                                <span class="d-flex flex-column gap-0 p-0 m-0">
+                                                    <button type="button" class="btn btn-nex-secondary d-none w-100 instance-list-template instance-button-comp" style="max-width: 13.25rem; margin: 0 0 0.25rem 0 !important;">
+                                                        <i class="bi bi-dice-6 instance-button-comp"></i>
+                                                        <img alt="" src="" class="instance-button-comp">
+                                                        <span class="instance-button-comp">Instance</span>
+                                                    </button>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="p-0 m-0 w-100 h-100">
+            <div class="nex-side-view p-3" id="overview">
+                <div class="p-2">
+                    <div class="content-table shadow">
+                        <table class="w-100" id="instance-overview">
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <label><input class="search" type="text" placeholder="Search instances..." oninput="filterTable('instance-overview')"></label>
+                                </th>
+                                <th></th>
+                            </tr>
+                            <tr id="overview-template-row" class="d-none">
+                                <td class="first"><label><input class="opacity-0 z-n1" type="checkbox" disabled></label></td>
+                                <td class="nohover d-flex">
+                                    <div style="position: relative; min-width: 48px; max-width: 48px; width: 48px; height: 48px; background: var(--nex-darker-200); padding: 0.5rem; margin: 0; border-radius: var(--bs-border-radius);">
+                                        <img class="instance-icon d-none" height="48" width="48" alt="instance icon" style="position: absolute; left: 0; top: 0;">
+                                    </div>
+                                    <span class="instance-name w-100 p-2">Name</span>
+                                </td>
+                                <td class="nohover position-relative">
+                                    <div class="position-absolute d-flex gap-2 p-3" style="bottom: 0; right: 0;">
+                                        <button type="button" class="btn btn-nex-primary btn-nex-glass instance-show">Show</button>
+                                        <button type="button" class="btn btn-nex-glass btn-nex-primary instance-launch">Launch</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nex-side-view p-0 m-0" style="display: none" id="instance-view">
+                <div id="instance-description" class="m-0 p-0">
+                    <div class="content-table m-2 shadow">
+                        <table class="w-100">
+                            <tr>
+                                <th></th>
+                                <th class="position-relative p-3">
+                                    <span class="d-none" id="library-title"><span>Library</span></span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="first">
+                                    <label><input class="opacity-0 z-n1" type="checkbox" disabled></label>
+                                </td>
+                                <td class="nohover position-relative menu">
+                                    <div class="p-0 m-0 d-flex position-relative">
+                                        <div class="d-flex gap-3">
+                                            <img height="128" width="128" alt="instance icon" id="instance-icon" src="">
+                                            <div class="p-0 m-0 position-relative d-flex flex-column" style="height: 128px; overflow: hidden; overflow-y: auto;">
+                                                <h3 class="p-0 m-0 mb-1"><span id="instance-name"></span> <span id="instance-version" style="background: var(--nex-brighter-100); font-size: 0.8rem; padding: 0.1rem 0.5rem; font-weight: 0 !important; position: absolute; margin: 0.5rem 0.5rem; border-radius: var(--bs-border-radius)"></span></h3>
+                                                <div class="m-0 p-0 h-100" id="library-tags"></div>
+                                                <span id="instance-summary" style="max-width: calc(100% - 15rem); min-height: 4rem; max-height: 4rem; font-size: 0.8rem;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="position-absolute buttons w-100 d-flex gap-2 flex-row align-self-start justify-content-end">
+                                            <a id="update-button" type="button" class="btn btn-nex-primary btn-nex-glass"><i class="bi bi-download"></i></a>
+                                            <a id="folder-button" type="button" class="btn btn-nex-primary btn-nex-glass"><i class="bi bi-folder2"></i></a>
+                                            <a id="library-settings-button" type="button" class="btn btn-nex-primary btn-nex-glass" onclick="console.log('[CONNECTOR] library.settings.'+activeInstance)"><i class="bi bi-gear"></i></a>
+                                        </div>
+                                    </div>
+                                    <button id="launch-button" type="button" class="btn btn-nex-primary text-nowrap overflow-hidden"></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="first"></td>
+                                <td class="nohover p-0 position-relative d-flex w-100">
+                                    <ul class="nav w-100">
+                                        <li class="nav-item">
+                                            <button class="nav-link left active" id="tab-about" data-bs-toggle="tab" data-bs-target="#tab-about-content" type="button" aria-controls="tab-about-content" aria-selected="true"><i class="bi bi-card-text"></i>About</button>
+                                        </li>
+                                        <li class="nav-item active">
+                                            <button class="nav-link" id="tab-mods" data-bs-toggle="tab" data-bs-target="#tab-mods-content" type="button" aria-controls="tab-mods-content" aria-selected="false"><i class="bi bi-code-slash"></i>Mods</button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button class="nav-link" id="tab-maps" data-bs-toggle="tab" data-bs-target="#tab-maps-content" type="button" aria-controls="tab-maps-content" aria-selected="false"><i class="bi bi-map"></i>Maps</button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button class="nav-link" id="tab-servers" data-bs-toggle="tab" data-bs-target="#tab-servers-content" type="button" aria-controls="tab-servers-content" aria-selected="false"><i class="bi bi-hdd-stack"></i>Servers</button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button class="nav-link" id="tab-resourcePacks" data-bs-toggle="tab" data-bs-target="#tab-resourcePacks-content" type="button" aria-controls="tab-resourcePacks-content" aria-selected="false"><i class="bi bi-brush"></i>Resource Packs</button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button class="nav-link right" id="tab-shaders" data-bs-toggle="tab" data-bs-target="#tab-shaders-content" type="button" aria-controls="tab-shaders-content" aria-selected="false"><i class="bi bi-cloud-haze2"></i>Shaders</button>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane m-0 p-0 show active" id="tab-about-content" aria-labelledby="tab-about">
+                            <div class="content-table shadow">
+                            <table class="w-100">
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>
+                                        <span>About</span> <label><input class="opacity-0 search" type="text" disabled></label>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td class="first opacity-0">
+                                        <label><input class="opacity-0" type="checkbox" disabled></label>
+                                    </td>
+                                    <td id="instance-about" class="nohover">
+
+                                    </td>
+                                </tr>
+                            </table></div>
+                            </div>
+                        <div class="tab-pane m-0 p-0" id="tab-mods-content" aria-labelledby="tab-mods">
+                            <div class="content-table shadow">
+                                <table class="w-100" id="instance-mods">
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane m-0 p-0" id="tab-maps-content" aria-labelledby="tab-maps">
+                            <div class="content-table shadow">
+                                <table class="w-100" id="instance-maps">
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane m-0 p-0" id="tab-servers-content" aria-labelledby="tab-maps">
+                            <div class="content-table shadow">
+                                <table class="w-100" id="instance-servers">
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane m-0 p-0" id="tab-resourcePacks-content" aria-labelledby="tab-resourcePacks">
+                            <div class="content-table shadow">
+                                <table class="w-100" id="instance-resourcepacks">
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane m-0 p-0" id="tab-shaders-content" aria-labelledby="tab-shaders">
+                            <div class="content-table shadow">
+                                <table class="w-100" id="instance-shaders">
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overflow-hidden" id="settings-pane">
+        <div class="instance-settings">
+            <div class="settings-menu">
+                <button type="button" class="general-button btn btn-nex-secondary flex-grow-1 top" onclick="showSettingsPane('General');">
+                    <i class="bi bi-wrench"></i>
+                    <span>General settings</span>
+                </button>
+                <button type="button" class="game-button btn btn-nex-secondary flex-grow-1" onclick="showSettingsPane('Game');">
+                    <i class="bi bi-controller"></i>
+                    <span>Game settings</span>
+                </button>
+                <button type="button" class="java-button btn btn-nex-secondary flex-grow-1" onclick="showSettingsPane('Java');">
+                    <i class="bi bi-cup-hot"></i>
+                    <span>Java settings</span>
+                </button>
+                <button type="button" class="hook-button btn btn-nex-secondary flex-grow-1 d-none" onclick="showSettingsPane('Hook');">
+                    <i class="bi bi-code"></i>
+                    <span>Hook settings</span>
+                </button>
+                <div class="settings-menu-actions">
+                    <button type="button" class="deletion-button btn btn-nex-red flex-grow-1 bottom" onclick="showSettingsPane('Deletion');">
+                        <i class="bi bi-trash"></i>
+                        <span>Delete instance</span>
+                    </button>
+                </div>
+            </div>
+            <div class="settings-content">
+                <i class="bi bi-x-lg close-button" onclick="document.getElementById('settings-pane').classList.remove('show');"></i>
+                <h5 class="p-3"><span class="settings-title">${instance.settings.pagename}</span> settings for <strong class="settings-instance-title">${instance.name}</strong></h5>
+                <div class="general-settings settings-content-pane">
+
+                </div>
+                <div class="game-settings settings-content-pane">
+                    <div class="container">
+                        <h6>Game version settings</h6>
+                        <div class="d-flex w-100 gap-2 border-bottom p-1">
+                            <div class="text-start w-100 h-100">
+                                <p>Game type/Modloader</p>
+                            </div>
+
+                            <div class="text-end w-100 h-100 position-relative">
+                                <label>
+                                    <select class="form-select" onchange="">
+                                        <option value="dashboard.html">Vanilla/stable</option>
+                                        <option value="dashboard.html">Vanilla/unstable</option>
+                                        <option value="dashboard.html">Fabric/all</option>
+                                        <option value="dashboard.html">Forge/all</option>
+                                        <option value="dashboard.html">NeoForge/all</option>
+                                        <option value="dashboard.html">Quilt/all</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 gap-2 border-bottom p-1">
+                            <div class="text-start w-100 h-100">
+                                <p>Minecraft version</p>
+                            </div>
+
+                            <div class="text-end w-100 h-100 position-relative">
+                                <label>
+                                    <select class="form-select" onchange="">
+
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 gap-2 mb-3 p-1">
+                            <div class="text-start w-100 h-100">
+                                <p>Minecraft version</p>
+                            </div>
+
+                            <div class="text-end w-100 h-100 position-relative">
+                                <label>
+                                    <select class="form-select" onchange="">
+
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <h6>Game window settings</h6>
+                        <div class="d-flex w-100 gap-2 border-bottom p-1">
+                            <div class="text-start w-100 h-100">
+                                <p>Launch in fullscreen</p>
+                            </div>
+
+                            <div class="text-end w-100 h-100 position-relative">
+                                <div class="form-switch p-2">
+                                    <label>
+                                        <input class="form-check-input instance-useFullscreen switch" type="checkbox" onchange="" role="switch">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 gap-2 border-bottom p-1 align-items-center">
+                            <div class="text-start w-100 h-100">
+                                <p>Game window width</p>
+                            </div>
+                            <div class="text-end w-100 h-100">
+                                <p>
+                                    <label>
+                                        <input type="number" class="window-width-input number" value="">
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 gap-2 p-1 align-items-center">
+                            <div class="text-start w-100 h-100">
+                                <p>Game window height</p>
+                            </div>
+                            <div class="text-end w-100 h-100">
+                                <p>
+                                    <label>
+                                        <input type="number" class="window-height-input number" value="">
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="java-settings settings-content-pane position-relative p-3">
+                    <div class="container">
+                        <div class="d-flex w-100 gap-2 border-bottom p-1">
+                            <div class="text-start w-100 h-100">
+                                <p>Java version</p>
+                            </div>
+                            <div class="text-center w-100 h-100">
+                                <p>${instance.java.version}</p>
+                            </div>
+
+                            <div class="text-end w-100 h-100 align-items-center">
+                                <a type="button" class="btn btn-nex-secondary">Change Java version</a>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 gap-2 border-bottom p-1 align-items-center">
+                            <div class="text-start w-100 h-100">
+                                <p>Allocated memory (in MB)</p>
+                            </div>
+                            <div class="text-center w-100 h-100">
+                                <p>
+                                    <label>
+                                        <input type="number" class="java-memory-input number" value="${instance.java.memory}">
+                                    </label>
+                                </p>
+                            </div>
+
+                            <div class="text-end w-100 h-100 align-items-center d-flex justify-content-end align-items-center align-content-center memory-slider">
+                                <label>
+                                    <input type="range" class="range instance-JavaMemory form-range" min="512" value="1024" max="16384" step="1" onchange="">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 gap-2 border-bottom p-1">
+                            <div class="text-start w-100 h-100">
+                                <p>JVM arguments</p>
+                            </div>
+
+                            <div class="text-end w-100 h-100 align-items-center" style="padding: 0.5rem 0;">
+                                <div class="array-box instance-jvmArgs" onclick="this.querySelector('input').focus();">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 gap-2 p-1">
+                            <div class="text-start w-100 h-100">
+                                <p>Environmental arguments</p>
+                            </div>
+
+                            <div class="text-end w-100 h-100 align-items-center" style="padding: 0.5rem 0;">
+                                <div class="array-box instance-envArgs" onclick="this.querySelector('input').focus();">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hook-settings settings-content-pane">
+
+                </div>
+                <div class="deletion-settings settings-content-pane">
+
+                    <div class="alert alert-danger shadow" role="alert">
+                        <strong>Do you really want to delete this instance?</strong><br><br>
+                        <div class="alert alert-warning shadow" role="alert">
+                            <strong>ID: </strong><span class="settings-deletion-id"></span><br>
+                            <strong>Name: </strong><span class="settings-deletion-name"></span><br>
+                            <strong>Version: </strong><span class="settings-deletion-version"></span><br>
+                            <strong>Path: </strong><span class="settings-deletion-path"></span><br>
+                        </div>
+                        If you continue, this instance will be permanently deleted - <strong>Forever</strong>.<br>
+                        Think carefully about whether you want to do that.<br><br>
+                        Do you want to take another look at the contents of this instance?<br>
+                        <button type="button" class="btn btn-nex-red shadow btn-of settings-deletion-folder">Open instance folder</button>
+                    </div>
+                    <div class="d-flex flex-row gap-3">
+                        <button onclick="showSettingsPane('General');" type="button" class="btn btn-nex-secondary shadow"><strong>Don't delete instance</strong></button>
+                        <div>
+                            <button type="button" class="btn btn-df btn-nex-red shadow settings-deletion-delete">Delete instance <strong>forever</strong></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addInstance" tabindex="-1" aria-labelledby="addInstanceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content rounded-2">
+            <div class="modal-header" style="background: var(--nex-brighter-100);" id="addInstanceM-header">
+                <strong>Instance Creator (work in progress but working)</strong>
+            </div>
+            <div class="modal-body instance-creator">
+                <div class="alert alert-warning d-none" id="creator-name-warning" role="alert">
+                    Please input an instance name.
+                </div>
+                <div class="d-flex creator-header">
+                    <div class="instance-image-container">
+
+                    </div>
+                    <div class="instance-main-information-container">
+                        <label>
+                            <input type="text" id="creator–instance-name" placeholder="* Instance name">
+                        </label>
+                        <div class="d-flex">
+                            <div>
+                                Game Type
+                                <label>
+                                    <select id="creator-mc-type" onchange="document.getElementById('creator-mc-versions').innerHTML = ''; document.getElementById('creator-ml-versions').innerHTML = ''; console.log('[CONNECTOR] library.creator.init.'+this.value);">
+                                        <option value="vanilla">Vanilla</option>
+                                        <option value="experimental">Experimental</option>
+                                        <option value="fabric">Fabric</option>
+                                        <option value="forge">Forge</option>
+                                        <option value="neoforge">NeoForge</option>
+                                        <option value="quilt">Quilt</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div>
+                                Minecraft Version
+                                <label>
+                                    <select id="creator-mc-versions" onchange="document.getElementById('creator-ml-versions').innerHTML = ''; console.log('[CONNECTOR] library.creator.init.version.'+document.getElementById('creator-mc-type').value+'.'+this.value);">
+
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div>
+                                Modloader version
+                                <label>
+                                    <select id="creator-ml-versions" class="d-none" onchange="">
+
+                                    </select>
+                                </label>
+                            </div>
+                            <label>
+
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="background: var(--nex-brighter);">
+                <!--button type="button" data-bs-dismiss="modal" data-bs-target="#addInstance" class="btn btn-nex-secondary shadow"><i class="bi bi-file-earmark-arrow-down"></i> Import</button-->
+                <button type="button" data-bs-dismiss="modal" data-bs-target="#addInstance" onclick="loadPage('discover.html',false,'&dt=search');" class="btn btn-nex-primary shadow"><i class="bi bi-globe-europe-africa"></i> Discover modpacks</button>
+                <button type="button" class="btn btn-nex-primary shadow" onclick="requestInstanceCreation();"><i class="bi bi-plus-lg"></i> Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button onclick="loadScript('assets/nexus/js/library.js', onload);  setTimeout(()=>{ addInstanceGroup('uncategorized','Uncategorized','nex-secondary'); addInstanceGroup('essentialplus','Essential+','nex-primary'); document.getElementById('essentialplus').classList.add('d-none'); document.getElementById('uncategorized').classList.add('d-none'); if(localStorage.getItem('submenu-group_uncategorized-collapse') === null) { enableSubMenuGroup('uncategorized-collapse') } initLibrary(); }, 100);" class="onload d-none">On page load</button>

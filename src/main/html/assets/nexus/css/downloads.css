@@ -1,0 +1,82 @@
+#downloads {
+    background: linear-gradient(-45deg, #00000050, #00000045);
+
+    .downloads-content {
+        width: 100%;
+
+        .download-card {
+            overflow: hidden;
+        }
+
+        .card {
+            background: linear-gradient(-45deg,var(--nex-brighter-100),var(--nex-brighter));
+
+            .card-header {
+                background: none;
+                padding-bottom: 0;
+                border: none !important;
+            }
+
+            .card-body {
+                padding-top: 0.5rem;
+                .progress {
+                    background: var(--nex-darker-500);
+
+                    .progress-bar {
+                        background: var(--nex-primary);
+                    }
+                }
+            }
+        }
+
+        .waiting-downloads {
+            background: var(--bs-body-bg);
+            border-top: 1px solid var(--bs-border-color-translucent);
+            padding-bottom: 20rem;
+        }
+    }
+
+    .downloads-sidecard {
+        min-width: 18rem;
+        width: 20rem;
+        max-width: 22rem;
+
+        background: linear-gradient(-45deg,var(--nex-brighter-100),var(--nex-brighter));
+        border-left: 1px solid var(--bs-border-color-translucent);
+
+        .history {
+            position: relative;
+            height: calc(100% - 11rem);
+            padding: 0 1rem 4rem 1rem;
+            overflow: hidden;
+            overflow-y: auto;
+
+            .history-card {
+                background: linear-gradient(-45deg, var(--nex-brighter-100), var(--nex-brighter));
+                border: 1px solid var(--bs-border-color-translucent);
+
+                strong {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    width: calc(100% - 1.1rem);
+                }
+
+                i {
+                    position: absolute;
+                    right: 1rem;
+                }
+            }
+
+            .history-card.finished {
+                background: linear-gradient(-45deg, var(--nex-success-transparent), var(--nex-brighter));
+                border: 1px solid var(--nex-success-accent);
+            }
+
+            .history-card.failed {
+                background: linear-gradient(-45deg, var(--nex-error-transparent), var(--nex-brighter));
+                border: 1px solid var(--nex-error-accent);
+            }
+        }
+    }
+}
